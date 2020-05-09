@@ -1,0 +1,212 @@
+{% extends 'base.html.twig' %}
+{% form_theme form _self %}
+{% block title %}Hello AccountController!
+{% endblock %}
+
+{% block stylesheets %}
+	{{parent()}}
+	<link rel="stylesheet" href="/account/login.css">
+	<link rel="stylesheet" href="/account/intl-tel-input/build/css/intlTelInput.min.css">
+	<style>
+		.card-title {
+			padding-top: 1rem;
+		}
+		.userImage{
+			width:100px;
+			height:100px;
+		}
+	</style>
+{% endblock %}
+
+{% block body %}
+
+	<div class="container">
+		<div class="row">
+			<div class="col s10 offset-s1">
+				<div class="card">
+					<div class="card-title">
+						<h5 class=" center">Register</h5>
+					</div>
+					<div class="card-content">
+						{{form_start(form)}}
+						{{form_widget(form)}}
+						<p>
+							<label>
+								<input type="checkbox"/>
+								<span>I agree to the terms of service</span>
+							</label>
+						</p>
+						<button name="" type="submit" id="submit" class="btn btn-primary" href="#" role="button">Register</button>
+
+						{{form_end(form)}}
+					</div>
+
+
+				</div>
+			</div>
+		</div>
+
+	{% endblock %}
+
+	{% block _account_file_widget %}
+     
+    <div class="col s8">
+        <div class="file-field input-field">
+            <div class="btn">
+                <span>Photo</span>
+                {{form_widget(form)}}
+            </div>
+            <div class="file-path-wrapper">
+                <input class="file-path validate" type="text">
+            </div>
+            </div>
+      </div>
+    <div class="col s4 rigth-align">
+       <img class="materialboxed userImage"  id="image_ahmad_{{id}}" />
+    </div>
+   
+    
+     
+     
+      
+   
+      
+ {% endblock %}
+	{% block javascripts %}
+		{{parent()}}
+		<script src="/account/intl-tel-input/build/js/intlTelInput.js"></script>
+		<script>
+			var input = document.querySelector("#account_phone");
+window.intlTelInput(input, {
+// allowDropdown: false,
+// autoHideDialCode: false,
+// autoPlaceholder: "off",
+// dropdownContainer: document.body,
+// excludeCountries: ["us"],
+// formatOnDisplay: false,
+// geoIpLookup: function(callback) {
+// $.get("http://ipinfo.io", function() {}, "jsonp").always(function(resp) {
+//     var countryCode = (resp && resp.country) ? resp.country : "";
+//     callback(countryCode);
+// });
+// },
+// hiddenInput: "full_number",
+// initialCountry: "auto",
+// localizedCountries: { 'de': 'Deutschland' },
+// nationalMode: false,
+// onlyCountries: ['us', 'gb', 'ch', 'ca', 'do'],
+// placeholderNumberType: "MOBILE",
+// preferredCountries: ['cn', 'jp'],
+// separateDialCode: true,
+utilsScript: "/account/intl-tel-input/build/js/utils.js"
+});
+		</script>
+		<script src="/account/utile.js"></script>
+		<script src="/account/register.js"></script>
+		<script src="/account/phoneCheck.js"></script>
+		<script src="/account/country.js"></script>
+		<script>
+
+/////////////////////////////////image////////////////////////////
+		   document.getElementById(`account_file_file`).onchange = function () {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    // get loaded data and render thumbnail.
+					let imageUser= document.getElementById(`image_ahmad_account_file`)
+                   imageUser.src = e.target.result;
+				
+                    elemsImage = document.querySelectorAll('.materialboxed');
+                   instanceselemsImage = M.Materialbox.init(elemsImage, {});
+                };
+                // read the image file as a data URL.
+                reader.readAsDataURL(this.files[0]);
+            };
+/////////////////////////////////////////////////////////////////////////			
+           const getUrl=(type,typeId)=>{
+                  
+				  if(type=='department'){
+                        let url ="{{ path('location_department',{id:'typeId'}) }}";
+							url = url.replace('typeId', typeId);
+						return url;	
+				  }
+				  else if(type=='city'){
+					    let url ="{{ path('location_city',{id:'typeId'}) }}";
+							url = url.replace('typeId', typeId);
+						return url;	
+				  }
+			  
+		   }
+			const fetchLocation = (url) => {
+							
+							let data = axios.get(url).then((response) => {
+							return response.data;
+
+							}).catch((err) => {
+							console.log(err);
+							})
+                   return data;
+           }
+
+		 
+
+
+         document.addEventListener('DOMContentLoaded', function () {
+			    // region
+				let region = document.getElementById('account_region');
+				let instancesRegion = M.FormSelect.init(region, {});
+                // department
+				let department = document.getElementById('account_department');
+				let departments = M.FormSelect.init(department, {});
+				let instanceDepartments = M.FormSelect.getInstance(department);
+                //city
+				let city = document.getElementById('account_city');
+				let instancesCity = M.FormSelect.init(city, {});
+
+
+				  const populateSelect=(item,collection)=>{
+                           let optionNode = document.createElement("option");
+							optionNode.value = item.id;
+							let textNode = document.createTextNode(item.name);
+							optionNode.appendChild(textNode);
+							collection.appendChild(optionNode);
+
+						
+		         }
+				 
+				const initDepartment=async()=>{
+					if(region.value){
+						let departmentData = await fetchLocation(getUrl('department',region.value));
+						departmentData.forEach((departmentElment) => {
+						populateSelect(departmentElment,department);
+						})
+							M.FormSelect.init(department, {});
+
+					}
+				}
+
+				region.addEventListener('change', async (e) => {
+					department.innerHTML='';
+						let departmentData = await fetchLocation(getUrl('department',e.target.value));
+					
+						departmentData.forEach((departmentElment) => {
+							populateSelect(departmentElment,department);
+						})
+						M.FormSelect.init(department, {});
+				});
+
+				department.addEventListener('change',async(e)=>{
+                   city.innerHTML='';
+				   let cityData = await fetchLocation(getUrl('city',e.target.value));
+						
+						cityData.forEach((cityElment) => {
+							
+							populateSelect(cityElment,city);
+						})
+						M.FormSelect.init(city, {});
+
+				})
+            
+			initDepartment();
+       });
+		</script>
+	{% endblock %}

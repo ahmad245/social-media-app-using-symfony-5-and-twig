@@ -1,0 +1,138 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello Post!
+{% endblock %}
+{% block stylesheets %}
+
+	{{parent()}}
+	<link rel="stylesheet" href="/css/post/postCard.css">
+	<link rel="stylesheet" href="/css/component/spinner.css">
+	<style>
+		.card-title {
+			padding-top: 1rem;
+		}
+	</style>
+{% endblock %}
+{% block body %}
+	
+		<div class="row">
+			{% for message in app.flashes('success') %}
+				<div class=" col s8 offset-s2 center green">
+					{{message}}
+				</div>
+			{% endfor %}
+			{% if app.user %}
+				<a href={{path('post_add')}} class="btn-floating btn-large waves-effect waves-light red postAdd">
+					<i class="material-icons">add</i>
+				</a>
+			{% endif %}
+
+			<div class="row">
+				<div class="card col s8 offset-s2">
+					<div class="card-content">
+						{% if app.user and  app.user!=user %}
+							<div class="card-panel">
+								<div class="card-title">
+									<h4>
+										{{user.fullName}}</h4>
+									<span>{{user.username}}</span>
+								</div>
+								{% if  app.user.isFollowing(user) %}
+									<a href="{{path('unfollowing',{'id':user.id})}}" class="waves-effect waves-light btn-small">
+										<i class="material-icons left">person_outline</i>Un Following</a>
+								{% else %}
+									<a href="{{path('following',{'id':user.id})}}" class="waves-effect waves-light btn-small">
+										<i class="material-icons left">person_add</i>Following</a>
+								{% endif %}
+							</div>
+						{% endif %}
+
+
+						<ul class="collection col s6">
+							<li class="collection-header">
+								<h4>followers</h4>
+							</li>
+							{% if user.followers|length > 0%}
+								{% for follower in user.followers %}
+
+									{% include "post/followers.html.twig" with {'follower':follower} %}
+
+								{% endfor %}
+							</ul>
+						{% else %}
+							<div>do not followers yest</div>
+						{% endif %}
+
+
+						<ul class="collection col s6">
+							<li class="collection-header">
+								<h4>following</h4>
+							</li>
+							{% if user.following|length > 0 %}
+								{% for following in user.following %}
+
+									{% include "post/following.html.twig" with {'following':following} %}
+
+								{% endfor %}
+							</ul>
+						{% else %}
+							<div>do not followig  yest</div>
+						{% endif %}
+					</div>
+				</div>
+			</div>
+
+
+			{% for post in posts %}
+				<div class="col s8 offset-s2">
+					{% include "post/_postCard.html.twig" with {'post':post} %}
+				</div>
+			{% endfor %}
+		</div>
+
+
+
+{% endblock %}
+
+{% block javascripts %}
+	{{parent()}}
+	{# <script src="/post/like.js"></script> #}
+	<script>
+		document.addEventListener('DOMContentLoaded', function () {
+					var elems = document.querySelectorAll('.modal');
+			var instances = M.Modal.init(elems, {});
+			});
+			const debounce = (callback, delay = 20000) => {
+			let timeoutId;
+
+			return(...args) => {
+
+			if (timeoutId) {
+			clearTimeout(timeoutId);
+			}
+			timeoutId = setTimeout(() => {
+			callback.apply(null, args);
+			}, delay);
+
+			}
+			}
+			let btnPostDelete = document.querySelectorAll('.post-edit');
+			let isClicked = false;
+			const handelEventEdit = (event) => {
+
+			if (isClicked) {
+			event.target.classList.add('spinner');
+			event.preventDefault();
+
+			return;
+			}
+			isClicked = true;
+			event.target.classList.remove('spinner');
+
+			} 
+			btnPostDelete.forEach((el) => {
+
+			el.addEventListener('click', handelEventEdit)
+			});
+	</script>
+{% endblock %}

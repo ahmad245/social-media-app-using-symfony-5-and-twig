@@ -1,0 +1,30 @@
+.register{
+    display: flex;
+   
+    align-items: center;
+    /* height: 100vh;   */
+    width: 100%;
+}
+.register >div{
+    width: 100%;
+}
+.form{
+    margin-bottom:1rem;
+}
+.iti__selected-flag::placeholder {
+  color: black !important;
+}
+.iti__selected-flag::placeholder {
+  color: black !important;
+}
+.iti__flag-container::placeholder {
+  color: black !important;
+}
+#account_phone::placeholder {
+  color: black !important;
+}
+
+/* LOGIN */
+
+
+/* FOOTER */

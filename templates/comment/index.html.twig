@@ -1,0 +1,28 @@
+<!-- Modal Trigger -->
+{# 
+<a  class="waves-effect waves-light btn red lighten-2 modal-trigger " href="#{{postId}}+1">
+	<i class="material-icons iconis  prefix">mode_comment</i>
+</a>
+
+<!-- Modal Structure -->
+<div id="{{postId}}+1" class="modal">
+	<div class="modal-content">
+		<span class="close-modal modal-close">
+			<i class="material-icons right">close</i>
+		</span>
+		<h4>Write Your Comment!</h4> #}
+
+		{{form_start(form,{'action': path(path,{'id':id})})}}
+		{{form_widget(form)}}
+			
+		{{form_end(form)}}
+         
+	{# </div>
+	     <div class="modal-footer">
+		<button class="btn waves-effect waves-light btn-flat" type="submit" name="action">Submit
+			<i class="material-icons right">send</i>
+		</button>
+		
+
+	</div>
+</div> #}

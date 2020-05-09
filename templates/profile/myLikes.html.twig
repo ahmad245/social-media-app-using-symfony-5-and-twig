@@ -1,0 +1,8 @@
+	<div class="row">
+
+			{% for post in posts %}
+				<div class="col s8 offset-s2">
+					{% include "post/_postCard.html.twig" with {'post':post} %}
+				</div>
+			{% endfor %}
+		</div>

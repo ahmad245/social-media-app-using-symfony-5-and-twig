@@ -1,0 +1,99 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello AccountController!
+{% endblock %}
+
+{% block stylesheets %}
+	{{parent()}}
+	<link rel="stylesheet" href="/account/login.css">
+{% endblock %}
+
+{% block body %}
+	<div class="had-container">
+
+
+		<div class="row">
+			<div class="col m8 s8 offset-m2 offset-s2 center">
+
+				<ul class="collection col s12 ">
+					<li class="collection-header center">
+						<h4>Your Notification
+						</h4>
+
+					</li>
+					{% if notifications|length > 0 %}
+
+						<li class="collection-header center">
+							<a href="{{path('mark_all_seen')}}">
+								mark all ass read
+
+							</a>
+
+						</li>
+            
+
+						{% for notification in notifications %}
+                 
+							{% if notification is like %}
+								<li class="collection-item">
+									<a href="{{path('post_user',{'id':notification.likedBy.id})}}">
+										{{notification.likedBy.username}}</a>
+
+									<a href="{{path('mark_seen',{'id':notification.id})}}">
+										<span class="new badge" data-badge-caption="read"></span>
+									</a>
+
+									<a href="{{path('post_show',{'id':notification.post.id})}}">
+										<span class="new badge" data-badge-caption="liked your post"></span>
+									</a>
+
+								</li>
+							{% elseif notification is follow %}
+								<li class="collection-item">
+									<a href="{{path('post_user',{'id':notification.following.id})}}">
+										{{notification.following.username}}</a>
+
+									<a href="{{path('mark_seen',{'id':notification.id})}}">
+										<span class="right new badge" data-badge-caption="read"></sapn>
+									</a>
+
+									<a href="#!">
+										<span class="new badge" data-badge-caption="following you"></sapn>
+									</a>
+
+
+								</li>
+                  
+                {% elseif notification is comment %}
+                	<li class="collection-item">
+									<a href="{{path('post_user',{'id':notification.commentedBy.id})}}">
+										{{notification.commentedBy.username}}</a>
+
+									<a href="{{path('mark_seen',{'id':notification.id})}}">
+										<span class="new badge" data-badge-caption="read"></span>
+									</a>
+
+									<a href="{{path('post_show',{'id':notification.post.id})}}">
+										<span class="new badge" data-badge-caption="Comment to your post"></span>
+									</a>
+
+								</li>
+
+
+							{% endif %}
+						{% endfor %}
+
+					{% else %}
+						<li class="collection-header center">
+							<h6>Your do not have notification
+							</h6>
+
+						</li>
+					{% endif %}
+				</ul>
+
+
+			</div>
+		</div>
+	</div>
+</div></div><!-- fin del .container -->{% endblock %}{% block javascripts %}{{parent()}}{% endblock %}

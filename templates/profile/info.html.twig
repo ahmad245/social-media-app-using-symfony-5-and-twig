@@ -1,0 +1,18 @@
+
+	<span class="card-title">{{user.fullname}}
+	</span>
+	<span>{{user.username}}
+	</span>
+	<span class="card-title"> <i class="material-icons">date_range</i> Joined
+		{{user.createAt|date('m/Y')}}
+	</span>
+	<span class="card-title">
+		{{user.birthday}}
+	</span>
+	<div class="col s12">
+		<p>introduction :{{user.introduction}}</p>
+	</div>
+	<div class="col s12">
+		<p>bio :{{user.bio}}</p>
+	</div>
+

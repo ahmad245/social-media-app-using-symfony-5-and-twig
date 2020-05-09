@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello Post!
+{% endblock %}
+{% block stylesheets %}
+
+	{{parent()}}
+	<link rel="stylesheet" href="/css/post/postCard.css">
+	<link rel="stylesheet" href="/css/component/spinner.css">
+	<style>
+		.card-title {
+			padding-top: 1rem;
+		}
+	</style>
+{% endblock %}
+{% block body %}
+
+		<div class="row">
+
+			{% for post in posts %}
+				<div class="col s8 offset-s2">
+					{% include "post/_postCard.html.twig" with {'post':post} %}
+				</div>
+			{% endfor %}
+		</div>
+
+
+
+{% endblock %}
+

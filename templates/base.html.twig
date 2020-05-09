@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>
+			{% block title %}Welcome!
+			{% endblock %}
+		</title>
+
+		{% block stylesheets %}
+			<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+			<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+		{% endblock %}
+
+		<!--Let browser know website is optimized for mobile-->
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	</head>
+	<body>
+	<style>
+		.card-title {
+			padding-top: 1rem;
+		}
+		.likeBtn {
+			
+		  
+		   background-color:transparent;
+		   border-style: none;
+		   
+		
+		}
+		.flexbox {
+			display: flex;
+			flew-wrap: wrap;
+			justify-content: center;
+			align-items: center;
+}
+	</style>
+		<!-- Dropdown Structure -->
+			{% if app.user %}
+		<ul id="dropdown1" class="dropdown-content">
+		<li><a href="{{path('my_posts',{'id':app.user.id})}}">my Posts</a></li>
+		<li><a href="{{path('my_profile')}}">My Profile</a></li>
+		<li class="divider"></li>
+		<li><a href="#!">Create Post</a></li>
+		</ul>
+		   {% endif %}
+		<nav>
+			<div class="nav-wrapper">
+				<a href="{{path('home')}}" class="brand-logo">Twitter</a>
+
+
+				<ul class="right hide-on-med-and-down">
+					{% if app.user %}
+
+						<li>
+							<a class="dropdown-trigger" href="#!" data-target="dropdown1">{{app.user.username}}<i class="material-icons right">arrow_drop_down</i></a>
+						</li>
+						<li>
+							
+
+								<a href="{{path('notification_all')}}"  id="notification">
+								
+								notification
+								<span class="new badge" data-badge-caption="new" id="notification-count"></span>
+							</a>
+						
+						</li>
+						<li>
+							<a href="{{path('account_logout')}}">Logout</a>
+						</li>
+					{% else %}
+						<li>
+							<a href="{{path('account_register')}}">Sign Up</a>
+						</li>
+						<li>
+							<a href="{{path('account_login')}}">Sign In</a>
+						</li>
+					{% endif %}
+
+
+					<!-- Dropdown Trigger -->
+
+				</ul>
+			</div>
+		</nav>
+         <div class="container">
+		   {% block body %}{% endblock %}
+		 </div>  
+		{% block javascripts %}
+			<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+			<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+			{# <script src="/chips/chip.js"></script> #}
+			<script>
+///////////////////////////////////////////////////////////////////////////////////////////
+  document.addEventListener('DOMContentLoaded', function() {
+    var profileTap=document.querySelectorAll('.tabs');
+    var instancesprofileTap = M.Tabs.init(profileTap, {});
+
+    var slider = document.querySelectorAll('.slider');
+    var instancesslider = M.Slider.init(slider, {});
+
+
+          var carousel = document.querySelectorAll('.carousel');
+    var instancescarousel = M.Carousel.init(carousel, {});
+
+	   var materialboxed = document.querySelectorAll('.materialboxed');
+    var instancesmaterialboxed = M.Materialbox.init(materialboxed, {});
+
+    var elems = document.querySelectorAll('.modal');
+    var instances = M.Modal.init(elems, {});country
+
+	  var countryElems = document.getElementById('country');
+     var countrySelect = M.FormSelect.init(countryElems, {});
+
+	
+
+			 var serchAuto = document.querySelector('.autocomplete');
+              var instancesserchAuto = M.Autocomplete.init(serchAuto, {
+				  
+			  });
+			  ///////////////////////////////////////////////////////////////////
+
+			  	const fetchUserByIdentity = (url) => {
+					   let urlUser = "{{ path('user_search',{user:'url'}) }}";
+                   urlUser = urlUser.replace('url', url);
+				   console.log(urlUser)
+				  return  axios.get(urlUser).then((response) => {
+			      return response.data;
+
+				}).catch((err) => {
+				console.log(err);
+				})
+				
+				} 
+			    var searchFor = M.Autocomplete.getInstance(serchAuto);
+			   const debounceUserSearch = (callback, delay = 1000) => {
+							let timeoutId;
+							return (...args) => {
+								if (timeoutId) {
+									clearTimeout(timeoutId);
+								}
+								timeoutId = setTimeout(() => {
+									callback.apply(null, args);
+								}, delay);
+
+							}
+             }
+			  onKeyUpUserSearch=async(e)=>{
+					let resultSearchUser= await fetchUserByIdentity(e.target.value)
+									let userObect={};
+									if(resultSearchUser?.length>0){
+									resultSearchUser.forEach((obj)=>{
+										userObect[obj.email]=obj.picture
+									})
+									console.log(resultSearchUser);
+									searchFor.updateData(userObect);
+									}
+				
+			  }
+			serchAuto.addEventListener('keyup',debounceUserSearch(onKeyUpUserSearch))
+  });
+  ///////////////////////////////////////////////////////////////////////////
+				document.addEventListener('DOMContentLoaded', function () {
+				var elems = document.querySelectorAll('.dropdown-trigger');
+				var instances = M.Dropdown.init(elems, {});
+				});
+				let url ="{{ path('notification') }}";
+				const fetchData = () => {
+				    axios.get(url).then((response) => {
+			       	document.getElementById('notification-count').innerText = response.data.count;
+
+			         	setTimeout(() => {
+			             //	fetchData();
+			          	}, 5000)
+
+				}).catch((err) => {
+				console.log(err);
+				})
+				} 
+				fetchData();
+			
+		    </script>
+		{% endblock %}
+
+
+	</body>
+</html>
+
+{# 
+	let list=	document.getElementById('dropdown2');
+				document.getElementById('notification').addEventListener('click',()=>{
+					const url="{{ path('notification_all')}}";
+					 axios.get(url).then((response) => {
+						 console.log(response);
+			        list.innerHTML="";
+				     response.data.forEach((el)=>{
+						
+						  let li=document.createElement('li');
+						  if(el.following){
+                              li.innerHTML=`
+					   <a href="#!">one<span class="badge">${el.following.email}</span>
+						</a>
+					  `;
+						  }
+						  else{
+							    li.innerHTML=`
+							   <a href="#!">one<span class="badge">${el.post.id}</span>
+						</a> `;
+						  }
+					 
+					  list.appendChild(li)
+						
+						 
+                     
+				 })
+
+				}).catch((err) => {
+				console.log(err);
+				})
+				 
+				}) #}
+
+				{# https://stackoverflow.com/questions/51775289/trigger-enter-keypress-in-vanilla-js #}
+				{# https://stackoverflow.com/questions/18190878/triggering-a-keydown-event-programmatically-in-vanilla-javascript #}

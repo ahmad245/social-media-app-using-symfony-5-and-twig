@@ -1,0 +1,344 @@
+{% extends 'base.html.twig' %}
+{% form_theme form _self %}
+{% block title %}Hello PostController!
+{% endblock %}
+
+{% block body %}
+	<div class="row">
+		<div class="col s8 offset-s2">
+			<div class="card">
+				<div class="card-content">
+					{{form_start(form)}}
+					{{form_widget(form)}}
+					<div class="collection hide"></div>
+					 <button class="btn waves-effect waves-light" type="submit" name="action">Submit
+                             <i class="material-icons right">send</i>
+                       </button>
+					{{form_end(form)}}
+				</div>
+			</div>
+		</div>
+	</div>
+
+{% endblock %}
+
+{% block _post_tags_widget %}
+  <div class="chips chips-initial chips-autocomplete input-field">
+  </div>
+  {{form_widget(form)}}
+ {% endblock %}
+
+ {# ////////////////////images///////////////////////////////// #}
+{% block _post_images_widget %}
+        {{form_widget(form)}}
+       <a class="waves-effect btn-small waves-effect waves-light red" id="addImage">
+       <i class="material-icons">add</i> Add Image</a>
+ {% endblock %}
+
+{% block _post_images_entry_row %}
+  {{form_widget(form)}}
+{% endblock %}
+
+ {% block _post_images_entry_widget %}
+  <div class="row" id="block_{{id}}">
+    <div class="col s6">
+        <div class="file-field input-field">
+            <div class="btn">
+                <span>File</span>
+                {{form_widget(form.file)}}
+            </div>
+            <div class="file-path-wrapper">
+                <input class="file-path validate" type="text">
+            </div>
+            </div>
+      </div>
+    <div class="col s4">
+       <img class="materialboxed " width="100" height="100" id="image_ahmad_{{id}}" />
+    </div>
+   
+     <div class="col s2">
+       <button class="red delete" data-target="#block_{{id}}" type="button" id="delete{{id}}"> x</button>
+    </div>
+     
+   </div>      
+      
+   
+ {% endblock %}
+
+ {# ///////////////////////////////////////////////////// #}
+
+
+{% block javascripts %}
+{{parent()}}
+<script >
+/////////////////////image///////////////////////////////////
+document.addEventListener('DOMContentLoaded', function() {
+   
+  let addImage=document.getElementById('addImage');
+      
+        addImage.addEventListener('click',(e)=>{
+            let postImages=document.getElementById('post_images');
+            let index=postImages.querySelectorAll('.row');
+            console.log(index)
+            let dataPrototype=postImages.dataset.prototype.replace(/__name__/g,index.length);
+
+            postImages.insertAdjacentHTML('beforeend',dataPrototype);
+
+             let btnDelete=postImages.querySelector(`#deletepost_images_${index.length}`);
+             btnDelete.addEventListener('click',(btn)=>{
+
+                 let elementDele=document.querySelector(btn.target.dataset.target);
+                 console.log(btn.target.dataset.target,elementDele)
+               elementDele.remove()
+             })
+
+            document.getElementById(`post_images_${index.length}_file_file`).onchange = function () {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    // get loaded data and render thumbnail.
+                    document.getElementById(`image_ahmad_post_images_${index.length}`).src = e.target.result;
+                    elemsImage = document.querySelectorAll('.materialboxed');
+                   instanceselemsImage = M.Materialbox.init(elemsImage, {});
+                };
+                // read the image file as a data URL.
+                reader.readAsDataURL(this.files[0]);
+            };
+             
+        })
+     {% if method is not defined   %}
+        
+          
+    {% else %}
+            let displayBtn=document.querySelectorAll('.delete');
+            displayBtn.forEach((el)=>{
+                el.style.display='none'
+            })
+           let postImages=document.getElementById('post_images');
+           // let allRow=postImages.querySelectorAll('.row');
+          let allRow = Array.from(postImages.children).filter(function (ele) {
+                    	return ele.matches('.row');
+           });
+            allRow.forEach((el)=>{
+                let href=el.querySelector('a').href;
+                let img=el.querySelector('img');
+                img.src=href;
+            })
+          
+    {% endif %}
+ const deleteElement=()=>{
+          let deleteBtn=  document.getElementById('post_images').querySelectorAll('.delete')
+        deleteBtn.forEach((btn)=>{
+            btn.addEventListener('click',(e)=>{
+               let info= e.target.dataset.target
+               console.log(info)
+            })
+        })
+ }
+     
+       
+
+    });
+
+////////////////////////////////////////////////////////
+
+
+
+
+
+  document.addEventListener('DOMContentLoaded', function () {
+
+    ///////////////////////////////////////////inputChip//////////////////////////////////////////////
+    let instances;
+    let instance;
+    let elems;
+    let inputHidden = document.getElementById('post_tags');
+
+    elems = document.querySelector('.chips');
+    instances = M.Chips.init(elems, {});
+    instance = M.Chips.getInstance(elems);
+   
+    let chipsList = [];
+
+    let inputChip = elems.firstElementChild;
+    const onInputChip = (el) => {
+
+        chipsList = [];
+        console.log(el.keyCode);
+        if (el.keyCode == 13 || el.keyCode == 8) {
+
+            let chips = document.querySelectorAll('.chip');
+
+            chips.forEach(chip => {
+
+                chipsList.push(chip.textContent.replace('close', ''));
+
+                chip.firstElementChild.addEventListener('click', (close) => {
+                    updateDom(close.target.parentElement.textContent.replace('close', ''));
+                })
+            })
+            console.log(chipsList);
+            inputHidden.value = chipsList.join(',');
+        }
+
+    }
+    inputChip.addEventListener('keyup', onInputChip)
+
+    function updateDom(element) {
+        chipsList = chipsList.filter(el => el !== element);
+        inputHidden.value = chipsList.join(',');
+    }
+
+    function populatChipList() {
+        let chips = document.querySelectorAll('.chip');
+		
+        chips.forEach(chip => {
+
+            chipsList.push(chip.textContent.replace('close', ''));
+
+        })
+        console.log(chipsList);
+        inputHidden.value = chipsList.join(',');
+    }
+
+    ///////////////////////autocomplete/////////////////////////////////////////////
+    var ev = new KeyboardEvent('keydown', {
+        altKey: false,
+        bubbles: true,
+        cancelBubble: false,
+        cancelable: true,
+        charCode: 0,
+        code: "Enter",
+        composed: true,
+        ctrlKey: false,
+        currentTarget: null,
+        defaultPrevented: true,
+        detail: 0,
+        eventPhase: 0,
+        isComposing: false,
+        isTrusted: true,
+        key: "Enter",
+        keyCode: 13,
+        location: 0,
+        metaKey: false,
+        repeat: false,
+        returnValue: false,
+        shiftKey: false,
+        type: "keydown",
+        which: 13
+    });
+
+    //txtbox.dispatchEvent(ev);
+
+    const fetchTags = (string) => {
+       
+        let urlTags = "{{ path('tag_search',{text:'string'}) }}";
+        urlTags = urlTags.replace('string', string);
+      
+         
+        const resultData =axios.get(urlTags).then((response) => {
+            return response.data;
+        }).catch((err) => {
+            console.log(err);
+        });
+        return resultData;
+    }
+
+
+
+    let root = document.querySelector('.collection');
+
+
+    //<div class="chip" tabindex="0">g<i class="material-icons close">close</i></div>
+    const debounce = (callback, delay = 1000) => {
+        let timeoutId;
+
+        return (...args) => {
+
+            if (timeoutId) {
+                clearTimeout(timeoutId);
+            }
+            timeoutId = setTimeout(() => {
+                callback.apply(null, args);
+            }, delay);
+
+        }
+    }
+    async function simulateAsyncEvent(el) {
+        return await el.dispatchEvent(ev);
+    }
+    const onSelect = (e) => {
+      
+        elems.querySelector('input').value = '';
+        elems.querySelector('input').value = e.target.textContent.trim();
+
+      
+        simulateAsyncEvent(elems.querySelector('input')).then(() => {
+            populatChipList()
+            root.classList.add('hide');
+        })
+      
+    }
+
+    const onInputTag = async (el) => {
+
+        let items = await fetchTags(el.target.value);
+        if (!items?.length) {
+            root.classList.add('hide')
+            return;
+        }
+
+        root.classList.remove('hide')
+        root.innerHTML = "";
+        for (const item of items) {
+            let a = document.createElement('a');
+            a.innerHTML = `
+           ${item.name}
+          `;
+            a.classList.add('collection-item');
+            a.addEventListener('click', onSelect)
+            root.appendChild(a);
+
+        }
+
+
+    }
+    inputChip.addEventListener('input', debounce(onInputTag))
+
+	/////////////////////////////////////
+	  instances.options.onChipDelete=function(e){
+		  chipsList=[];
+		 populatChipList()
+	 }
+
+ 
+     initTagOnEdit=()=>{
+         let tagsFromEdit=inputHidden.value;
+        tagsFromEdit.split(',').forEach((el)=>{
+            elems.querySelector('input').value =el;
+           
+           
+          simulateAsyncEvent(elems.querySelector('input')).then(() => {
+           
+             let chips = document.querySelectorAll('.chip');
+		
+        chips.forEach(chip => {
+
+            chipsList.push(chip.textContent.replace('close', ''));
+
+        })
+        })
+
+
+        })
+         
+
+     }
+
+     initTagOnEdit();
+
+
+});
+</script>
+
+{% endblock %}
+
