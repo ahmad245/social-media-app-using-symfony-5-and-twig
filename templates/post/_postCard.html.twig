@@ -1,6 +1,6 @@
 <div class="row">
 	<div class="col s12">
-		<div class="card-panel hoverable red lighten-2">
+		<div class="card-panel hoverable ">
 			<div class="row post-body">
 				<div class="col s2">
 					<div class="user-img">
@@ -9,13 +9,13 @@
 				</div>
 				<div class="col s4">
 					<a href="{{path('post_user',{'id':post.user.id})}}">
-						<strong class="white-text">
+						<strong class="">
 							{{post.user.username}}
 						</strong>
 					</a>
 				</div>
 				<div class="col s2">
-					<small class="white-text">
+					<small class="">
 						{{post.createAt|date('d/m/Y')}}
 					</small>
 				</div>
@@ -37,7 +37,7 @@
 			</div>
 			<div class="row">
 				<a href="{{path('post_show',{'id':post.id})}}">
-					<div class="col  white-text">
+					<div class="col  ">
 						{% if app.request.get('id') and app.request.attributes.get('_route')=='post_show' %}
 							{{post.content}}
 						{% else %}
@@ -88,7 +88,7 @@
 
 			{% if app.user %}
 				<div class="card-footer">
-					<button data-href="{{path('like',{'id':post.id})}}" class=" btn-small waves-effect waves-light red lighten-2 like">
+					<button data-href="{{path('like',{'id':post.id})}}" class=" btn-small waves-effect waves-light  like">
 						{% if  post.isLikedBy(app.user) %}
 							<i class="material-icons iconis res prefix">
 								favorite_border</i>
@@ -111,7 +111,7 @@
 						
 					{% endfor %}
 
-					<a class="waves-effect waves-light btn red lighten-2 modal-trigger " href="#{{post.id}}addComment">
+					<a class="waves-effect waves-light btn  modal-trigger " href="#{{post.id}}addComment">
 						<i class="material-icons iconis  prefix">mode_comment</i> {{totalComment}}
 					</a>
 

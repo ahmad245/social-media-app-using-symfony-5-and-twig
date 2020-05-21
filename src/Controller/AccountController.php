@@ -2,20 +2,21 @@
 
 namespace App\Controller;
 
+use DateTime;
 use App\Entity\User;
-use App\Event\UserRegisterEvent;
 use App\Form\AccountType;
+use App\Form\SettingType;
+use App\Event\UserRegisterEvent;
 use App\Form\UpdatePasswordType;
 use App\Security\TokenGenerator;
-use App\Security\UserConfirmationService;
-use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
+use App\Security\UserConfirmationService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class AccountController extends AbstractController
 {
@@ -58,7 +59,7 @@ class AccountController extends AbstractController
      */
 
     public function register(Request $req,UserPasswordEncoderInterface $encode){
-     $user=new User();
+        $user=new User();
         $form=$this->createForm(AccountType::class,$user);
         $form->handleRequest($req);
         if ($form->isSubmitted() && $form->isValid() ) {
@@ -88,6 +89,24 @@ class AccountController extends AbstractController
 
         $this->userConfirmationService->confirmUser($token);
         return $this->redirectToRoute('account_login');
+    }
+
+    
+   /**
+     * @Route("/edit/{id}",name="account_edit")
+     */
+    public function edit(User $user,Request $req)
+    {
+        $form=$this->createForm(SettingType::class,$user);
+        $form->handleRequest($req);
+        if ($form->isSubmitted() && $form->isValid() ) {
+          
+            $this->em->flush();
+            return $this->redirectToRoute('account_login');
+        }
+        return $this->render('account/edit.html.twig',[
+            'form'=>$form->createView()
+        ]);
     }
 
     

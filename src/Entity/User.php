@@ -574,10 +574,13 @@ class User implements UserInterface, \Serializable
     /**
      * Undocumented function
      *
-     * @return \DateTimeInterface|null
+    
      */
-    public function getBirthday(): ?\DateTimeInterface
+    public function getBirthday()
     {
+        if($this->birthday instanceof \DateTime){
+            return $this->birthday->format('Y-m-d H:i:s');
+        }
         return $this->birthday;
     }
 
@@ -823,7 +826,8 @@ class User implements UserInterface, \Serializable
                $this->lastName,
                $this->email,
                $this->password,
-               $this->enabled
+               $this->enabled,
+               $this->birthday
             
            ]
        );
@@ -837,7 +841,8 @@ class User implements UserInterface, \Serializable
            $this->lastName,
            $this->email, 
            $this->password,
-           $this->enabled
+           $this->enabled,
+           $this->birthday
            ) = unserialize($serialized);
    }
 
@@ -999,5 +1004,10 @@ class User implements UserInterface, \Serializable
          $this->getCreateAt();
         }
         
+    }
+
+    public function __toString()
+    {
+        return $this->getFullName();
     }
 }
