@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 {% form_theme form _self %}
-{% block title %}Hello AccountController!
+{% block title %}Hello edit !
 {% endblock %}
 
 {% block stylesheets %}
@@ -48,7 +48,10 @@
 
 	{% endblock %}
 
-	{% block _account_file_widget %}
+	
+
+
+ 	{% block _setting_file_widget %}
      
     <div class="col s8">
         <div class="file-field input-field">
@@ -62,7 +65,7 @@
             </div>
       </div>
     <div class="col s4 rigth-align">
-       <img class="materialboxed userImage"  id="image_ahmad_{{id}}" />
+       <img class="materialboxed userImage"  id="image_ahmad" />
     </div>
    
     
@@ -74,7 +77,17 @@
  {% endblock %}
 	{% block javascripts %}
 		{{parent()}}
-		
+		<script src="/account/intl-tel-input/build/js/intlTelInput.js"></script>
+		<script>
+			var input = document.querySelector("#setting_phone");
+                    window.intlTelInput(input, {
+
+                utilsScript: "/account/intl-tel-input/build/js/utils.js"
+});
+		</script>
+		<script src="/account/editRegister.js"></script>
+			<script src="/account/editPhoneCheck.js"></script>
+		    <script src="/account/editCountry.js"></script>
 		<script>
          document.addEventListener('DOMContentLoaded', function () {
              //////////////////////edit
@@ -89,6 +102,93 @@
 				let cityEdit = document.getElementById('setting_city');
 				let instancesCityEdit = M.FormSelect.init(cityEdit, {});
 
+
+
+
+
+				/////////////////////////image//////////////
+				let test=document.getElementById(`setting_file_file`);
+				console.log(test.value);
+				  let href=document.querySelector('.vich-image').querySelector('a');
+				  console.log(href.href)
+                let img=document.getElementById(`image_ahmad`);
+                img.src=href;
+				
+            document.getElementById(`setting_file_file`).onchange = function () {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    // get loaded data and render thumbnail.
+                    document.getElementById(`image_ahmad`).src = e.target.result;
+                    elemsImage = document.querySelectorAll('.materialboxed');
+                   instanceselemsImage = M.Materialbox.init(elemsImage, {});
+                };
+                // read the image file as a data URL.
+                reader.readAsDataURL(this.files[0]);
+            };
+			/////////////////////////////////city department/////////////////
+           
+			//console.log( document.getElementById('setting_department'))
+			cityEdit.disabled=true;
+			const getUrl=(type,typeId)=>{
+							
+							if(type=='department'){
+									let url ="{{ path('location_department',{id:'typeId'}) }}";
+										url = url.replace('typeId', typeId);
+									return url;	
+							}
+							else if(type=='city'){
+									let url ="{{ path('location_city',{id:'typeId'}) }}";
+										url = url.replace('typeId', typeId);
+									return url;	
+							}
+						
+					}
+			const fetchLocation = (url) => {
+							
+							let data = axios.get(url).then((response) => {
+							return response.data;
+
+							}).catch((err) => {
+							console.log(err);
+							})
+                   return data;
+           }
+			  const populateSelect=(item,collection)=>{
+                           let optionNode = document.createElement("option");
+							optionNode.value = item.id;
+							let textNode = document.createTextNode(item.name);
+							optionNode.appendChild(textNode);
+							collection.appendChild(optionNode);	
+		         }
+                 
+				regionEdit.addEventListener('change', async (e) => {
+					departmentEdit.disabled=false;
+					departmentEdit.innerHTML='';
+						let departmentData = await fetchLocation(getUrl('department',e.target.value));
+					
+						departmentData.forEach((departmentElment) => {
+							populateSelect(departmentElment,departmentEdit);
+						})
+						M.FormSelect.init(departmentEdit, {});
+				});	 
+
+			departmentEdit.addEventListener('change',async(e)=>{
+				cityEdit.disabled=false;
+                   cityEdit.innerHTML='';
+				   let cityData = await fetchLocation(getUrl('city',e.target.value));
+						
+						cityData.forEach((cityElment) => {
+							
+							populateSelect(cityElment,cityEdit);
+						})
+						M.FormSelect.init(cityEdit, {});
+
+				})	
+
+
+
+
+			
 
 
        });

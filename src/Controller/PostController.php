@@ -2,16 +2,17 @@
 
 namespace App\Controller;
 
-use App\Entity\Image;
 use App\Entity\Tag;
 use App\Entity\Post;
-use App\Entity\Search;
 use App\Entity\User;
+use App\Entity\Image;
+use App\Entity\Search;
 use App\Form\PostType;
 use App\Form\SearchType;
 use App\Repository\TagRepository;
 use App\Repository\PostRepository;
 use App\Repository\UserRepository;
+use App\Services\PaginationService;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\NotificationRepository;
 use Symfony\Component\HttpFoundation\Request;
@@ -24,9 +25,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class PostController extends AbstractController
 {
   private $em;
-  public function __construct(EntityManagerInterface $em)
+  private $pagination;
+  public function __construct(EntityManagerInterface $em,PaginationService $pagination)
   {
     $this->em = $em;
+    $this->pagination = $pagination;
   }
   /**
    * @Route("/",name="home")
@@ -34,25 +37,42 @@ class PostController extends AbstractController
    */
   public function index(PostRepository $repo, UserRepository $userRepo, Request $req)
   {
-    $usersToFollow = [];
+   
     $search = new Search();
+    
+    if ($req->query->get('page')) {
+      $search->page = $req->query->get('page');
+  }
+  $limit=5;
+  $usersToFollow = [];
+  $data = [];
+  $total=0;
+  $offset= ($search->page * $limit) -$limit ;
     $form = $this->createForm(SearchType::class, $search);
     $form->handleRequest($req);
     if ($form->isSubmitted() && $form->isValid()) {
-      $posts = $repo->fillter($search);
-    } else {
+      // $posts = $repo->fillter($search);
+      $data=$repo->fillter($search,$limit, $offset);
+      // $total=$data->count();
+    } 
+    else{
 
       if ($this->getUser() instanceof User) {
-        $posts = $repo->findByUsers($this->getUser()->getFollowing());
+       // $posts = $repo->findByUsers($this->getUser()->getFollowing());
+        $data=$repo->findByUsers($this->getUser()->getFollowing(),$limit, $offset);
+        // $total=$data->count();
 
-        $usersToFollow = count($posts) === 0 ? $userRepo->findByMoreThan5Post($this->getUser()) : [];
+        $usersToFollow = $data->count() === 0 ? $userRepo->findByMoreThan5Post($this->getUser()) : [];
       } else {
-        $posts = $repo->findAllPost();
+       // $posts = $repo->findAllPost();
+       $data=$repo->findAllPost($limit, $offset);
+      //  $total=$data->count();
+       
       }
     }
-
+     $this->pagination->setEntityClass(Post::class)->setData($data)->setLimit($limit)->setPage($search->page)->setTotal($data->count());
     return $this->render('post/index.html.twig', [
-      'posts' => $posts,
+      'posts' => $this->pagination,
       'usersToFollow' => $usersToFollow,
       'form' => $form->createView()
     ]);
@@ -201,8 +221,7 @@ class PostController extends AbstractController
    */
   public function userPost(User $user, PostRepository $repo)
   {
-    // $posts=$user->getPosts(); // but can not sorted 
-    // $posts = $repo->findBy(['user' => $user], ['createAt' => 'DESC']);
+  
     $posts = $repo->findByUser($user);
 
     return $this->render('post/post_user.html.twig', [
@@ -218,15 +237,35 @@ class PostController extends AbstractController
    * @param PostRepository $repo
    * @return void
    */
-  public function myPost(User $user, PostRepository $repo)
+  public function myPost(User $user, PostRepository $repo,Request $req)
   {
-    // $posts=$user->getPosts(); // but can not sorted 
+    $search = new Search();
+    
+    if ($req->query->get('page')) {
+      $search->page = $req->query->get('page');
+  }
+  $limit=5;
+  $usersToFollow = [];
+  $data = [];
+  $total=0;
+  $offset= ($search->page * $limit) -$limit ;
+    $form = $this->createForm(SearchType::class, $search);
+    $form->handleRequest($req);
+    if ($form->isSubmitted() && $form->isValid()) {
+      // $posts = $repo->fillter($search);
+      $data=$repo->fillter($search,$limit, $offset);
+      // $total=$data->count();
+    } 
+    else{
+     $data= $repo->findMyPost($user,$limit, $offset);
+    }
+ 
 
-    $posts = $repo->findMyPost($user);
-    // $posts = $repo->findBy(['user' => $user], ['createAt' => 'DESC']);
+    $this->pagination->setEntityClass(Post::class)->setData($data)->setLimit($limit)->setPage($search->page)->setTotal($data->count());
 
-    return $this->render('post/myPosts.html.twig', [
-      'posts' => $posts
+    return $this->render('post/index.html.twig', [
+      'posts' =>  $this->pagination,
+      'form' => $form->createView()
     ]);
   }
 
@@ -238,14 +277,36 @@ class PostController extends AbstractController
    * @param PostRepository $repo
    * @return void
    */
-  public function tagPost(Tag $tag, PostRepository $repo)
+  public function tagPost(Tag $tag, PostRepository $repo,Request $req)
   {
+   
+    $search = new Search();
+    
+    if ($req->query->get('page')) {
+      $search->page = $req->query->get('page');
+  }
+  $limit=5;
+  $usersToFollow = [];
+  $data = [];
+  $total=0;
+  $offset= ($search->page * $limit) -$limit ;
+    $form = $this->createForm(SearchType::class, $search);
+    $form->handleRequest($req);
+    if ($form->isSubmitted() && $form->isValid()) {
+      // $posts = $repo->fillter($search);
+      $data=$repo->fillter($search,$limit, $offset);
+      // $total=$data->count();
+    } 
+    else{
+     $data= $repo->findByTags($tag->getId(),$limit, $offset);
+    }
     // $posts=$tag->getPosts();
 
-    $posts = $repo->findByTags($tag->getId());
+    $this->pagination->setEntityClass(Post::class)->setData($data)->setLimit($limit)->setPage($search->page)->setTotal($data->count());
 
-    return $this->render('post/post_tag.html.twig', [
-      'posts' => $posts,
+    return $this->render('post/index.html.twig', [
+      'posts' => $this->pagination,
+      'form' => $form->createView()
     ]);
   }
 }

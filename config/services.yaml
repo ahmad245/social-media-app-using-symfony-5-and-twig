@@ -35,3 +35,8 @@ services:
     App\Twig\AppExtentions:
         arguments:
             $message: '%hello_message%'
+ 
+    
+    App\Services\PaginationService:
+        arguments:
+          $templatePath: 'shared/_pagination.html.twig'            

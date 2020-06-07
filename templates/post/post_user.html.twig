@@ -33,8 +33,7 @@
 						{% if app.user and  app.user!=user %}
 							<div class="card-panel">
 								<div class="card-title">
-									<h4>
-										{{user.fullName}}</h4>
+									<h4>{{user.fullName}}</h4>
 									<span>{{user.username}}</span>
 								</div>
 								{% if  app.user.isFollowing(user) %}

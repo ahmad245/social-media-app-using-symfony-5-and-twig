@@ -62,7 +62,7 @@
 
 		
 
-			{% if usersToFollow|length > 0 %}
+			{% if usersToFollow is defined and  usersToFollow|length > 0 %}
 
 				<div class="collection col s10 offset-s1 ">
 					<li class="collection-header center">
@@ -78,7 +78,7 @@
 				</div>
 			{% else %}
 			
-				{% for post in posts %}
+				{% for post in posts.getData() %}
 					<div class="col s10 offset-s1">
 						{% include "post/_postCard.html.twig" with {'post':post} %}
 					</div>
@@ -88,6 +88,14 @@
 
 
 		</div>
+		  {# {% if posts.getTotal() > posts.getLimit() %} #}
+	 
+      <div class="row center-align">
+            <div class="card-panel col  s10  center">
+               {{posts.display()}}
+               </div>
+           </div>
+	  {# {% endif %}	 #}
 
 
 

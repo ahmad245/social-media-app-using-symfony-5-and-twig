@@ -17,11 +17,6 @@ let form = document.querySelector("form");
 
 let birth=document.getElementById('account_birthday');
 
-//M.AutoInit();
-// document.addEventListener('DOMContentLoaded', function() {
-//   var elems = document.querySelectorAll('select');
-//   var instances = M.FormSelect.init(elems, {});
-// });
 
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -31,8 +26,6 @@ document.addEventListener('DOMContentLoaded', function() {
   var elemsSelect = document.querySelector('#account_country');
   var instancesSelect = M.FormSelect.init(elemsSelect, {});
 
-//  var elemsSelect = document.querySelector('#account_address');
-//  var instancesSelect = M.FormSelect.init(elemsSelect, {});
 
  let elems;
  let instances;
@@ -53,14 +46,6 @@ let isValid = {
 
 }
 
-// let isValidRegister={
-//     firstNameIsValid: false,
-//   lastNameIsValid: false,
-// emailIsValid: false,
-// passwordIsValid: false,
-//   confirmPassowrdIsvalid: false,
-//   phoneIsValid:false
-// }
 
 
 

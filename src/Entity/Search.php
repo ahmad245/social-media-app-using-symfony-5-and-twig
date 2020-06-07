@@ -6,6 +6,7 @@ use App\Entity\Country;
 
 class Search
 {
+    public $page=1;
 
     public $identity = "";
 

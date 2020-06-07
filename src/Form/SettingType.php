@@ -28,8 +28,10 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 class SettingType extends AbstractType
 {
     private $repoDep;
-    public function __construct(DepartmentsRepository $repoDep = null) {
+    private $repoCities;
+    public function __construct(DepartmentsRepository $repoDep = null,CitiesRepository $repoCities) {
         $this->repoDep = $repoDep;
+        $this->repoCities = $repoCities;
     }
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -71,24 +73,38 @@ class SettingType extends AbstractType
             
         ])
       //  ->add('picture', TextType::class)
-        ->add('password', PasswordType::class)
-        ->add('confirmPassword', PasswordType::class)
+        // ->add('password', PasswordType::class)
+        // ->add('confirmPassword', PasswordType::class)
         ->add('introduction', TextareaType::class)
         ->add('bio', TextareaType::class)
         ->add('region', EntityType::class, [
             'class' => Regions::class,
             'mapped' => false,
             'required'   => false,
+            
         ]);
 
+        $builder->get('region')->addEventListener(
+          FormEvents::POST_SUBMIT,
+          function (FormEvent $event) {
+            $form = $event->getForm();
+           
+            $this->addDepartementField($form->getParent(), $form->getData());
+          }
+        
+        
+      );
+
         $builder->addEventListener(
-            FormEvents::POST_SET_DATA,
+            FormEvents::POST_SET_DATA ,
             function (FormEvent $event) {
+              // dd($event->getData());die;
               $data = $event->getData();
               /* @var $ville Ville */
               $city = $data->getCity();
               $form = $event->getForm();
               if ($city) {
+              
                 // On récupère le département et la région
                 $departement = $city->getDepartment();
                 $region = $departement->getRegion();
@@ -98,17 +114,19 @@ class SettingType extends AbstractType
                 // On set les données
                 $form->get('region')->setData($region);
                 $form->get('department')->setData($departement);
-              } else {
+              } 
+              else {
                 // On crée les 2 champs en les laissant vide (champs utilisé pour le JavaScript)
                 $this->addDepartementField($form, null);
                 $this->addVilleField($form, null);
               }
             }
           );
-      
+     
+         
    
 }
-private function addDepartementField(FormInterface $form, ?Regions $region)
+private function addDepartementField( $form, ?Regions $region)
 {
   $builder = $form->getConfig()->getFormFactory()->createNamedBuilder(
     'department',
@@ -120,26 +138,39 @@ private function addDepartementField(FormInterface $form, ?Regions $region)
       'mapped'          => false,
       'required'        => false,
       'auto_initialize' => false,
+       'attr'=>['disabled' => 'disabled'],
       'choices'         => $region ? $region->getDepartments() : []
     ]
   );
+  
   $builder->addEventListener(
     FormEvents::POST_SUBMIT,
     function (FormEvent $event) {
       $form = $event->getForm();
+     
       $this->addVilleField($form->getParent(), $form->getData());
     }
   );
   $form->add($builder->getForm());
+ 
 }
 private function addVilleField( $form, ?Departments $departement)
 {
+  
+
+
   $form->add('city', EntityType::class, [
     'class'       => Cities::class,
+    'required'        => true,
     'placeholder' => $departement ? 'Sélectionnez votre ville' : 'Sélectionnez votre département',
+    'attr'=>['disabled' => 'disabled'],
     'choices'     => $departement ? $departement->getCities() : []
   ]);
+
+
 }
+
+
 public function configureOptions(OptionsResolver $resolver)
 {
     $resolver->setDefaults([

@@ -79,7 +79,7 @@ document.addEventListener('DOMContentLoaded', function() {
         addImage.addEventListener('click',(e)=>{
             let postImages=document.getElementById('post_images');
             let index=postImages.querySelectorAll('.row');
-            console.log(index)
+        
             let dataPrototype=postImages.dataset.prototype.replace(/__name__/g,index.length);
 
             postImages.insertAdjacentHTML('beforeend',dataPrototype);

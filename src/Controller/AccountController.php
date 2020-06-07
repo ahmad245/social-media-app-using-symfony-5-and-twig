@@ -99,8 +99,8 @@ class AccountController extends AbstractController
     {
         $form=$this->createForm(SettingType::class,$user);
         $form->handleRequest($req);
-        if ($form->isSubmitted() && $form->isValid() ) {
-          
+        if ($form->isSubmitted()  ) {
+          dd( $form->getData()->getCity());die;
             $this->em->flush();
             return $this->redirectToRoute('account_login');
         }

@@ -21,20 +21,20 @@
         </div>
         <div class="col s3">
         
-									<a href="{{path('my_profile_follow',{'id':1})}}" class="waves-effect waves-light btn-small">
+									<a href="{{path('my_profile_follow',{'userId':user.id,'id':1})}}" class="waves-effect waves-light btn-small">
 										<i class="material-icons left">person_outline</i>{{user.following|length |default('0')}} Following</a>	
         </div>
          <div class="col s3">
-          		<a href="{{path('my_profile_follow',{'id':0})}}" class="waves-effect waves-light btn-small">
+          		<a href="{{path('my_profile_follow',{'userId':user.id,'id':0})}}" class="waves-effect waves-light btn-small">
 										<i class="material-icons left">person_add</i>{{user.followers|length |default('0')}}Followers</a>
         </div>
 					<div class="card-tabs">
 						<ul class="tabs tabs-fixed-width">
 							<li class="tab">
-								<a class="active" href="#myPost" id="go">MyPost</a>
+								<a  href="#myPost" id="go">MyPost</a>
 							</li>
 							<li class="tab">
-								<a href="#myLikes">Likes</a>
+								<a class="active" href="#myLikes">Likes</a>
 							</li>
 							<li class="tab">
 								<a href="#test">Replies</a>
@@ -44,25 +44,85 @@
 					</div>
 					<div class="card-content grey lighten-4">
 						<div id="myPost">
-							{{ render(path('my_profile_posts')) }}
+						   <div id="postTemplete">
+						   </div>
+						   <div id="postPagination">
+						   </div>
+							{# {{ render(path('my_profile_posts',{id:user.id})) }} #}
 							{# {% include "profile/myPost.html.twig" with {'posts':user.posts} %} #}
 						</div>
 						<div id="myLikes">
-							{{ render(path('my_profile_likes')) }}
+							{{ render(path('my_profile_likes',{id:user.id})) }}
 							{# {% include "profile/myLikes.html.twig" with {'posts':user.posts} %} #}
 						</div>
 						<div id="test">
-							{{ render(path('my_profile_commented')) }}
+							{{ render(path('my_profile_commented',{id:user.id})) }}
 						</div>
 
 					</div>
 				</div>
 			</div>
 		</div>
-
+ 
 
 	{% endblock %}
 	{% block javascripts %}
 		{{parent()}}
-		<script></script>
+		<script>
+		let go =document.getElementById('go');
+		let target=document.getElementById('postTemplete');
+		let postPagination=document.getElementById('postPagination');
+		let fetchMyPost=(url)=>{
+                 return  axios.get(url).then((response) => {
+					
+			     return response.data;
+
+				}).catch((err) => {
+				console.log(err);
+				})
+		}
+
+       let urlPagePost="{{path('my_profile_posts',{id:user.id,'page':1}) }}";
+
+		const handelEvent=async()=>{
+              let data=await fetchMyPost(urlPagePost);
+                target.innerHTML=data.templete;
+				let pages=document.querySelectorAll(".pages");
+				
+
+		pages.forEach((el)=>{
+         el.addEventListener('click',async(e)=>{
+            e.preventDefault();
+			 urlPagePost="{{path('my_profile_posts',{id:user.id,'page':'pageId'}) }}";
+			 if(event.target.tagName.toLowerCase() === 'a')
+          {
+                    urlPagePost=urlPagePost.replace('pageId',e.target.dataset.page)
+           }
+		   else{
+          urlPagePost=urlPagePost.replace('pageId',e.target.closest('a').dataset.page)
+		   }
+		 	
+			
+			 pages.forEach((element)=>{
+				if(element.parentElement.classList.contains('active')){
+					element.parentElement.classList.remove('active')
+				}
+			 })
+			  
+
+			  el.parentElement.classList.add('active');
+              handelEvent();
+		})
+		})
+		}
+		go.addEventListener('click',handelEvent)
+
+		
+		</script>
 	{% endblock %}
+{# const params = new URLSearchParams(location.search);
+		params.set('page', e.target.dataset.page);
+
+
+		params.toString(); // => test=123&cheese=yummy
+		window.history.replaceState({}, '', `${location.pathname}?${params.toString()}`); #}

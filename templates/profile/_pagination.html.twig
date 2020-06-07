@@ -1,0 +1,30 @@
+<ul class="pagination">
+	<li class="{% if page==1 %} disabled {% else %}  {% endif %} ">
+		<a  data-page="{{page - 1}}" id="first" class="pages">
+			<i class="material-icons">chevron_left</i>
+		</a>
+	</li>
+
+
+     {% for i in 1..pages %}
+	 
+        <li class="{% if page==i %} active {% else %} waves-effect {% endif %} {% if i > 2 and page != i and i != page-1 and i != pages and i != pages-1  %} hide {% endif %} ">
+            <a data-page="{{i}}" class="pages">
+						{% if i!=page  and i == pages-1 %}... 
+						 {% else %}
+							  {{i}} 
+						{% endif %}
+						
+						
+			</a>
+        </li>
+       {% endfor %}
+	
+	
+	<li class=" {% if page==pages %} disabled {% else %}  {% endif %} "  >
+		<a  data-page="{{page + 1}}" id="last" class="pages">
+			<i class="material-icons">chevron_right</i>
+		</a>
+	</li>
+</ul>
+     

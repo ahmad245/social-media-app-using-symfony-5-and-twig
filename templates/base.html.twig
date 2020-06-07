@@ -40,7 +40,7 @@
 			{% if app.user %}
 		<ul id="dropdown1" class="dropdown-content">
 		<li><a href="{{path('my_posts',{'id':app.user.id})}}">my Posts</a></li>
-		<li><a href="{{path('my_profile')}}">My Profile</a></li>
+		<li><a href="{{path('my_profile',{id:app.user.id})}}">My Profile</a></li>
 		<li><a href="{{path('account_edit',{id:app.user.id})}}">Setting</a></li>
 		<li class="divider"></li>
 		<li><a href="#!">Create Post</a></li>
@@ -109,7 +109,7 @@
     var instancesmaterialboxed = M.Materialbox.init(materialboxed, {});
 
     var elems = document.querySelectorAll('.modal');
-    var instances = M.Modal.init(elems, {});country
+    var instances = M.Modal.init(elems, {});
 
 	  var countryElems = document.getElementById('country');
      var countrySelect = M.FormSelect.init(countryElems, {});
@@ -188,39 +188,7 @@
 	</body>
 </html>
 
-{# 
-	let list=	document.getElementById('dropdown2');
-				document.getElementById('notification').addEventListener('click',()=>{
-					const url="{{ path('notification_all')}}";
-					 axios.get(url).then((response) => {
-						 console.log(response);
-			        list.innerHTML="";
-				     response.data.forEach((el)=>{
-						
-						  let li=document.createElement('li');
-						  if(el.following){
-                              li.innerHTML=`
-					   <a href="#!">one<span class="badge">${el.following.email}</span>
-						</a>
-					  `;
-						  }
-						  else{
-							    li.innerHTML=`
-							   <a href="#!">one<span class="badge">${el.post.id}</span>
-						</a> `;
-						  }
-					 
-					  list.appendChild(li)
-						
-						 
-                     
-				 })
 
-				}).catch((err) => {
-				console.log(err);
-				})
-				 
-				}) #}
 
 				{# https://stackoverflow.com/questions/51775289/trigger-enter-keypress-in-vanilla-js #}
 				{# https://stackoverflow.com/questions/18190878/triggering-a-keydown-event-programmatically-in-vanilla-javascript #}
