@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>
+			{% block title %}Welcome!
+			{% endblock %}
+		</title>
+
+		{% block stylesheets %}
+		
+		{% endblock %}
+
+		<!--Let browser know website is optimized for mobile-->
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	</head>
+	<body>
+	<style>
+	
+	</style>
+		
+        
+		   {% block body %}{% endblock %}
+
+		{% block javascripts %}
+			<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+			<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+	
+			<script>
+				let likes = document.querySelectorAll('button.like');
+			let unlikes = document.querySelectorAll('button.unlike');
+
+			function handelLike(e) {
+		     
+			 {% if not app.user %}
+			   return window.location.replace("{{path('account_login')}}");
+			 {% endif %}
+			 
+
+                this.disabled=true
+			let icon = this.querySelector('i');
+			let likeCount = this.querySelector('#likeCount');
+			this.parentElement.setAttribute('disabled', true);
+			
+			// let a=e.target.closest('a');
+			let url = this.dataset.href;
+            console.log(url)
+			axios.get(url).then((response) => {
+              this.disabled=false
+		 console.log(response.data)
+			
+			likeCount.innerText = response.data.likes;
+			icon.innerText = response.data.message == 'added' ? 'favorite_border ' : 'favorite';
+
+			}).catch((err) => {
+			console.log(err)
+			})
+
+			e.preventDefault();
+			}
+			likes.forEach((el) => {
+			el.addEventListener('click', handelLike);
+
+			})
+			unlikes.forEach((el) => {
+			el.addEventListener('click', handelLike)
+			})
+			
+		    </script>
+		{% endblock %}
+
+
+	</body>
+</html>
+
+
+
+				{# https://stackoverflow.com/questions/51775289/trigger-enter-keypress-in-vanilla-js #}
+				{# https://stackoverflow.com/questions/18190878/triggering-a-keydown-event-programmatically-in-vanilla-javascript #}

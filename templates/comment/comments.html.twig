@@ -1,0 +1,4 @@
+{% for comment in comments %}
+			  {% include "comment/_commentCard.html.twig" with {'comment':comment,'post':post} %}
+			  
+	{% endfor %}

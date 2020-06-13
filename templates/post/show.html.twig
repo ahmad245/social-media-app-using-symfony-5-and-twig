@@ -17,221 +17,29 @@
 		i {
 			z-index: -10;
 		}
-		.collapsible-header i{
+		.collapsible-header i {
 			z-index: 1;
 		}
 	</style>
 {% endblock %}
 {% block body %}
 
-		<div class="row">
-			<div class="col s8 offset-s2">
-				{% include "post/_postCard.html.twig" with {'post':post} %}
-			</div>
-			{% if post.comments|length>0 %}
-				{% for comment in post.comments %}
-					<div class="col s8 offset-s2">
-						<div class="card-panel ">
-							<div class="row post-body">
-								<div class="col s2">
-									<div class="user-img">
-										<img src="/images/ah.jpg" alt="" class="circle responsive-img">
-									</div>
-								</div>
-								<div class="col s4">
-									<a href="{{path('post_user',{'id':post.user.id})}}">
-										<strong class=" black-text">
-											{{comment.user.username}}
-										</strong>
-									</a>
-
-
-								</div>
-								<div class="col s2">
-									<small class=" black-text">
-										{{comment.createdAt|date('d/m/Y')}}
-									</small>
-								</div>
-								<div class="col s4 right-align">
-									{% if app.user and app.user==comment.user %}
-
-										{# edit #}
-										<a class="waves-effect waves-light btn-small red lighten-2 modal-trigger " href="#{{comment.id}}editComment">
-											<i class="material-icons iconis  prefix">edit</i>
-										</a>
-										{# delete #}
-										<a href="#{{post.id}}Comment" class="waves-effect waves-light modal-trigger btn-small red lighten-3 post-delete">delete</a>
-									{% endif %}
-									<!-- Modal Structure -->
-									<div id="{{comment.id}}editComment" class="modal">
-										<div class="modal-content">
-											<span class="close-modal modal-close">
-												<i class="material-icons right">close</i>
-											</span>
-											<h4 class="left">Update Your Comment!</h4>
-
-											{{ render(controller('App\\Controller\\CommentController::edit', { 'id': comment.id })) }}
-
-										</div>
-
-									</div>
-									<!--end Modal Structure -->
-
-
-								</div>
-
-							</div>
-							<div class="row">
-								<div class="col s9  black-text">
-									{{comment.content}}
-								</div>
-
-								{# /////////////////////////////////////////////////////////////////////////////////////////////////////////////// #}
-								{# Replay Comment #}
-								<div class="col s3  black-text right">
-									<a class="waves-effect waves-light btn-small red lighten-2 modal-trigger reply " data-email={{comment.user.email}} href="#{{comment.id}}replyComment">
-										<i class="material-icons iconis  prefix">replay</i>
-										Replay
-									</a>
-								</div>
-								<!-- Modal Structure -->
-								<div id="{{comment.id}}replyComment" class="modal">
-									<div class="modal-content">
-										<span class="close-modal modal-close">
-											<i class="material-icons right">close</i>
-										</span>
-										<h4 class="left">add Your replay to this comment!</h4>
-
-										{{ render(controller('App\\Controller\\CommentReplyController::add', { 'id': comment.id,'postId':post.id })) }}
-
-									</div>
-
-								</div>
-								<!--end Modal Structure -->
-							</div>
-{# //////////////////////////////////////////////////////////////////////  #}
-                            <div class="row">
-							   	{% if comment.commentReplies|length > 0 %}
-						<div class="col s12  right-align">
-							<ul class="collapsible">
-								<li>
-									<div class="collapsible-header right-align black-text">
-									  
-										<i class="material-icons">replay</i>View the {{comment.commentReplies|length}} reply 
-									</div>
-									<div class="collapsible-body">
-										{% for replyComment in comment.commentReplies %}
-
-											<div class="card-panel ">
-												<div class="row post-body">
-													<div class="col s2">
-														<div class="user-img">
-															<img src="/images/ah.jpg" alt="" class="circle responsive-img">
-														</div>
-													</div>
-													<div class="col s4">
-														<a href="{{path('post_user',{'id':post.user.id})}}">
-															<strong class=" black-text">
-																{{replyComment.user.username}}
-															</strong>
-														</a>
-
-
-													</div>
-													<div class="col s2">
-														<small class=" black-text">
-															{{replyComment.createdAt|date('d/m/Y')}}
-														</small>
-													</div>
-													<div class="col s4 right-align">
-														{% if app.user and app.user==replyComment.user %}
-
-															{# edit #}
-															<a class="waves-effect waves-light btn-small red lighten-2 modal-trigger " href="#{{replyComment.id}}editReplayComment">
-																<i class="material-icons iconis  prefix">edit</i>
-															</a>
-															{# delete #}
-															<a href="#{{replyComment.id}}deleteReplayComment" class="waves-effect waves-light modal-trigger btn-small red lighten-3 post-delete">delete</a>
-														{% endif %}
-														<!-- Modal Structure -->
-														<div id="{{replyComment.id}}editReplayComment" class="modal">
-															<div class="modal-content">
-																<span class="close-modal modal-close">
-																	<i class="material-icons right">close</i>
-																</span>
-																<h4 class="left">Update Your Comment!</h4>
-
-																{{ render(controller('App\\Controller\\CommentReplyController::edit', { 'id': replyComment.id,'postId':post.id })) }}
-
-															</div>
-
-														</div>
-														<!--end Modal Structure -->
-
-
-													</div>
-
-												</div>
-												<div class="row">
-													<div class="col s9  black-text">
-														{{replyComment.content}}
-													</div>
-
-
-												</div>
-											</div>
-
-											{# modal for delete reply comment #}
-											<div id="{{replyComment.id}}deleteReplayComment" class="modal">
-												<div class="modal-content">
-													<h4>Are You Sure To Delete This Comment</h4>
-												</div>
-												<div class="modal-footer">
-													<a id="accept-delete" href="{{path('comment_reply_delete',{'id':replyComment.id,'postId':post.id})}}" class="modal-close waves-effect waves-green btn-flat">Agree</a>
-													<a id="ignore-accept" class="modal-close waves-effect waves-green btn-flat">cancle</a>
-												</div>
-											</div>
-											{# end modal delete reply comment #}
-										{% endfor %}
-									</div>
-								</li>
-
-							</ul>
-							</div>
-						{% endif %}
-
-							</div>
-{# //////////////////////////////////////////////////////////////////////////// #}
-
-						</div>
-
-
-					</div>
-
-					{# modal for delete comment #}
-					<div id="{{post.id}}Comment" class="modal">
-						<div class="modal-content">
-							<h4>Are You Sure To Delete This Comment</h4>
-						</div>
-						<div class="modal-footer">
-							<a id="accept-delete" href="{{path('comment_delete',{'id':comment.id})}}" class="modal-close waves-effect waves-green btn-flat">Agree</a>
-							<a id="ignore-accept" class="modal-close waves-effect waves-green btn-flat">cancle</a>
-						</div>
-					</div>
-					{# end modal delete comment #}
-
-
-				
-
-					{% endfor %}
-
-				
-			{% endif %}
-
-
+	<div class="row" id="comments">
+		<div class="col s8 offset-s2">
+			{% include "post/_postCard.html.twig" with {'post':post} %}
 		</div>
+		{% if comments|length>0 %}
+			{% for comment in comments %}
+			  {% include "comment/_commentCard.html.twig" with {'comment':comment,'post':post} %}
+			{% endfor %}
+		{% endif %}
 
-
+	</div>
+    <div class="row">
+	  <div class="col s8 offset-s2">
+		    <a id="more" class="waves-effect waves-light btn"><i class="material-icons left">cloud</i>More</a>
+		</div>
+	</div>
 
 {% endblock %}
 {% block javascripts %}
@@ -240,7 +48,8 @@
 		document.addEventListener('DOMContentLoaded', function () {
 var elems = document.querySelectorAll('.collapsible');
 var instances = M.Collapsible.init(elems, {});
-});
+
+
 let replies = document.querySelectorAll('.reply');
 let replyText = document.getElementById('comment_reply_content');
 
@@ -252,5 +61,52 @@ replyText.value = target.dataset.email;
 console.log(target.dataset.email)
 });
 })
+
+
+
+////////////////////////////////////More
+
+  let more=document.getElementById('more');
+  let comments=document.getElementById('comments');
+  let pageId=2;
+  const preUrl=(page)=>{
+   let urlPagePost="{{path('comments_post',{id:post.id,'page':'pageId'}) }}";
+
+    return urlPagePost.replace('pageId',page)
+  }
+    
+	  
+			let fetchComments=(url)=>{
+			
+                 return  axios.get(url).then((response) => {
+					 var modalelems = document.querySelectorAll('.modal');
+			var modalinstances = M.Modal.init(modalelems, {});
+			     return response.data;
+
+				}).catch((err) => {
+				console.log(err);
+				})
+		}
+  more.addEventListener('click',async()=>{
+	 
+     let urlPagePost=preUrl(pageId);
+
+     let data=await fetchComments(urlPagePost);
+	         var script = document.createElement("script");
+             script.src = "/initM/initModal.js";
+           
+	 let div=document.createElement('div');
+	 div.innerHTML=data;
+	  div.appendChild(script);
+   comments.append(div);
+    
+  
+   pageId++;
+  })
+});
+
+
+
+
 	</script>
 {% endblock %}

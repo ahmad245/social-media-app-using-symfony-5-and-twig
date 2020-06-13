@@ -106,8 +106,8 @@
 	
 	<script>
 					document.addEventListener('DOMContentLoaded', function () {
-			var elems = document.querySelectorAll('.modal');
-			var instances = M.Modal.init(elems, {});
+			var modalelems = document.querySelectorAll('.modal');
+			var modalinstances = M.Modal.init(modalelems, {});
 
                    var filter = document.querySelectorAll('.collapsible');
                  var instancesfilter = M.Collapsible.init(filter, {});
@@ -134,43 +134,6 @@
 			});
 
 
-			let likes = document.querySelectorAll('button.like');
-			let unlikes = document.querySelectorAll('button.unlike');
-
-			function handelLike(e) {
-		     
-			 {% if not app.user %}
-			   return window.location.replace("{{path('account_login')}}");
-			 {% endif %}
-			 
-
-                this.disabled=true
-			let icon = this.querySelector('i');
-			let likeCount = this.querySelector('#likeCount');
-			this.parentElement.setAttribute('disabled', true);
-			
-			// let a=e.target.closest('a');
-			let url = this.dataset.href;
-            console.log(url)
-			axios.get(url).then((response) => {
-              this.disabled=false
-		 console.log(response.data)
-			
-			likeCount.innerText = response.data.likes;
-			icon.innerText = response.data.message == 'added' ? 'favorite_border ' : 'favorite';
-
-			}).catch((err) => {
-			console.log(err)
-			})
-
-			e.preventDefault();
-			}
-			likes.forEach((el) => {
-			el.addEventListener('click', handelLike);
-
-			})
-			unlikes.forEach((el) => {
-			el.addEventListener('click', handelLike)
-			})
+		
 	</script>
 {% endblock %}

@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Comment;
 use App\Entity\Post;
 use App\Form\CommentType;
+use App\Repository\CommentRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -24,6 +25,8 @@ class CommentController extends AbstractController
     {
        
         $comment=new Comment();
+
+       
         
         $form=$this->createForm(CommentType::class,$comment);
         $form->handleRequest($req);
@@ -39,7 +42,8 @@ class CommentController extends AbstractController
         return $this->render('comment/index.html.twig', [
             'form' => $form->createView(),
             'id'=>$post->getId(),
-            'path'=>'comment_add'
+            'path'=>'comment_add',
+         
         ]);
     }
     /**
@@ -73,6 +77,26 @@ class CommentController extends AbstractController
        $this->em->flush();
        return $this->redirectToRoute('post_show',['id'=>$postId]);
 
+    }
+
+    /**
+     * @Route("/comment/post/{id}", name="comments_post")
+     */
+    public function commentsForPost(Post $post,CommentRepository $repo,Request $req){
+      $page=2;
+      if ($req->query->get('page')) {
+       $page = $req->query->get('page');
+    }
+      $limit=5;
+      $total=0;
+      $offset= ($page * $limit) -$limit ;
+      $data=$repo->findByPost($post->getId(),$limit,$offset);
+
+      $result= $this->render('comment/comments.html.twig', [
+        'post' => $post,
+        'comments'=> $data
+      ]);
+      return $this->json($result->getContent(),200,[]);
     }
 
     

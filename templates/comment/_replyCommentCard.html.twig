@@ -1,0 +1,63 @@
+<div class="card-panel ">
+														<div class="row post-body">
+															<div class="col s2">
+																<div class="user-img">
+																	<img src="/images/ah.jpg" alt="" class="circle responsive-img">
+																</div>
+															</div>
+															<div class="col s4">
+																<a href="{{path('post_user',{'id':post.user.id})}}">
+																	<strong class=" black-text">
+																		{{replyComment.user.username}}
+																	</strong>
+																</a>
+
+
+															</div>
+															<div class="col s2">
+																<small class=" black-text">
+																	{{replyComment.createdAt|date('d/m/Y')}}
+																</small>
+															</div>
+															<div class="col s4 right-align">
+																{% if app.user and app.user==replyComment.user %}
+
+																	{# edit #}
+																	<a class="waves-effect waves-light btn-small red lighten-2 modal-trigger " href="#{{replyComment.id}}editReplayComment">
+																		<i class="material-icons iconis  prefix">edit</i>
+																	</a>
+																	{# delete #}
+																	<a href="#{{replyComment.id}}deleteReplayComment" class="waves-effect waves-light modal-trigger btn-small red lighten-3 post-delete">delete</a>
+																{% endif %}
+																<!-- Modal Structure -->
+																<div id="{{replyComment.id}}editReplayComment" class="modal">
+																	<div class="modal-content">
+																		<span class="close-modal modal-close">
+																			<i class="material-icons right">close</i>
+																		</span>
+																		<h4 class="left">Update Your Comment!</h4>
+
+																		{{ render(controller('App\\Controller\\CommentReplyController::edit', { 'id': replyComment.id,'postId':post.id })) }}
+
+																	</div>
+
+																</div>
+																<!--end Modal Structure -->
+
+
+															</div>
+
+														</div>
+														<div class="row">
+															<div class="col s9  black-text">
+																{{replyComment.content}}
+															</div>
+
+
+														</div>
+													</div>
+
+
+
+
+													

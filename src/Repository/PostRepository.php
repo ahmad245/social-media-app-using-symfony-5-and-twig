@@ -232,6 +232,7 @@ class PostRepository extends ServiceEntityRepository
 
 
             ->setParameter('id', $id)
+           
             ->getQuery()
             ->getOneOrNullResult();
     }
@@ -294,9 +295,9 @@ class PostRepository extends ServiceEntityRepository
             return $paginator;
     }
 
-    public function findPostsBbLikedByUser($user)
+    public function findPostsBbLikedByUser($user,$limit = 20, $offset = 1)
     {
-        return $this->createQueryBuilder('p')
+        $query= $this->createQueryBuilder('p')
             ->join('p.user', 'u')
 
             ->leftJoin('p.tags', 't')
@@ -311,21 +312,26 @@ class PostRepository extends ServiceEntityRepository
             ->addSelect('cr')
             ->addSelect('l')
             ->addSelect('i')
-
             ->setParameter('user', $user)
-            ->getQuery()
-            ->getResult();
+            ->setMaxResults($limit)
+            ->setFirstResult($offset);
+            
+            $paginator=new Paginator($query,$fetchJoinCollection = true);
+            return $paginator;
     }
-    public function findPostsWhereCommentedByUser($user)
+    public function findPostsWhereCommentedByUser($user,$limit = 20, $offset = 1)
     {
 
-        return $this->createQueryBuilder('p')
+        $query= $this->createQueryBuilder('p')
             ->join('p.comments', 'c')
             ->join('p.user', 'u')
             ->where('c.commentedBy = :user')
 
             ->setParameter('user', $user)
-            ->getQuery()
-            ->getResult();
+            ->setMaxResults($limit)
+            ->setFirstResult($offset);
+             
+            $paginator=new Paginator($query,$fetchJoinCollection = true);
+            return $paginator;
     }
 }

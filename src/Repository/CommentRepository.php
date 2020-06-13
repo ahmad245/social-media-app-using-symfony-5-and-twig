@@ -47,5 +47,18 @@ class CommentRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    public function findByPost($postId,$limit=10,$offset=1)
+    {
+        return $this->createQueryBuilder('c')
+            ->join('c.post','p')
+            ->where('p.id = :postId')
+            ->setParameter('postId', $postId)
+            ->setMaxResults($limit)
+            ->setFirstResult($offset)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
    
 }

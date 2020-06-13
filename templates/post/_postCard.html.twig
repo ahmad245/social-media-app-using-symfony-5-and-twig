@@ -1,3 +1,5 @@
+{# {% extends "baseSecondary.html.twig" %}
+{% block body %} #}
 <div class="row">
 	<div class="col s12">
 		<div class="card-panel hoverable ">
@@ -27,8 +29,9 @@
 					{% endif %}
 					{% if is_granted('delete',post) %}
 
-
-						<a href="#{{post.id}}" class="waves-effect waves-light modal-trigger btn-small red lighten-3 post-delete">delete</a>
+                     
+					  
+						<a href="#{{post.id}}{% if type is defined %}{{type}}{% endif %}" class="waves-effect waves-light modal-trigger btn-small red lighten-3 post-delete">delete</a>
 					{% endif %}
 
 
@@ -111,12 +114,12 @@
 						
 					{% endfor %}
 
-					<a class="waves-effect waves-light btn  modal-trigger " href="#{{post.id}}addComment">
+					<a class="waves-effect waves-light btn  modal-trigger " href="#{{post.id}}addComment{% if type is defined %}{{type}}{% endif %}">
 						<i class="material-icons iconis  prefix">mode_comment</i> {{totalComment}}
 					</a>
 
 					<!-- Modal Structure -->
-					<div id="{{post.id}}addComment" class="modal">
+					<div id="{{post.id}}addComment{% if type is defined %}{{type}}{% endif %}" class="modal">
 						<div class="modal-content">
 							<span class="close-modal modal-close">
 								<i class="material-icons right">close</i>
@@ -141,7 +144,7 @@
 {# <a id="modal-delete" class="waves-effect waves-light btn modal-trigger hide" href="#modal1">Modal</a> #}
 
 <!-- Modal Structure -->
-<div id="{{post.id}}" class="modal">
+<div id="{{post.id}}{% if type is defined %}{{type}}{% endif %}" class="modal">
 	<div class="modal-content">
 		<h4>Modal Header</h4>
 		<p>A bunch of text</p>
@@ -151,3 +154,8 @@
 		<a id="ignore-accept" class="modal-close waves-effect waves-green btn-flat">cancle</a>
 	</div>
 </div>
+{# {% endblock %}
+{% block javascripts %}
+	{{ parent() }}
+
+{% endblock %} #}

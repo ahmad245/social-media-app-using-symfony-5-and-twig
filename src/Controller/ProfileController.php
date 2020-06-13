@@ -51,43 +51,78 @@ class ProfileController extends AbstractController
     $total=0;
     $offset= ($search->page * $limit) -$limit ;
        $data= $repoPost->findMyPost($user,$limit, $offset);
-      $this->pagination->setEntityClass(Post::class)->setData($data)->setLimit($limit)->setPage($search->page)->setTotal($data->count());
+      $this->pagination->setEntityClass(Post::class)
+                        ->setData($data)->setLimit($limit)
+                        ->setPage($search->page)
+                        ->setTotal($data->count());
         $result= $this->render('profile/myPost.html.twig', [
            'posts'=> $this->pagination,
            'pages'=>  $this->pagination->getPages(),
            'page'=>  $this->pagination->getPage()
         ]);
-        $paginationTemplete=$this->render('profile/_pagination.html.twig', [
-         'pages'=>  $this->pagination->getPages(),
-         'page'=>  $this->pagination->getPage()
-      ]);
-     
-        $dataJson=['templete'=>$result->getContent(),'page'=> $search->page,'paginationTemplete'=>$paginationTemplete->getContent()];
-       // dd($result->getContent());die;
+        $dataJson=['templete'=>$result,'page'=> $search->page];
         return $this->json($dataJson,200,[]);
 
     }
     /**
      * @Route("/profile/myLiked/{id}", name="my_profile_likes")
      */
-    public function myLikes(User $user,UserRepository $repoUser,PostRepository $repoPost)
+    public function myLikes(User $user,UserRepository $repoUser,PostRepository $repoPost,Request $req)
     {
-         $posts=$repoPost->findPostsBbLikedByUser($user);
-        return $this->render('profile/myLikes.html.twig', [
-           'posts'=>$posts
+      $search = new Search();
+     
+      if ($req->query->get('page')) {
+        $search->page = $req->query->get('page');
+    }
+         $limit=5;
+         $data = [];
+         $total=0;
+         $offset= ($search->page * $limit) -$limit ;
+         $data=$repoPost->findPostsBbLikedByUser($user,$limit, $offset);
+         $this->pagination->setEntityClass(Post::class)
+                  ->setData($data)->setLimit($limit)
+                  ->setPage($search->page)
+                  ->setTotal($data->count());
+       $result=  $this->render('profile/myLikes.html.twig', [
+           'posts'=> $this->pagination,
+           'pages'=>  $this->pagination->getPages(),
+           'page'=>  $this->pagination->getPage()
+          
         ]);
+        $dataJson=['templete'=>$result,'page'=> $search->page];
+        return $this->json($dataJson,200,[]);
     }
 
     
     /**
      * @Route("/profile/myCommented/{id}", name="my_profile_commented")
      */
-    public function myPostCommented(User $user,UserRepository $repoUser,PostRepository $repoComment)
+    public function myPostCommented(User $user,UserRepository $repoUser,PostRepository $repoComment,Request $req)
     {
-         $posts=$repoComment->findPostsWhereCommentedByUser($user);
-        return $this->render('profile/myLikes.html.twig', [
-           'posts'=>$posts
-        ]);
+      $search = new Search();
+     
+      if ($req->query->get('page')) {
+        $search->page = $req->query->get('page');
+    }
+      
+      $limit=5;
+      $data = [];
+      $total=0;
+      $offset= ($search->page * $limit) -$limit ;
+      $data=$repoComment->findPostsWhereCommentedByUser($user,$limit, $offset);
+      $this->pagination->setEntityClass(Post::class)
+               ->setData($data)->setLimit($limit)
+               ->setPage($search->page)
+               ->setTotal($data->count());
+    $result=  $this->render('profile/myCommented.html.twig', [
+        'posts'=> $this->pagination,
+        'pages'=>  $this->pagination->getPages(),
+        'page'=>  $this->pagination->getPage()
+       
+     ]);
+     $dataJson=['templete'=>$result,'page'=> $search->page];
+     return $this->json($dataJson,200,[]);
+        
     }
 
     /**

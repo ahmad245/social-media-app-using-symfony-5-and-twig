@@ -9,6 +9,7 @@ use App\Entity\Image;
 use App\Entity\Search;
 use App\Form\PostType;
 use App\Form\SearchType;
+use App\Repository\CommentRepository;
 use App\Repository\TagRepository;
 use App\Repository\PostRepository;
 use App\Repository\UserRepository;
@@ -204,11 +205,19 @@ class PostController extends AbstractController
    * @param Post $post
    * @return void
    */
-  public function show($id, PostRepository $repo)
+  public function show($id, PostRepository $repo,CommentRepository $commentRepo)
   {
+    $page=1;
+    
+    $limit=5;
+    $total=0;
+    $offset= ($page * $limit) -$limit ;
+    
     $post = $repo->findByPost($id);
+    $comments=$commentRepo->findByPost($id,$limit,$offset);
     return $this->render('post/show.html.twig', [
       'post' => $post,
+      'comments'=> $comments
     ]);
   }
 
