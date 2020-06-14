@@ -36,9 +36,12 @@ class PostController extends AbstractController
    * @Route("/",name="home")
    * @Route("/post", name="post")
    */
-  public function index(PostRepository $repo, UserRepository $userRepo, Request $req)
+  public function index(PostRepository $repo, UserRepository $userRepo, Request $req,TagRepository $repoTags)
   {
-   
+    // $req->getSession()->set('_locale','fr');
+    // $req->setLocale('fr');
+  
+  // dd(  $req->getSession()->get('_locale'));die;
     $search = new Search();
     
     if ($req->query->get('page')) {
@@ -75,7 +78,8 @@ class PostController extends AbstractController
     return $this->render('post/index.html.twig', [
       'posts' => $this->pagination,
       'usersToFollow' => $usersToFollow,
-      'form' => $form->createView()
+      'form' => $form->createView(),
+      'tags'=>$repoTags->popularTags()
     ]);
   }
 
@@ -214,6 +218,7 @@ class PostController extends AbstractController
     $offset= ($page * $limit) -$limit ;
     
     $post = $repo->findByPost($id);
+    // $total=$commentRepo->countCommentByPost($id);
     $comments=$commentRepo->findByPost($id,$limit,$offset);
     return $this->render('post/show.html.twig', [
       'post' => $post,

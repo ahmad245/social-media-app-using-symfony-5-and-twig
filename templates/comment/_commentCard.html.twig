@@ -45,8 +45,8 @@
 							{# Replay Comment #}
 							<div class="col s3  black-text right">
 								<a class="waves-effect waves-light btn-small red lighten-2 modal-trigger reply " data-email={{comment.user.email}} href="#{{comment.id}}replyComment">
-									<i class="material-icons iconis  prefix">replay</i>
-									Replay
+									<i class="material-icons iconis  prefix">reply</i>
+									{{'REPLY'|trans}}
 								</a>
 							</div>
 							<!-- Modal Structure -->
@@ -72,9 +72,9 @@
 										<li>
 											<div class="collapsible-header right-align black-text">
 
-												<i class="material-icons">replay</i>View the
-												{{comment.commentReplies|length}}
-												reply
+												<i class="material-icons">replay</i>
+												{{'View the reply'|trans}}{{comment.commentReplies|length}}
+												
 											</div>
 											<div class="collapsible-body">
 												{% for replyComment in comment.commentReplies %}
@@ -111,7 +111,7 @@
 {# modal for delete comment #}
 				<div id="{{comment.id}}Comment" class="modal">
 					<div class="modal-content">
-						<h4>Are You Sure To Delete This Comment({{comment.content}})</h4>
+						<h4>{{'Are You Sure To Delete This Comment?'|trans}}({{comment.content}})</h4>
 					</div>
 					<div class="modal-footer">
 						<a id="accept-delete" href="{{path('comment_delete',{'id':comment.id})}}" class="modal-close waves-effect waves-green btn-flat">Agree</a>
@@ -128,7 +128,7 @@
 										<span class="close-modal modal-close">
 											<i class="material-icons right">close</i>
 										</span>
-										<h4 class="left">Update Your Comment!</h4>
+										<h4 class="left">{{'Update Your Comment!'|trans}}</h4>
 
 										{{ render(controller('App\\Controller\\CommentController::edit', { 'id': comment.id })) }}
 

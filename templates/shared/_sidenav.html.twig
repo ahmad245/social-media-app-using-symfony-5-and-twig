@@ -1,0 +1,45 @@
+<ul id="slide-out" class="sidenav sidenav-fixed">
+	<li>
+		<div class="user-view">
+			
+			<a href="#user"><img class="circle" src="/images/ah.jpg"></a>
+			<a href="#name">
+				<span class=" name">{{app.user.fullname}}</span>
+			</a>
+			<a href="#email">
+				<span class=" email">{{app.user.username}}</span>
+			</a>
+		</div>
+	</li>
+	
+	<li>
+		<div class="divider"></div>
+	</li>
+	<li>
+       <a href="{{path('home')}}" ><i class="material-icons">home</i>Home</a>
+    </li>
+	<li>
+		
+		<a href="#!"><i class="material-icons">create</i>{{'Create Post'|trans}}</a>
+	</li>
+	<li>
+		
+		<a href="{{path('my_posts',{'id':app.user.id})}}"><i class="material-icons">list</i>{{'My Posts'|trans}}</a>
+	</li>
+	<li>
+	
+		<a href="{{path('my_profile',{id:app.user.id})}}"><i class="material-icons">account_circle</i>{{'My Profile'|trans}}</a>
+	</li>
+	<li>
+		
+		<a href="{{path('account_edit',{id:app.user.id})}}"><i class="material-icons">settings_applications</i>{{'Setting'|trans}}</a>
+	</li>
+	<li>
+		
+		<a href="{{path('notification_all')}}" id="notification">
+
+			<i class="material-icons">notifications</i>{{'Notifications'|trans}}
+			<span class="new badge" data-badge-caption="{{'new'|trans}}" id="notification-count"></span>
+		</a>
+	</li>
+</ul>

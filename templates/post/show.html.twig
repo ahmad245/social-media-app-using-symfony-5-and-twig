@@ -37,7 +37,7 @@
 	</div>
     <div class="row">
 	  <div class="col s8 offset-s2">
-		    <a id="more" class="waves-effect waves-light btn"><i class="material-icons left">cloud</i>More</a>
+		    <a id="more" class="waves-effect waves-light btn"><i class="material-icons left">cloud</i>{{'Show More'|trans}}</a>
 		</div>
 	</div>
 
@@ -79,8 +79,10 @@ console.log(target.dataset.email)
 			let fetchComments=(url)=>{
 			
                  return  axios.get(url).then((response) => {
-					 var modalelems = document.querySelectorAll('.modal');
-			var modalinstances = M.Modal.init(modalelems, {});
+				    if(!response.data){
+						more.classList.add('hide');
+						return;
+					}
 			     return response.data;
 
 				}).catch((err) => {

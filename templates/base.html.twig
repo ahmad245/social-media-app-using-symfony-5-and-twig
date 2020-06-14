@@ -35,58 +35,24 @@
 			justify-content: center;
 			align-items: center;
 }
+.container,nav{
+	padding-left:95px;
+	width:100%;
+	padding-left:300px;
+}
+nav{
+	padding-left:300px;
+}
+
 	</style>
-		<!-- Dropdown Structure -->
-			{% if app.user %}
-		<ul id="dropdown1" class="dropdown-content">
-		<li><a href="{{path('my_posts',{'id':app.user.id})}}">my Posts</a></li>
-		<li><a href="{{path('my_profile',{id:app.user.id})}}">My Profile</a></li>
-		<li><a href="{{path('account_edit',{id:app.user.id})}}">Setting</a></li>
-		<li class="divider"></li>
-		<li><a href="#!">Create Post</a></li>
-		</ul>
-		   {% endif %}
-		<nav>
-			<div class="nav-wrapper">
-				<a href="{{path('home')}}" class="brand-logo">Twitter</a>
 
-
-				<ul class="right hide-on-med-and-down">
-					{% if app.user %}
-
-						<li>
-							<a class="dropdown-trigger" href="#!" data-target="dropdown1">{{app.user.username}}<i class="material-icons right">arrow_drop_down</i></a>
-						</li>
-						<li>
-							
-
-								<a href="{{path('notification_all')}}"  id="notification">
-								
-								notification
-								<span class="new badge" data-badge-caption="new" id="notification-count"></span>
-							</a>
-						
-						</li>
-						<li>
-							<a href="{{path('account_logout')}}">Logout</a>
-						</li>
-					{% else %}
-						<li>
-							<a href="{{path('account_register')}}">Sign Up</a>
-						</li>
-						<li>
-							<a href="{{path('account_login')}}">Sign In</a>
-						</li>
-					{% endif %}
-
-
-					<!-- Dropdown Trigger -->
-
-				</ul>
-			</div>
-		</nav>
+     {% include "shared/_navbar.html.twig" %}
+     {% include "shared/_sidenav.html.twig" %}
          <div class="container">
-		   {% block body %}{% endblock %}
+						
+		   {% block body %}
+		   
+		   {% endblock %}
 		 </div>  
 		{% block javascripts %}
 			<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
@@ -95,6 +61,13 @@
 			<script>
 ///////////////////////////////////////////////////////////////////////////////////////////
   document.addEventListener('DOMContentLoaded', function() {
+
+	 
+ 
+    var select = document.querySelectorAll('select');
+    var selectinstances = M.FormSelect.init(select, {});
+
+
 	  
     var profileTap=document.querySelectorAll('.tabs');
     var instancesprofileTap = M.Tabs.init(profileTap, {});
@@ -224,6 +197,24 @@
 			unlikes.forEach((el) => {
 			el.addEventListener('click', handelLike)
 			})
+
+
+
+			//////////////////////lang
+			{# let changLocale=(urlLocale)=>{
+                return axios.get(urlLocale).then((res)=>{
+					  return res;
+				})
+			}
+			let lang=document.getElementById('lang');
+			lang.addEventListener('change',async(e)=>{
+				let urlLocale="{{path('locale',{id:'localeId'})}}";
+				console.log(e.target.value);
+				urlLocale=urlLocale.replace('localeId',e.target.value);
+				$result=await changLocale(urlLocale);
+				console.log($result);
+
+			}) #}
 			
 		    </script>
 		{% endblock %}

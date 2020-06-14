@@ -334,4 +334,7 @@ class PostRepository extends ServiceEntityRepository
             $paginator=new Paginator($query,$fetchJoinCollection = true);
             return $paginator;
     }
+
+   
+   
 }

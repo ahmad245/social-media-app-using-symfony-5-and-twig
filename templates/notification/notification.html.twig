@@ -17,7 +17,7 @@
 
 				<ul class="collection col s12 ">
 					<li class="collection-header center">
-						<h4>Your Notification
+						<h4>{{'Your Notification'|trans}}
 						</h4>
 
 					</li>
@@ -25,7 +25,7 @@
 
 						<li class="collection-header center">
 							<a href="{{path('mark_all_seen')}}">
-								mark all ass read
+								{{'Mark All As Read'|trans}}
 
 							</a>
 
@@ -40,11 +40,11 @@
 										{{notification.likedBy.username}}</a>
 
 									<a href="{{path('mark_seen',{'id':notification.id})}}">
-										<span class="new badge" data-badge-caption="read"></span>
+										<span class="new badge" data-badge-caption="{{'Read'|trans}}"></span>
 									</a>
 
 									<a href="{{path('post_show',{'id':notification.post.id})}}">
-										<span class="new badge" data-badge-caption="liked your post"></span>
+										<span class="new badge" data-badge-caption="{{'Liked Your Post'|trans}}"></span>
 									</a>
 
 								</li>
@@ -54,11 +54,11 @@
 										{{notification.following.username}}</a>
 
 									<a href="{{path('mark_seen',{'id':notification.id})}}">
-										<span class="right new badge" data-badge-caption="read"></sapn>
+										<span class="right new badge" data-badge-caption="{{'Read'|trans}}"></sapn>
 									</a>
 
 									<a href="#!">
-										<span class="new badge" data-badge-caption="following you"></sapn>
+										<span class="new badge" data-badge-caption="{{'Following You'|trans}}"></sapn>
 									</a>
 
 
@@ -70,11 +70,11 @@
 										{{notification.commentedBy.username}}</a>
 
 									<a href="{{path('mark_seen',{'id':notification.id})}}">
-										<span class="new badge" data-badge-caption="read"></span>
+										<span class="new badge" data-badge-caption="{{'Read'|trans}}"></span>
 									</a>
 
 									<a href="{{path('post_show',{'id':notification.post.id})}}">
-										<span class="new badge" data-badge-caption="Comment to your post"></span>
+										<span class="new badge" data-badge-caption="{{'Comment To Your Post'|trans}}"></span>
 									</a>
 
 								</li>

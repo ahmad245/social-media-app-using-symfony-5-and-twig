@@ -11,7 +11,7 @@
 					{{form_start(form)}}
 					{{form_widget(form)}}
 					<div class="collection hide"></div>
-					 <button class="btn waves-effect waves-light" type="submit" name="action">Submit
+					 <button class="btn waves-effect waves-light" type="submit" name="action">{{'SUBMIT'|trans}}
                              <i class="material-icons right">send</i>
                        </button>
 					{{form_end(form)}}
@@ -32,7 +32,7 @@
 {% block _post_images_widget %}
         {{form_widget(form)}}
        <a class="waves-effect btn-small waves-effect waves-light red" id="addImage">
-       <i class="material-icons">add</i> Add Image</a>
+       <i class="material-icons">add</i> {{'ADD IMAGE'|trans}}</a>
  {% endblock %}
 
 {% block _post_images_entry_row %}

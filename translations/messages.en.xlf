@@ -1,0 +1,218 @@
+<?xml version="1.0"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" target-language="en" datatype="plaintext" original="file.ext">
+        <body>
+            <trans-unit id="menu.signin">
+                <source>Sign In</source>
+                <target>Sign In</target>
+            </trans-unit>
+
+            <trans-unit id="menu.signup">
+                <source>Sign Up</source>
+                <target>Sign Up</target>
+            </trans-unit>
+             <trans-unit id="menu.logout">
+                <source>Logout</source>
+                <target>Logout</target>
+            </trans-unit>
+            <trans-unit id="menu.notifications">
+                <source>Notifications</source>
+                <target>Notifications</target>
+            </trans-unit>
+            <trans-unit id="menu.create">
+                <source>Create Post</source>
+                <target>Create Post</target>
+            </trans-unit>
+             <trans-unit id="menu.mypost">
+                <source>My Posts</source>
+                <target>My Posts</target>
+            </trans-unit>
+
+             <trans-unit id="menu.myprofile">
+                <source>My Profile</source>
+                <target>My Profile</target>
+            </trans-unit>
+             <trans-unit id="menu.setting">
+                <source>Setting</source>
+                <target>Setting</target>
+            </trans-unit>
+
+             <trans-unit id="notifications.notifications">
+                <source>Your Notification</source>
+                <target>Your Notification</target>
+            </trans-unit>
+
+            <trans-unit id="notifications.following">
+                <source>Following You</source>
+                <target>Following You</target>
+            </trans-unit>
+
+            <trans-unit id="notifications.like">
+                <source>Liked Your Post</source>
+                <target>Liked Your Post</target>
+            </trans-unit>
+
+            <trans-unit id="notifications.comment">
+                <source>Comment To Your Post</source>
+                <target>Comment To Your Post</target>
+            </trans-unit>
+
+            <trans-unit id="notifications.read">
+                <source>Read</source>
+                <target>Read</target>
+            </trans-unit>
+         <trans-unit id="notifications.new">
+                <source>new</source>
+                <target>new</target>
+            </trans-unit>
+             <trans-unit id="notifications.mark">
+                <source>Mark All As Read</source>
+                <target>Mark All As Read</target>
+            </trans-unit>
+
+
+            <trans-unit id="post.recent">
+                <source>Recent updates</source>
+                <target>Recent updates</target>
+            </trans-unit>
+           
+            <trans-unit id="register.terms">
+                <source>I agree to the terms of service</source>
+                <target>I agree to the terms of service</target>
+            </trans-unit>
+            <trans-unit id="register.email">
+                <source>Email</source>
+                <target>Eamil</target>
+            </trans-unit>
+            <trans-unit id="register.password">
+                <source>Password</source>
+                <target>Password</target>
+            </trans-unit>
+            <trans-unit id="register.repeated_password">
+                <source>Repated password</source>
+                <target>Repated password</target>
+            </trans-unit>
+            <trans-unit id="register.first_name">
+                <source>First name</source>
+                <target>First name</target>
+            </trans-unit>
+            <trans-unit id="register.last_name">
+                <source>Last name</source>
+                <target>Last name</target>
+            </trans-unit>
+             <trans-unit id="register.birthday">
+                <source>Birthday</source>
+                <target>Birthday</target>
+            </trans-unit>
+            <trans-unit id="register.country">
+                <source>Country</source>
+                <target>Country</target>
+            </trans-unit>
+             <trans-unit id="register.city">
+                <source>City</source>
+                <target>City</target>
+            </trans-unit>
+            <trans-unit id="register.register">
+                <source>Register</source>
+                <target>Register</target>
+            </trans-unit>
+
+              <trans-unit id="post.content">
+                <source>Content</source>
+                <target>Content</target>
+            </trans-unit>
+             <trans-unit id="post.image">
+                <source>ADD IMAGE</source>
+                <target>ADD IMAGE</target>
+            </trans-unit>
+             <trans-unit id="post.submit">
+                <source>SUBMIT</source>
+                <target>SUBMIT</target>
+            </trans-unit>
+            <trans-unit id="post.tag">
+                <source>TAG</source>
+                <target>TAG</target>
+            </trans-unit>
+
+              <trans-unit id="notification.new">
+                <source>NEW</source>
+                <target>NEW</target>
+            </trans-unit>
+
+            <trans-unit id="comment.head">
+                <source>Write Your Comment!</source>
+                <target>Write Your Comment!</target>
+            </trans-unit>
+            <trans-unit id="comment.modalDelete">
+                <source>Are You Sure To Delete This Comment?</source>
+                <target>Are You Sure To Delete This Comment?</target>
+            </trans-unit>
+             <trans-unit id="comment.modalUpdate">
+                <source>Update Your Comment!</source>
+                <target>Update Your Comment!</target>
+            </trans-unit>
+            <trans-unit id="comment.content">
+                <source>Content</source>
+                <target>Content</target>
+            </trans-unit>
+             <trans-unit id="comment.delete">
+                <source>DELETE</source>
+                <target>DELETE</target>
+            </trans-unit>
+              <trans-unit id="comment.reply">
+                <source>REPLY</source>
+                <target>REPLY</target>
+            </trans-unit>
+              <trans-unit id="comment.view">
+                <source>View the reply</source>
+                <target>View the reply</target>
+            </trans-unit>
+             <trans-unit id="comment.more">
+                <source>Show More</source>
+                <target>Show More</target>
+            </trans-unit>
+
+            <trans-unit id="notifications.none">
+                <source>You have not notifications</source>
+                <target>You have not notifications</target>
+            </trans-unit>
+
+            <trans-unit id="email.registration">
+                <source>email.registration</source>
+                <target><![CDATA[<h3>Welcome to the app!</h3>
+<p>Hello %name%! You've registered into the app!</p>
+<p>Please confirm account by clicking this
+    <a href="%confirm-link%">link</a>.
+</p>
+<p>To login, go to <a href="%login-link%">login page</a>.</p>
+<p>Thanks!</p>]]></target>
+            </trans-unit>
+
+            <trans-unit id="user.followers">
+                <source>Followers</source>
+                <target>{0} No followers|{1} Follower|]1,Inf[ %count% Followers</target>
+            </trans-unit>
+
+            <trans-unit id="user.following">
+                <source>Following</source>
+                <target>{0} Following no one|]0,Inf[ Following %count%</target>
+            </trans-unit>
+
+             <trans-unit id="filter.maxpost">
+                <source>Max Posts</source>
+                <target>Max Posts</target>
+            </trans-unit>
+             <trans-unit id="filter.maxlike">
+                <source>Max Likes</source>
+                <target>Max Likes</target>
+            </trans-unit>
+
+            <trans-unit id="filter.identity">
+                <source>Identity</source>
+                <target>Identity</target>
+            </trans-unit>
+
+
+        </body>
+    </file>
+</xliff>

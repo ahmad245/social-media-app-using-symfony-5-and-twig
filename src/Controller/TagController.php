@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Repository\PostRepository;
 use App\Repository\TagRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
@@ -15,5 +16,6 @@ class TagController extends AbstractController
     {
         return $this->json($repo->search($text),200,[],['groups'=>['tag']]);
     }
+    
     
 }

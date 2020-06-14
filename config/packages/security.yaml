@@ -20,6 +20,7 @@ security:
             form_login:
                login_path: account_login
                check_path: account_login
+               use_referer: true
 
             logout:
                 path: account_logout
