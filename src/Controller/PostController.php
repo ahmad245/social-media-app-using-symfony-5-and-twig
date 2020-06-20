@@ -42,6 +42,8 @@ class PostController extends AbstractController
     // $req->setLocale('fr');
   
   // dd(  $req->getSession()->get('_locale'));die;
+  $userMabyWantToFollowByCity=[];
+  $userMaby=[];
     $search = new Search();
     
     if ($req->query->get('page')) {
@@ -65,21 +67,25 @@ class PostController extends AbstractController
        // $posts = $repo->findByUsers($this->getUser()->getFollowing());
         $data=$repo->findByUsers($this->getUser()->getFollowing(),$limit, $offset);
         // $total=$data->count();
-
         $usersToFollow = $data->count() === 0 ? $userRepo->findByMoreThan5Post($this->getUser()) : [];
+        $userMaby=$userRepo->findBySameCity($this->getUser()->getFollowing(),$this->getUser()->getCity(),$this->getUser());
+        $userMabyWantToFollowByCity = count($userMaby) === 0 ? $userRepo->findByMoreThan5PostButNotFowwing($this->getUser()->getFollowing(),$this->getUser()) : $userMaby;
       } else {
        // $posts = $repo->findAllPost();
        $data=$repo->findAllPost($limit, $offset);
       //  $total=$data->count();
        
       }
+     
+   
     }
      $this->pagination->setEntityClass(Post::class)->setData($data)->setLimit($limit)->setPage($search->page)->setTotal($data->count());
     return $this->render('post/index.html.twig', [
       'posts' => $this->pagination,
       'usersToFollow' => $usersToFollow,
       'form' => $form->createView(),
-      'tags'=>$repoTags->popularTags()
+      'tags'=>$repoTags->popularTags(),
+      'MabyWantToFollow'=>$userMabyWantToFollowByCity
     ]);
   }
 
@@ -251,7 +257,7 @@ class PostController extends AbstractController
    * @param PostRepository $repo
    * @return void
    */
-  public function myPost(User $user, PostRepository $repo,Request $req)
+  public function myPost(User $user, PostRepository $repo,Request $req, UserRepository $userRepo,TagRepository $repoTags)
   {
     $search = new Search();
     
@@ -272,6 +278,8 @@ class PostController extends AbstractController
     } 
     else{
      $data= $repo->findMyPost($user,$limit, $offset);
+     $userMaby=$userRepo->findBySameCity($this->getUser()->getFollowing(),$this->getUser()->getCity(),$this->getUser());
+     $userMabyWantToFollowByCity = count($userMaby) === 0 ? $userRepo->findByMoreThan5PostButNotFowwing($this->getUser()->getFollowing(),$this->getUser()) : $userMaby;
     }
  
 
@@ -279,7 +287,9 @@ class PostController extends AbstractController
 
     return $this->render('post/index.html.twig', [
       'posts' =>  $this->pagination,
-      'form' => $form->createView()
+      'form' => $form->createView(),
+      'MabyWantToFollow'=>$userMabyWantToFollowByCity,
+      'tags'=>$repoTags->popularTags(),
     ]);
   }
 
@@ -291,9 +301,10 @@ class PostController extends AbstractController
    * @param PostRepository $repo
    * @return void
    */
-  public function tagPost(Tag $tag, PostRepository $repo,Request $req)
+  public function tagPost(Tag $tag, PostRepository $repo,Request $req, UserRepository $userRepo,TagRepository $repoTags)
   {
-   
+    $userMabyWantToFollowByCity=[];
+    $userMaby=[];
     $search = new Search();
     
     if ($req->query->get('page')) {
@@ -314,13 +325,23 @@ class PostController extends AbstractController
     else{
      $data= $repo->findByTags($tag->getId(),$limit, $offset);
     }
+    if ($this->getUser() instanceof User) {
+      // $posts = $repo->findByUsers($this->getUser()->getFollowing());
+     
+       // $total=$data->count();
+       $usersToFollow = $data->count() === 0 ? $userRepo->findByMoreThan5Post($this->getUser()) : [];
+       $userMaby=$userRepo->findBySameCity($this->getUser()->getFollowing(),$this->getUser()->getCity(),$this->getUser());
+       $userMabyWantToFollowByCity = count($userMaby) === 0 ? $userRepo->findByMoreThan5PostButNotFowwing($this->getUser()->getFollowing(),$this->getUser()) : $userMaby;
+     }
     // $posts=$tag->getPosts();
 
     $this->pagination->setEntityClass(Post::class)->setData($data)->setLimit($limit)->setPage($search->page)->setTotal($data->count());
 
     return $this->render('post/index.html.twig', [
       'posts' => $this->pagination,
-      'form' => $form->createView()
+      'form' => $form->createView(),
+      'MabyWantToFollow'=>$userMabyWantToFollowByCity,
+      'tags'=>$repoTags->popularTags(),
     ]);
   }
 }

@@ -1,24 +1,24 @@
 		<!-- Dropdown Structure -->
 			{% if app.user %}
 		<ul id="dropdown1" class="dropdown-content">
-		<li><a href="{{path('my_posts',{'id':app.user.id})}}">{{'My Posts'|trans}}</a></li>
-		<li><a href="{{path('my_profile',{id:app.user.id})}}">{{'My Profile'|trans}}</a></li>
-		<li><a href="{{path('account_edit',{id:app.user.id})}}">{{'Setting'|trans}}</a></li>
-		<li class="divider"></li>
-		<li><a href="#!">{{'Create Post'|trans}}</a></li>
+			<li><a href="{{path('my_posts',{'id':app.user.id})}}">{{'My Posts'|trans}}</a></li>
+			<li><a href="{{path('my_profile',{id:app.user.id})}}">{{'My Profile'|trans}}</a></li>
+			<li><a href="{{path('account_edit',{id:app.user.id})}}">{{'Setting'|trans}}</a></li>
+			<li class="divider"></li>
+			<li><a href="#!">{{'Create Post'|trans}}</a></li>
 		</ul>
 
 
 		<ul id="dropdown2" class="dropdown-content">
-		<li><a href="{{path('locale',{'id':'en'})}}">English</a></li>
-		<li><a href="{{path('locale',{'id':'fr'})}}">Frensh</a></li>
+			<li><a href="{{path('locale',{'id':'en'})}}">English</a></li>
+			<li><a href="{{path('locale',{'id':'fr'})}}">Frensh</a></li>
 		
 		</ul>
 		   {% endif %}
 		<nav>
 			<div class="nav-wrapper">
 				<a href="{{path('home')}}" class="brand-logo"></a>
-
+                 <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
 
 				<ul class="right hide-on-med-and-down">
 			         	
@@ -60,3 +60,42 @@
 				</ul>
 			</div>
 		</nav>
+
+
+		<ul class="sidenav" id="mobile-demo">
+     	{% if app.user %}
+
+						<li>
+							<a class="dropdown-trigger" href="#!" data-target="dropdown1">{{app.user.username}}<i class="material-icons right">arrow_drop_down</i></a>
+						</li>
+							<li>
+							<a class="dropdown-trigger" href="#!" data-target="dropdown2"><i class="material-icons left">language</i> language <i class="material-icons right">arrow_drop_down</i></a>
+						</li>
+						
+						<li>
+							
+
+								<a href="{{path('notification_all')}}"  id="notification">
+								
+								{{'Notifications'|trans}}
+								<span class="new badge" data-badge-caption="{{'new'|trans}}" id="notification-count"></span>
+							</a>
+						
+						</li>
+						<li>
+							<a href="{{path('account_logout')}}">{{'Logout'|trans}}</a>
+						</li>
+					{% else %}
+						<li>
+							<a href="{{path('account_register')}}">{{'Sign Up'|trans}}</a>
+						</li>
+						<li>
+							<a href="{{path('account_login')}}">{{'Sign In'|trans}}</a>
+						</li>
+						
+					{% endif %}
+
+
+					<!-- Dropdown Trigger -->
+
+  </ul>

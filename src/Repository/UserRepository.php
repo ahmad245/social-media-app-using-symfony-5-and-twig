@@ -63,6 +63,21 @@ class UserRepository extends ServiceEntityRepository
                    ->getQuery()
                    ->getResult();
     }
+    public function findByMoreThan5PostButNotFowwing($users,$user)
+    {
+        return $this->createQueryBuilder('u')
+        ->select('u ')
+        ->join('u.posts','up')
+        ->groupBy('u')
+        ->having('u != :user')
+        ->andHaving('u NOT IN (:users)')
+        ->orderBy('count(up)','DESC')
+        ->setParameter('user',$user)
+        ->setParameter('users',$users)
+        ->setMaxResults(5)
+        ->getQuery()
+        ->getResult();
+    }
 
     public function findByMoreThan15Post()
     {
@@ -85,6 +100,23 @@ class UserRepository extends ServiceEntityRepository
                   ->setParameter('user',"%{$user}%");
                   return $query->getQuery()
                                 ->getResult();
+
+    }
+
+    public function findBySameCity($users,$city,$user){
+       return $this->createQueryBuilder('u')
+                   ->select('u')
+                    ->where('u NOT IN (:users)')
+                    ->andWhere('u.city =:city')
+                    ->andWhere('u != :user')
+                    ->setParameter('users',$users)
+                    ->setParameter('city',$city)
+                    ->setParameter('user',$user)
+                    ->setMaxResults(5)
+                    ->getQuery()
+                    ->getResult();
+                  
+                    
 
     }
 

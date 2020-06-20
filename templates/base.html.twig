@@ -10,7 +10,7 @@
 		{% block stylesheets %}
 			<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 			<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-
+          {{ encore_entry_link_tags('app') }}
 		{% endblock %}
 
 		<!--Let browser know website is optimized for mobile-->
@@ -18,36 +18,16 @@
 	</head>
 	<body>
 	<style>
-		.card-title {
-			padding-top: 1rem;
-		}
-		.likeBtn {
-			
-		  
-		   background-color:transparent;
-		   border-style: none;
-		   
-		
-		}
-		.flexbox {
-			display: flex;
-			flew-wrap: wrap;
-			justify-content: center;
-			align-items: center;
-}
-.container,nav{
-	padding-left:95px;
-	width:100%;
-	padding-left:300px;
-}
-nav{
-	padding-left:300px;
-}
+	
 
 	</style>
 
      {% include "shared/_navbar.html.twig" %}
-     {% include "shared/_sidenav.html.twig" %}
+	 {% if app.user %}
+	      {% include "shared/_sidenav.html.twig" %}
+	 {% endif %}
+	 
+ 
          <div class="container">
 						
 		   {% block body %}
@@ -61,8 +41,11 @@ nav{
 			<script>
 ///////////////////////////////////////////////////////////////////////////////////////////
   document.addEventListener('DOMContentLoaded', function() {
+  var elems = document.querySelectorAll('.sidenav');
+    var instances = M.Sidenav.init(elems, {});
 
-	 
+  var collapsibleElem = document.querySelector('.collapsible');
+   var collapsibleInstance = M.Collapsible.init(collapsibleElem, {});
  
     var select = document.querySelectorAll('select');
     var selectinstances = M.FormSelect.init(select, {});

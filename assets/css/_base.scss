@@ -1,0 +1,50 @@
+html {
+    // This defines what 1rem is
+    //font-size: 62.5% !important; //1 rem = 10px; 10px/16px = 62.5%
+
+    // @include respond(tab-land) { // width < 1200?
+    //     font-size: 56.25%; //1 rem = 9px, 9/16 = 50%
+    // }
+
+    // @include respond(tab-port) { // width < 900?
+    //     font-size: 50%; //1 rem = 8px, 8/16 = 50%
+    // }
+    
+    // @include respond(big-desktop) {
+    //     font-size: 75%; //1rem = 12, 12/16
+    // }
+}
+
+
+// .sidenav li > a {
+  
+//     font-size: 1.4rem !important;
+//     font-weight: 500;
+//     height: 4.8rem !important;
+//     line-height: 4.8rem !important;
+//     padding: 0 3.2rem !important;
+// }
+
+// .chip {
+
+//     height: 3.2rem !important;
+//     font-size: 1.3rem !important;
+//     font-weight: 500;
+//     color: rgba(0,0,0,0.6);
+//     line-height: 3.2rem !important;
+//     padding: 0 1.2rem;
+//     border-radius: 1.6rem !important;
+//     background-color: #e4e4e4;
+//     margin-bottom: .5rem !important;
+//     margin-right: .5rem !important;
+// }
+
+// .btn, .btn-large, .btn-small, .btn-floating, .btn-large, .btn-small, .btn-flat {
+//     font-size: 1.4rem;
+// }
+// .btn, .btn-large, .btn-small, .btn-flat {
+//     height: 3.6rem;
+//     line-height: 3.6rem;
+//     padding: 0 1.6rem;
+   
+// }

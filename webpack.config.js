@@ -23,14 +23,10 @@ Encore
      * Each entry will result in one JavaScript file (e.g. app.js)
      * and one CSS file (e.g. app.css) if your JavaScript imports CSS.
      */
-    //.addEntry('app', './node_modules/materialize-css/dist/js/materialize.min.js')
-    // .addStyleEntry('css/app','./assets/css/app.css')
-    // .addEntry('js/acount/global','./assets/js/acount/global.js')
-    // .addEntry('js/acount/utile','./assets/js/acount/utile.js')
-    // .addEntry('js/acount/login','./assets/js/acount/login.js')
+    .addEntry('app', './assets/js/app.js')
     
-
-    
+    //.addEntry('page1', './assets/js/page1.js')
+    //.addEntry('page2', './assets/js/page2.js')
 
     // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.
     .splitEntryChunks()
@@ -59,7 +55,7 @@ Encore
     })
 
     // enables Sass/SCSS support
-    //.enableSassLoader()
+    .enableSassLoader()
 
     // uncomment if you use TypeScript
     //.enableTypeScriptLoader()
@@ -71,7 +67,7 @@ Encore
     // uncomment if you're having problems with a jQuery plugin
     //.autoProvidejQuery()
 
-    // uncomment if you use API Platform Admin (composer require api-admin)
+    // uncomment if you use API Platform Admin (composer req api-admin)
     //.enableReactPreset()
     //.addEntry('admin', './assets/js/admin.js')
 ;

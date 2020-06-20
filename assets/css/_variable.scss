@@ -1,0 +1,212 @@
+
+// FONT
+$default-font-size: 1.6rem;
+
+
+// GRID
+$grid-width: 114rem;
+$gutter-vertical: 8rem;
+$gutter-vertical-small: 6rem;
+$gutter-horizontal: 6rem;
+
+// ==========================================================================
+// Materialize variables
+// ==========================================================================
+//
+// Table of Contents:
+//
+//  1. Colors
+//  2. Badges
+//  3. Buttons
+//  4. Cards
+//  5. Carousel
+//  6. Collapsible
+//  7. Chips
+//  8. Date + Time Picker
+//  9. Dropdown
+//  10. Fonts
+//  11. Forms
+//  12. Global
+//  13. Grid
+//  14. Navigation Bar
+//  15. Side Navigation
+//  16. Photo Slider
+//  17. Spinners | Loaders
+//  18. Tabs
+//  19. Tables
+//  20. Toasts
+//  21. Typography
+//  22. Footer
+//  23. Flow Text
+//  24. Collections
+//  25. Progress Bar
+
+
+
+
+
+
+// 3. Buttons
+// ==========================================================================
+
+// Shared styles
+$button-border: none !default;
+
+$button-font-size: 1rem !default;
+$button-icon-font-size: 1.3rem !default;
+$button-height: 36px !default;
+$button-padding: 0 2rem !default;
+$button-radius: 2px !default;
+
+
+
+// Large buttons
+$button-large-icon-font-size: 1.6rem !default;
+$button-large-height: $button-height * 1.5 !default;
+
+
+
+
+$button-floating-size: 4rem !default;
+$button-floating-large-size: 5.6rem !default;
+$button-floating-radius: 50% !default;
+
+
+// 4. Cards
+// ==========================================================================
+
+$card-padding: 2.4rem !default;
+$card-bg-color: #fff !default;
+
+
+
+// 5. Carousel
+// ==========================================================================
+
+$carousel-height: 40rem !default;
+
+
+
+// 6. Collapsible
+// ==========================================================================
+
+$collapsible-height: 3rem !default;
+
+
+
+
+
+// 8. Date + Time Picker
+// ==========================================================================
+
+$datepicker-display-font-size: 2.8rem;
+
+
+
+
+// 9. Dropdown
+// ==========================================================================
+
+$dropdown-item-height: 5rem !default;
+
+
+
+
+// 11. Forms
+// ==========================================================================
+
+// Text Inputs + Textarea
+$input-height: 3rem !default;
+
+$input-font-size: 1rem !default;
+$input-margin-bottom: 20px;
+
+
+
+
+// Range
+$range-height: 1.4rem !default;
+$range-width: 1.4rem !default;
+$track-height: 3px !default;
+
+
+
+
+
+
+// 12. Global
+// ==========================================================================
+
+// Media Query Ranges
+$small-screen-up: 601px !default;
+$medium-screen-up: 993px !default;
+$large-screen-up: 1201px !default;
+$small-screen: 600px !default;
+$medium-screen: 992px !default;
+$large-screen: 1200px !default;
+
+$medium-and-up: "only screen and (min-width : #{$small-screen-up})" !default;
+$large-and-up: "only screen and (min-width : #{$medium-screen-up})" !default;
+$extra-large-and-up: "only screen and (min-width : #{$large-screen-up})" !default;
+$small-and-down: "only screen and (max-width : #{$small-screen})" !default;
+$medium-and-down: "only screen and (max-width : #{$medium-screen})" !default;
+$medium-only: "only screen and (min-width : #{$small-screen-up}) and (max-width : #{$medium-screen})" !default;
+
+
+// 13. Grid
+// ==========================================================================
+
+$num-cols: 12 !default;
+$gutter-width: 1.5rem !default;
+$element-top-margin: $gutter-width/3 !default;
+$element-bottom-margin: ($gutter-width*2)/3 !default;
+
+
+// 14. Navigation Bar
+// ==========================================================================
+
+$navbar-height: 6.4rem !default;
+$navbar-line-height: $navbar-height !default;
+$navbar-height-mobile: 5.6rem !default;
+$navbar-line-height-mobile: $navbar-height-mobile !default;
+$navbar-font-size: 1rem !default;
+$navbar-font-color: #fff !default;
+$navbar-brand-font-size: 2.1rem !default;
+
+// 15. Side Navigation
+// ==========================================================================
+
+$sidenav-font-size: 1.4rem !default;
+$sidenav-font-color: rgba(0,0,0,.87) !default;
+$sidenav-bg-color: #fff !default;
+$sidenav-padding: 1.6rem !default;
+$sidenav-item-height: 4.8rem !default;
+$sidenav-line-height: $sidenav-item-height !default;
+
+
+
+
+
+
+
+
+// ==========================================================================
+
+$toast-height: 4.8rem !default;
+
+
+
+// 21. Typography
+// ==========================================================================
+
+// Header Styles
+$h1-fontsize: 4.2rem !default;
+$h2-fontsize: 3.56rem !default;
+$h3-fontsize: 2.92rem !default;
+$h4-fontsize: 2.28rem !default;
+$h5-fontsize: 1.64rem !default;
+$h6-fontsize: 1rem !default;
+
+
+
+

@@ -1,0 +1,125 @@
+@media #{$small-and-down} {
+    .flex-s {
+        display: flex;
+        flex-direction: column; /* Stack on top */
+      }
+      .box-a {
+        order: 2; /* Go down, bring Box B up */
+      }
+      
+    .container,nav{
+      
+        width:100%;
+        padding-left:0px;
+    }
+    nav{
+        padding-left:0px;
+    }
+   
+  
+  }
+  @media #{$medium-and-up} {
+    // styles for medium screens and larger
+    // html,
+    // body {
+    //   font-size: 80%;
+    // }
+    
+  
+  }
+  @media #{$medium-and-down} {
+    // styles for medium screens and down
+    // html,
+    // body {
+    //   font-size: 70%;
+    // }
+    .container,nav{
+      
+        width:100%;
+        padding-left:0px;
+    }
+    nav{
+        padding-left:0px;
+    }
+
+  }
+  @media #{$large-and-up} {
+    // styles for large screens and up
+    // html,
+    // body {
+    //   font-size: 100%;
+    // }
+  }
+  @media #{$extra-large-and-up} {
+    // styles for extra large screens and up
+    // html,
+    // body {
+    //   font-size: 100%;
+    // }
+  }
+
+
+  html {
+    // This defines what 1rem is
+  //  font-size: 62.5%; //1 rem = 10px; 10px/16px = 62.5%
+
+    @include respond(tab-land) { // width < 1200?
+        font-size:65%; //1 rem = 9px, 9/16 = 50%
+
+    }
+
+    @include respond(tab-port) { // width < 900?
+        font-size: 60%; //1 rem = 8px, 8/16 = 50%
+    }
+    
+    @include respond(big-desktop) {
+        font-size: 80%; //1rem = 12, 12/16
+    }
+}
+.btn-small {
+    height: 2.025rem;
+    line-height: 2.025rem;
+    font-size: .8rem;
+}
+.btn, .btn-large, .btn-small, .btn-flat {
+    border: none;
+    border-radius: 2px;
+    display: inline-block;
+    height: 2.25rem;
+    line-height: 2.25rem;
+    padding: 0 1rem;
+    text-transform: uppercase;
+    vertical-align: middle;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.chip {
+    display: inline-block;
+    height:  2.25rem;
+    font-size: .8rem;
+    font-weight: 500;
+    color: rgba(0,0,0,0.6);
+    line-height:  2.25rem;
+    padding: 0 .75rem;
+    border-radius: 1rem;
+    background-color: #e4e4e4;
+    margin-bottom: .3rem;
+    margin-right: .3rem;
+}
+
+
+
+.btn i, .btn-large i, .btn-small i, .btn-floating i, .btn-large i, .btn-small i, .btn-flat i {
+    font-size: 1.3rem;
+   
+}
+i.left {
+
+    margin-right: .9rem;
+}
+.material-icons {
+  
+    font-size: 1.5rem;
+  
+
+}

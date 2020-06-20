@@ -29,8 +29,8 @@
 {% endblock %}
 {% block body %}
 
-	<div class="row">
-	<div class="col s8">
+	<div class="row flex-s">
+	<div class="col s12 m8 lg8 box-a">
 			
 				{% for message in app.flashes('success') %}
 					<div class=" center green">
@@ -73,7 +73,7 @@
 
 			</div>
 	
-		<div class="col s4">
+		<div class="col s12 m4 lg4 box-b">
 			
 					<ul class="collapsible">
 						<li>
@@ -99,7 +99,19 @@
 								
 							{% endfor %}
 		            </div>
-			
+                     {% if MabyWantToFollow|length > 0 %}
+					 <div class="card-panel  center">
+					  <ul class="collection ">
+						
+							
+								{% for userMabyToFollow in MabyWantToFollow %}
+								   	{% include "post/following.html.twig" with {'following':userMabyToFollow} %}
+						    	{% endfor %}
+							
+						</ul>
+		                	
+		            </div>
+			{% endif %}
 		</div>
 		
 	</div>
