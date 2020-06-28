@@ -5,7 +5,7 @@
 
 {% block stylesheets %}
 	{{parent()}}
-	<link rel="stylesheet" href="/account/login.css">
+	{# <link rel="stylesheet" href="/account/login.css"> #}
 	<link rel="stylesheet" href="/account/intl-tel-input/build/css/intlTelInput.min.css">
 	<style>
 		.card-title {
@@ -15,12 +15,15 @@
 			width:100px;
 			height:100px;
 		}
+		.container{
+		padding:0px;
+	}
 	</style>
 {% endblock %}
 
 {% block body %}
 
-	<div class="container">
+	
 		<div class="row">
 			<div class="col s10 offset-s1">
 				<div class="card">
@@ -44,7 +47,7 @@
 
 				</div>
 			</div>
-		</div>
+		
 
 	{% endblock %}
 

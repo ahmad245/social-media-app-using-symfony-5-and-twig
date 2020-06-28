@@ -5,26 +5,11 @@
 {% block stylesheets %}
 
 	{{parent()}}
-	<link rel="stylesheet" href="/css/post/postCard.css">
-	<link rel="stylesheet" href="/css/component/spinner.css">
+	{# <link rel="stylesheet" href="/css/post/postCard.css">
+	<link rel="stylesheet" href="/css/component/spinner.css"> #}
 	<style>
-		.card-title {
-			padding-top: 1rem;
-		}
-		.likeBtn {
 
 
-			background-color: transparent;
-			border-style: none;
-
-
-		}
-		.flexbox {
-			display: flex;
-			flew-wrap: wrap;
-			justify-content: center;
-			align-items: center;
-		}
 	</style>
 {% endblock %}
 {% block body %}
@@ -37,11 +22,11 @@
 						{{message}}
 					</div>
 				{% endfor %}
-				{% if app.user %}
+				{# {% if app.user %}
 					<a href={{path('post_add')}} class="btn-floating btn-large waves-effect waves-light red postAdd">
 						<i class="material-icons">add</i>
 					</a>
-				{% endif %}
+				{% endif %} #}
 
 
 				{% if usersToFollow is defined and  usersToFollow|length > 0 %}
@@ -91,7 +76,7 @@
 
 					</ul>
 					  <div class="card-panel  center">
-					  
+					   <h6 >Most populer tags</h6>
 		                	{% for tag in tags %}
 							<div class="chip teal lighten-2">
 							<a href="{{path("post_tag",{'id':tag.tags.id})}}" class="tag">{{tag.tags.name}}</a>
@@ -102,10 +87,11 @@
                      {% if MabyWantToFollow|length > 0 %}
 					 <div class="card-panel  center">
 					  <ul class="collection ">
-						
+						  <li class="collection-header"><h6>Who to follow</h6></li>
 							
 								{% for userMabyToFollow in MabyWantToFollow %}
 								   	{% include "post/following.html.twig" with {'following':userMabyToFollow} %}
+									  
 						    	{% endfor %}
 							
 						</ul>

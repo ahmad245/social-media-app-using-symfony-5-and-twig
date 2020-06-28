@@ -44,7 +44,8 @@ class SettingType extends AbstractType
             'allow_delete' => true,
             'download_uri' => true,
              'image_uri' => false,
-             'label'=>false
+             'label'=>false,
+            
              
          
             // 'asset_helper' => true,

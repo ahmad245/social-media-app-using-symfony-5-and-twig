@@ -2,7 +2,20 @@
 {% form_theme form _self %}
 {% block title %}Hello PostController!
 {% endblock %}
+{% block stylesheets %}
 
+	{{parent()}}
+	{# <link rel="stylesheet" href="/css/post/postCard.css">
+	<link rel="stylesheet" href="/css/component/spinner.css"> #}
+	<style>
+    img{
+         display:none !important;
+     }
+     .img-block {
+   display: block!important;
+ }
+  </style>
+  {% endblock %}
 {% block body %}
 	<div class="row">
 		<div class="col s8 offset-s2">
@@ -57,7 +70,8 @@
     </div>
    
      <div class="col s2">
-       <button class="red delete" data-target="#block_{{id}}" type="button" id="delete{{id}}"> x</button>
+     {# <button class="btn-floating btn-small  waves-effect waves-light red  delete" data-target="#block_post_images_0" type="button" id="deletepost_images_0"> <i class="material-icons">clear</i></button> #}
+       <button class="btn-floating btn-small  waves-effect waves-light red delete" data-target="#block_{{id}}" type="button" id="delete{{id}}"> x</button>
     </div>
      
    </div>      
@@ -97,6 +111,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 reader.onload = function (e) {
                     // get loaded data and render thumbnail.
                     document.getElementById(`image_ahmad_post_images_${index.length}`).src = e.target.result;
+                   document.getElementById(`image_ahmad_post_images_${index.length}`).classList.add('img-block')
                     elemsImage = document.querySelectorAll('.materialboxed');
                    instanceselemsImage = M.Materialbox.init(elemsImage, {});
                 };
@@ -163,7 +178,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const onInputChip = (el) => {
 
         chipsList = [];
-        console.log(el.keyCode);
+       
         if (el.keyCode == 13 || el.keyCode == 8) {
 
             let chips = document.querySelectorAll('.chip');
@@ -196,7 +211,7 @@ document.addEventListener('DOMContentLoaded', function() {
             chipsList.push(chip.textContent.replace('close', ''));
 
         })
-        console.log(chipsList);
+      
         inputHidden.value = chipsList.join(',');
     }
 

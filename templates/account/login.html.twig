@@ -5,11 +5,15 @@
 
 {% block stylesheets %}
 	{{parent()}}
-	<link rel="stylesheet" href="/account/login.css">
+	<style>
+	.container{
+		padding:0px;
+	}
+	</style>
+	{# <link rel="stylesheet" href="/account/login.css"> #}
 {% endblock %}
 
 {% block body %}
-	<div class="had-container">
 
 
 		<div class="row">
@@ -53,7 +57,7 @@
 
 			</div>
 		</div>
-	</div>
+	
 </div></div><!-- fin del .container -->{% endblock %}
 {% block javascripts %}
 {{parent()}}

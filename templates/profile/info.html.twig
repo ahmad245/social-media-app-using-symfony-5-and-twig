@@ -1,5 +1,17 @@
 
 	<span class="card-title">{{user.fullname}}
+	{% if  user is not same as(app.user) %}
+	
+	
+	
+	{% if   app.user.isFollowing(user) %}
+									<a href="{{path('unfollowing',{'id':user.id})}}" class="waves-effect waves-light btn-small right">
+										<i class="material-icons left">person_outline</i>Un Following</a>
+								{% else %}
+									<a href="{{path('following',{'id':user.id})}}" class="waves-effect waves-light btn-small right">
+										<i class="material-icons left">person_add</i>Following</a>
+	{% endif %}
+	{% endif %}
 	</span>
 	<span>{{user.username}}
 	</span>

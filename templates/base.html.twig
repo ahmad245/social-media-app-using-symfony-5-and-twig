@@ -18,17 +18,26 @@
 	</head>
 	<body>
 	<style>
-	
+	.user-view{
+		display:flex;
+		flex-direction:column;
+		justify-content:center;
+		align-items:center;
+	}
 
 	</style>
 
-     {% include "shared/_navbar.html.twig" %}
+    {% if  app.user==null %}
+	 {% include "shared/_navbar.html.twig" %}
+	{% endif %}
+	
 	 {% if app.user %}
 	      {% include "shared/_sidenav.html.twig" %}
 	 {% endif %}
 	 
  
          <div class="container">
+		 
 						
 		   {% block body %}
 		   
@@ -41,8 +50,11 @@
 			<script>
 ///////////////////////////////////////////////////////////////////////////////////////////
   document.addEventListener('DOMContentLoaded', function() {
-  var elems = document.querySelectorAll('.sidenav');
-    var instances = M.Sidenav.init(elems, {});
+	  	var elemsdropdown = document.querySelectorAll('.dropdown-trigger');
+				var instancesdropdown = M.Dropdown.init(elemsdropdown, {});
+
+  var elemssidenav = document.querySelectorAll('.sidenav');
+    var instancessidenav = M.Sidenav.init(elemssidenav, {});
 
   var collapsibleElem = document.querySelector('.collapsible');
    var collapsibleInstance = M.Collapsible.init(collapsibleElem, {});
@@ -65,8 +77,8 @@
 	   var materialboxed = document.querySelectorAll('.materialboxed');
     var instancesmaterialboxed = M.Materialbox.init(materialboxed, {});
 
-    var elems = document.querySelectorAll('.modal');
-    var instances = M.Modal.init(elems, {});
+    var elemsmodal = document.querySelectorAll('.modal');
+    var instancesmodal = M.Modal.init(elemsmodal, {});
 
 	  var countryElems = document.getElementById('country');
      var countrySelect = M.FormSelect.init(countryElems, {});
@@ -119,10 +131,7 @@
 			serchAuto.addEventListener('keyup',debounceUserSearch(onKeyUpUserSearch))
   });
   ///////////////////////////////////////////////////////////////////////////
-				document.addEventListener('DOMContentLoaded', function () {
-				var elems = document.querySelectorAll('.dropdown-trigger');
-				var instances = M.Dropdown.init(elems, {});
-				});
+			
 				let url ="{{ path('notification') }}";
 				const fetchData = () => {
 				    axios.get(url).then((response) => {
@@ -165,7 +174,7 @@
 		 console.log(response.data)
 			
 			likeCount.innerText = response.data.likes;
-			icon.innerText = response.data.message == 'added' ? 'favorite_border ' : 'favorite';
+			icon.innerText = response.data.message == 'added' ? 'favorite ' : 'favorite_border';
 
 			}).catch((err) => {
 			console.log(err)
@@ -181,23 +190,21 @@
 			el.addEventListener('click', handelLike)
 			})
 
+           {# document.getElementById('change-color').addEventListener('click',()=>{
+			 let btns= document.getElementsByTagName("*");
+			 console.log(btns)
+			Array.from(btns).forEach((el)=>{
+				 if(el.classList.contains('teal')){
+                   el.classList.remove('teal');
+                   el.classList.add('red');
+                   el.classList.add('lighten-2');
+				 }
+				
+			 })
+
+		   }) #}
 
 
-			//////////////////////lang
-			{# let changLocale=(urlLocale)=>{
-                return axios.get(urlLocale).then((res)=>{
-					  return res;
-				})
-			}
-			let lang=document.getElementById('lang');
-			lang.addEventListener('change',async(e)=>{
-				let urlLocale="{{path('locale',{id:'localeId'})}}";
-				console.log(e.target.value);
-				urlLocale=urlLocale.replace('localeId',e.target.value);
-				$result=await changLocale(urlLocale);
-				console.log($result);
-
-			}) #}
 			
 		    </script>
 		{% endblock %}

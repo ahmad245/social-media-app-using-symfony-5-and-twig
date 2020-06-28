@@ -1,34 +1,39 @@
-	<div class="col s8 offset-s2">
+	<div class="col  s12 m8 l8 offset-m2 offset-l2">
 					<div class="card-panel ">
 						<div class="row post-body">
-							<div class="col s2">
+							<div class="col s1">
 								<div class="user-img">
 									<img src="/images/ah.jpg" alt="" class="circle responsive-img">
 								</div>
 							</div>
-							<div class="col s4">
+							<div class="col s7">
 								<a href="{{path('post_user',{'id':post.user.id})}}">
-									<strong class=" black-text">
-										{{comment.user.username}}
+									<strong class="postHeader">
+										{{comment.user.fullname}} .
 									</strong>
+									<small class="date">
+					                     	{{comment.createdAt|ago}}
+					               </small>
 								</a>
 
 
 							</div>
-							<div class="col s2">
+							{# <div class="col s2">
 								<small class=" black-text">
 									{{comment.createdAt|date('d/m/Y')}}
 								</small>
-							</div>
-							<div class="col s4 right-align">
+							</div> #}
+							<div class="col s4 right ">
 								{% if app.user and app.user==comment.user %}
                                        
 									{# edit #}
-									<a href="#{{comment.id}}editComment" class="waves-effect waves-light btn-small red lighten-2 modal-trigger " >
+									<a href="#{{comment.id}}editComment" class="waves-effect waves-light  btn-floating  btn-small  lighten-2 modal-trigger " >
 										<i class="material-icons iconis  prefix">edit</i>
 									</a>
 									{# delete #}
-									<a href="#{{comment.id}}Comment" class="waves-effect waves-light modal-trigger btn-small red lighten-3 post-delete">delete</a>
+									<a href="#{{comment.id}}Comment" class="waves-effect waves-light   btn-floating modal-trigger btn-small  lighten-3 post-delete">
+									  <i class="material-icons iconis  prefix">delete</i>
+									</a>
 								{% endif %}
 							
 
@@ -43,8 +48,8 @@
 
 							{# /////////////////////////////////////////////////////////////////////////////////////////////////////////////// #}
 							{# Replay Comment #}
-							<div class="col s3  black-text right">
-								<a class="waves-effect waves-light btn-small red lighten-2 modal-trigger reply " data-email={{comment.user.email}} href="#{{comment.id}}replyComment">
+							<div class="col s3  right ">
+								<a class="waves-effect waves-light center-align  lighten-2 modal-trigger reply " data-email={{comment.user.email}} href="#{{comment.id}}replyComment">
 									<i class="material-icons iconis  prefix">reply</i>
 									{{'REPLY'|trans}}
 								</a>
@@ -67,10 +72,10 @@
 						{# //////////////////////////////////////////////////////////////////////  #}
 						<div class="row">
 							{% if comment.commentReplies|length > 0 %}
-								<div class="col s12  right-align">
+								<div class="col s12 ">
 									<ul class="collapsible">
 										<li>
-											<div class="collapsible-header right-align black-text">
+											<div class="collapsible-header  black-text">
 
 												<i class="material-icons">replay</i>
 												{{'View the reply'|trans}}{{comment.commentReplies|length}}

@@ -25,7 +25,7 @@
 {% block body %}
 
 	<div class="row" id="comments">
-		<div class="col s8 offset-s2">
+		<div class="col s12 m8 l8 offset-m2 offset-l2">
 			{% include "post/_postCard.html.twig" with {'post':post} %}
 		</div>
 		{% if comments|length>0 %}

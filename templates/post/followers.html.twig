@@ -1,7 +1,8 @@
  
-    <li class="collection-item avatar">
+    <li class="collection-item avatar ">
       <img src="/images/ah.jpg" alt="" class="circle">
-       <a href="{{path('post_user',{'id':follower.id})}}">   <p>{{follower.username}}  </p> </a>
+      <span class="title">{{follower.fullname}} </span>
+       <p>  <a href="{{path('post_user',{'id':follower.id})}}"> {{follower.username}} </a></p>
     
     
     </li>

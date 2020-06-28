@@ -4,34 +4,45 @@
 	<div class="col s12">
 		<div class="card-panel hoverable ">
 			<div class="row post-body">
-				<div class="col s1">
-					<div class="user-img">
-						<img src="/images/ah.jpg" alt="" class="circle responsive-img">
+				{# <div class="col s1">
+					<div class="">
+						
 					</div>
-				</div>
-				<div class="col s4">
-					<a href="{{path('my_profile',{id:post.user.id})}}">
-						<strong class="">
-							{{post.user.username}}
+				</div> #}
+				<div class="col s8 flexbox-header">
+				  {% if post.user.picture %}
+				  {# |imagine_filter('userImage') #}
+				  	<img src="{{vich_uploader_asset(post.user,'file') }}" alt="" class="circle responsive-img user-img">
+					  {% else %}
+						  	<i class="material-icons">mood</i>
+				  {% endif %}
+				  
+			    
+					<a href="{{path('my_profile',{id:post.user.id})}}" class="m-r-header">
+						<strong class="postHeader">
+							{{post.user.fullname}} .
 						</strong>
+							<small class="date">
+						{{post.createAt|ago}}
+					</small>
 					</a>
 				</div>
-				<div class="col s3">
+				{# <div class="col s3">
 					<small class="">
-						{{post.createAt|date('d/m/Y')}}
+						{{post.createAt|ago}}
 					</small>
-				</div>
+				</div> #}
 				<div class="col s4 right-align">
 					{% if is_granted('edit',post) %}
 
-						<a href="{{path('post_edit',{'id':post.id})}}" class="waves-effect waves-light btn-small red lighten-3 post-edit">edit</a>
+						<a href="{{path('post_edit',{'id':post.id})}}" class="waves-effect waves-light btn-small  lighten-3 post-edit">edit</a>
 
 					{% endif %}
 					{% if is_granted('delete',post) %}
 
                      
 					  
-						<a href="#{{post.id}}{% if type is defined %}{{type}}{% endif %}" class="waves-effect waves-light modal-trigger btn-small red lighten-3 post-delete">delete</a>
+						<a href="#{{post.id}}{% if type is defined %}{{type}}{% endif %}" class="waves-effect waves-light modal-trigger btn-small  lighten-3 post-delete">delete</a>
 					{% endif %}
 
 
@@ -40,12 +51,12 @@
 			</div>
 			<div class="row">
 				<a href="{{path('post_show',{'id':post.id})}}">
-					<div class="col  ">
+					<div class="col  postText">
 						{% if app.request.get('id') and app.request.attributes.get('_route')=='post_show' %}
 							{{post.content}}
 						{% else %}
 							{{post.content | str(100)}}
-							read more ...
+						<span class="date">	Read more ...</span>
 						{% endif %}
 
 
@@ -78,7 +89,7 @@
 			
 			
 			{% if post.tags|length >0 %}
-
+                        
 				<div class="row">
 					{% for tag in post.tags %}
 						<div class="chip teal lighten-2">
@@ -91,13 +102,13 @@
 
 			{% if app.user %}
 				<div class="card-footer">
-					<button data-href="{{path('like',{'id':post.id})}}" class=" btn-small waves-effect waves-light  like">
+					<button data-href="{{path('like',{'id':post.id})}}" class="  like ">
 						{% if  post.isLikedBy(app.user) %}
 							<i class="material-icons iconis res prefix">
-								favorite_border</i>
+								favorite</i>
 							<span id="likeCount">{{post.likeBy|length}}</span>
 						{% else %}
-							<i class="material-icons iconis res prefix">favorite</i>
+							<i class="material-icons iconis res prefix">favorite_border</i>
 							<span id="likeCount">{{post.likeBy|length}}</span>
 						{% endif %}
 
@@ -114,8 +125,8 @@
 						
 					{% endfor %}
 
-					<a class="waves-effect waves-light btn  modal-trigger " href="#{{post.id}}addComment{% if type is defined %}{{type}}{% endif %}">
-						<i class="material-icons iconis  prefix">mode_comment</i> {{totalComment}}
+					<a class="comment-icon  modal-trigger " href="#{{post.id}}addComment{% if type is defined %}{{type}}{% endif %}">
+						<i class="material-icons iconis  prefix">insert_comment</i> {{totalComment}}
 					</a>
 
 					<!-- Modal Structure -->

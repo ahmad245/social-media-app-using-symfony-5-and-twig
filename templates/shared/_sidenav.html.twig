@@ -1,46 +1,83 @@
 <ul id="slide-out" class="sidenav sidenav-fixed">
 	<li>
-		<div class="user-view">
-			
-			<a href="#user"><img class="circle" src="/images/ah.jpg"></a>
-			<a href="#name">
+		<div class="user-view center-align">
+
+			<a href="{{path('my_profile',{id:app.user.id})}}" class="center-align">
+			  {% if app.user.picture %}
+				  	<img src="/images/user/{{ app.user.picture}}" alt="" class="circle responsive-img user-img">
+					  {% else %}
+						  	<i class="material-icons">mood</i>
+				  {% endif %}
+			  
+			   </a>
+			<a href="{{path('my_profile',{id:app.user.id})}}">
 				<span class=" name">{{app.user.fullname}}</span>
 			</a>
-			<a href="#email">
+			<a href="{{path('my_profile',{id:app.user.id})}}">
 				<span class=" email">{{app.user.username}}</span>
 			</a>
 		</div>
 	</li>
-	
+
 	<li>
 		<div class="divider"></div>
 	</li>
 	<li>
-       <a href="{{path('home')}}" ><i class="material-icons">home</i>Home</a>
-    </li>
-	<li>
-		
-		<a href="#!"><i class="material-icons">create</i>{{'Create Post'|trans}}</a>
+		<a href="{{path('home')}}">
+			<i class="material-icons">home</i>Home</a>
 	</li>
 	<li>
-		
-		<a href="{{path('my_posts',{'id':app.user.id})}}"><i class="material-icons">list</i>{{'My Posts'|trans}}</a>
+
+		<a href="{{path('post_add')}} ">
+			<i class="material-icons">create</i>
+			{{'Create Post'|trans}}</a>
 	</li>
 	<li>
-	
-		<a href="{{path('my_profile',{id:app.user.id})}}"><i class="material-icons">account_circle</i>{{'My Profile'|trans}}</a>
+
+		<a href="{{path('my_posts',{'id':app.user.id})}}">
+			<i class="material-icons">list</i>
+			{{'My Posts'|trans}}</a>
 	</li>
 	<li>
-		
-		<a href="{{path('account_edit',{id:app.user.id})}}"><i class="material-icons">settings_applications</i>{{'Setting'|trans}}</a>
+
+		<a href="{{path('my_profile',{id:app.user.id})}}">
+			<i class="material-icons">account_circle</i>
+			{{'My Profile'|trans}}</a>
 	</li>
 	<li>
-		
+
+		<a href="{{path('account_edit',{id:app.user.id})}}">
+			<i class="material-icons">settings_applications</i>
+			{{'Setting'|trans}}</a>
+	</li>
+	<li>
+
 		<a href="{{path('notification_all')}}" id="notification">
 
-			<i class="material-icons">notifications</i>{{'Notifications'|trans}}
+			<i class="material-icons">notifications</i>
+			{{'Notifications'|trans}}
 			<span class="new badge" data-badge-caption="{{'new'|trans}}" id="notification-count"></span>
 		</a>
 	</li>
+	{% if app.user %}
+		<li>
+			<a href="{{path('account_logout')}}"><i class="material-icons">power_settings_new</i>{{'Logout'|trans}}</a>
+		</li>
+			</li>
+							<li>
+							<a class="dropdown-trigger" href="#!" data-target="dropdown2"><i class="material-icons left">language</i> language <i class="material-icons right">arrow_drop_down</i></a>
+						</li>
+	
+
+	{% endif %}
+
 </ul>
-<a href="#" data-target="slide-out" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+<a href="#" data-target="slide-out" class="sidenav-trigger btn-floating btn-large waves-effect waves-light menu">
+	<i class="material-icons">menu</i>
+</a>
+
+<ul id="dropdown2" class="dropdown-content">
+			<li><a href="{{path('locale',{'id':'en'})}}">English</a></li>
+			<li><a href="{{path('locale',{'id':'fr'})}}">Frensh</a></li>
+		
+		</ul>

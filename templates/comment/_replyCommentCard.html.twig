@@ -1,33 +1,39 @@
 <div class="card-panel ">
 														<div class="row post-body">
-															<div class="col s2">
+														<img src="/images/ah.jpg" alt="" class="circle responsive-img col s1">
+															{# <div class="col s1">
 																<div class="user-img">
-																	<img src="/images/ah.jpg" alt="" class="circle responsive-img">
+																	
 																</div>
-															</div>
-															<div class="col s4">
+															</div> #}
+															<div class="col s7 ">
 																<a href="{{path('post_user',{'id':post.user.id})}}">
-																	<strong class=" black-text">
-																		{{replyComment.user.username}}
+																	<strong class="postHeader">
+																		{{replyComment.user.username}} .
 																	</strong>
+																	<small class="date">
+																	{{replyComment.createdAt|ago}}
+																</small>
 																</a>
 
 
 															</div>
-															<div class="col s2">
+															{# <div class="col s2">
 																<small class=" black-text">
 																	{{replyComment.createdAt|date('d/m/Y')}}
 																</small>
-															</div>
-															<div class="col s4 right-align">
+															</div> #}
+															<div class="col s4 right">
 																{% if app.user and app.user==replyComment.user %}
 
 																	{# edit #}
-																	<a class="waves-effect waves-light btn-small red lighten-2 modal-trigger " href="#{{replyComment.id}}editReplayComment">
+																	<a class="waves-effect waves-light btn-floating btn-small  lighten-2 modal-trigger " href="#{{replyComment.id}}editReplayComment">
 																		<i class="material-icons iconis  prefix">edit</i>
 																	</a>
 																	{# delete #}
-																	<a href="#{{replyComment.id}}deleteReplayComment" class="waves-effect waves-light modal-trigger btn-small red lighten-3 post-delete">delete</a>
+																	<a href="#{{replyComment.id}}deleteReplayComment" class="waves-effect waves-light btn-floating modal-trigger btn-small  lighten-3 post-delete">
+																	   <i class="material-icons iconis  prefix">delete</i>
+																	</a>
 																{% endif %}
 																<!-- Modal Structure -->
 																<div id="{{replyComment.id}}editReplayComment" class="modal">

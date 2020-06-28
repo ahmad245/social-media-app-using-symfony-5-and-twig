@@ -1,0 +1,37 @@
+# See dos how to configure the bundle: https://symfony.com/doc/current/bundles/LiipImagineBundle/basic-usage.html
+liip_imagine:
+    # # valid drivers options include "gd" or "gmagick" or "imagick"
+    # driver: "gd"
+    
+   
+           
+    # loaders:
+    #     default:
+    #         filesystem:
+    #             data_root: public/images/user
+               
+    filter_sets: 
+        # cache : ~
+        ccc: # The name of the filter, can be later used in the twig template
+            quality: 75 # Compression quality, this image will be 75% the quality
+            filters: # These are the filters of the filter set, many filters can be applied
+               # Scale and shrink the image to the given size, with a possible crop of the image
+               
+               thumbnail  : { size : [120, 90], mode : outbound }
+                    # mode: outbound
+
+        # Shrink the image to 350px wide, the image will keep aspect ratio and adapt the height accordingly
+        small:
+            quality: 80
+            filters:
+                relative_resize:
+                    widen: 350
+
+        # Shrink/upscale the image to 800px of height, with full quality
+        big:
+            filters:
+                relative_resize:
+                    heighten: 800
+                    # Will allow smaller images to take 800px of height, 
+                    # width will change accordingly since aspect ration is still valid.
+                    allow_upscale: true 

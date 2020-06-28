@@ -9,6 +9,11 @@
 		.img-profile {
 			height: 30rem !important;
 		}
+
+		.border{
+			padding-top:1rem;
+			border-bottom:1px solid #039be5;
+		}
 		.spinner {
     position: fixed;
     top: 0;
@@ -104,18 +109,22 @@
 		<div class="col s12 m12">
 			<div class="card">
 				<div class="card-image">
-					<img class="responsive-img img-profile" src="/images/ah.jpg">
+				  {% if user.picture %}
+				  	<img src="/images/user/{{user.picture}}" alt="" class=" responsive-img  img-profile">
+					 
+				  {% endif %}
+				
 				</div>
 				<div class="card-content">
 					{% include "profile/info.html.twig" with {'user':user} %}
         </div>
         <div class="col s3">
         
-									<a href="{{path('my_profile_follow',{'userId':user.id,'id':1})}}" class="waves-effect waves-light btn-small">
+									<a href="{{path('my_profile_follow',{'userId':user.id,'id':1})}}" class="waves-effect waves-light border">
 										<i class="material-icons left">person_outline</i>{{user.following|length |default('0')}} Following</a>	
         </div>
          <div class="col s3">
-          		<a href="{{path('my_profile_follow',{'userId':user.id,'id':0})}}" class="waves-effect waves-light btn-small">
+          		<a href="{{path('my_profile_follow',{'userId':user.id,'id':0})}}" class="waves-effect waves-light border">
 										<i class="material-icons left">person_add</i>{{user.followers|length |default('0')}}Followers</a>
         </div>
 					<div class="card-tabs">

@@ -64,16 +64,16 @@
   //  font-size: 62.5%; //1 rem = 10px; 10px/16px = 62.5%
 
     @include respond(tab-land) { // width < 1200?
-        font-size:65%; //1 rem = 9px, 9/16 = 50%
+        font-size:80%; //1 rem = 9px, 9/16 = 50%
 
     }
 
     @include respond(tab-port) { // width < 900?
-        font-size: 60%; //1 rem = 8px, 8/16 = 50%
+        font-size: 65%; //1 rem = 8px, 8/16 = 50%
     }
     
     @include respond(big-desktop) {
-        font-size: 80%; //1rem = 12, 12/16
+        font-size: 90%; //1rem = 12, 12/16
     }
 }
 .btn-small {
@@ -91,6 +91,10 @@
     text-transform: uppercase;
     vertical-align: middle;
     -webkit-tap-highlight-color: transparent;
+}
+.btn, .btn-large, .btn-small, .btn-floating, .btn-large, .btn-small, .btn-flat {
+  font-size: .87rem;
+
 }
 
 .chip {
@@ -122,4 +126,39 @@ i.left {
     font-size: 1.5rem;
   
 
+}
+
+
+.btn-large {
+  height: 3.37rem !important;
+  line-height: 3.37rem;
+  font-size: .9rem;
+  padding: 0 1.75rem;
+}
+.btn-floating {
+  display: inline-block;
+  color: #fff;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+  width: 2.5rem;
+  height: 2.5rem;
+  line-height: 2.5rem;
+  padding: 0;
+  background-color: #26a69a;
+  border-radius: 50%;
+  -webkit-transition: background-color .3s;
+  transition: background-color .3s;
+  cursor: pointer;
+  vertical-align: middle;
+}
+
+.btn-floating.btn-large i {
+  line-height: 3.5rem;
+}
+
+.btn-floating.btn-large {
+  width: 3.5rem;
+  height: 3.5rem;
+  padding: 0;
 }

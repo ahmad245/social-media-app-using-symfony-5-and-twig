@@ -56,7 +56,7 @@ class PostController extends AbstractController
   $offset= ($search->page * $limit) -$limit ;
     $form = $this->createForm(SearchType::class, $search);
     $form->handleRequest($req);
-    if ($form->isSubmitted() && $form->isValid()) {
+    if ($form->isSubmitted() ) {
       // $posts = $repo->fillter($search);
       $data=$repo->fillter($search,$limit, $offset);
       // $total=$data->count();
@@ -107,7 +107,7 @@ class PostController extends AbstractController
     if ($form->isSubmitted() && $form->isValid()) {
 
 
-      // dump( $form->getData(),$post->getTags());die;
+     // dump($form->getData());die;
       foreach ($post->getTags() as $tag) {
         $tagExest = $tagRepo->findOneBy(['name' => $tag->getName()]);
 
@@ -133,7 +133,7 @@ class PostController extends AbstractController
 
       $this->em->flush();
 
-      return $this->redirectToRoute('home');
+      return $this->redirectToRoute('post_show',['id'=>$post->getId()]);
     }
     return $this->render('post/create.html.twig', [
       'form' => $form->createView()
@@ -156,9 +156,21 @@ class PostController extends AbstractController
     if ($form->isSubmitted()) {
      
       foreach ($post->getImages() as $image) {
-        $image->setPost($post);
-        $this->em->persist($image);
+       // dd($post->getImages());
+        if(is_null($image->getUrl()) && is_null($image->getFile()))
+        {
+          $this->em->remove($image);
+         
+        }
+        else{
+          $image->setPost($post);
+          $this->em->persist($image);
+        }
+        //dd($post->getImages());
+        // $image->setPost($post);
+        // $this->em->persist($image);
       }
+      //die;
       foreach ($post->getTags() as $tag) {
         $tagExest = $tagRepo->findOneBy(['name' => $tag->getName()]);
 
@@ -176,7 +188,7 @@ class PostController extends AbstractController
 
       $this->em->flush();
 
-      return $this->redirectToRoute('home');
+      return $this->redirectToRoute('post_show',['id'=>$post->getId()]);
     }
     return $this->render('post/create.html.twig', [
       'form' => $form->createView(),
@@ -205,7 +217,7 @@ class PostController extends AbstractController
 
     $this->em->flush();
     $this->addFlash('success', 'the post was deleted');
-    return $this->redirectToRoute('home');
+    return $this->redirectToRoute('my_posts',['id'=>$this->getUser()->getId()]);
   }
 
 

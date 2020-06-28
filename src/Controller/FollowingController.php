@@ -25,7 +25,7 @@ class FollowingController extends AbstractController
     {
        $this->getUser()->addFollowing($user);
        $this->em->flush();
-      return  $this->redirectToRoute('post_user',['id'=>$user->getId()]);
+      return  $this->redirectToRoute('my_profile',['id'=>$user->getId()]);
 
     }
     /**
@@ -35,6 +35,6 @@ class FollowingController extends AbstractController
     {
         $this->getUser()->removeFollowing($user);
        $this->em->flush();
-      return  $this->redirectToRoute('post_user',['id'=>$user->getId()]);
+      return  $this->redirectToRoute('my_profile',['id'=>$user->getId()]);
     }
 }

@@ -1,0 +1,75 @@
+.user-img{
+  height: 3rem;
+  width: 3rem;
+  
+  //padding-right: .5rem;
+  }
+.post-body{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.m-r-header{
+ margin-left: .5rem;
+}
+.postAdd{
+  position: fixed;
+  top: 80vh;
+  right: 2rem;
+}
+.tag{
+  color:#fff !important;
+}
+.image_ahmad{
+  height: 10rem;
+  width: 10rem;
+}
+
+.menu{
+  position: fixed !important;
+  top: 1vh;
+  left: 1rem;
+  /* z-index: 1000; */
+}
+
+.follow{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-left: 0 !important;
+}
+
+.card-title {
+  padding-top: 1rem;
+}
+.likeBtn {
+
+
+  background-color: transparent;
+  border-style: none;
+
+
+}
+.flexbox {
+  display: flex;
+  flew-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+.flexbox-header{
+  display: flex;
+  
+  align-items: center;
+}
+.date{
+  color:rgb(101, 119, 134);
+}
+.postText{
+      color: rgb(20, 23, 26);
+}
+.postHeader{
+  
+     color: rgb(20, 23, 26);
+
+       font-weight: bold;
+}

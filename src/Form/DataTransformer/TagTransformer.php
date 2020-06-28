@@ -20,7 +20,7 @@ class TagTransformer implements DataTransformerInterface{
     }
     public function reverseTransform($value){
          
-        $names= explode(',',$value);
+        $names=array_unique(array_filter(array_map('trim', explode(',',$value))));
         $tags=[];
         foreach($names as $name){
             $tag=new Tag();

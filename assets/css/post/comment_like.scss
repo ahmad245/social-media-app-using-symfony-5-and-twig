@@ -1,0 +1,18 @@
+.like {
+    padding: 0;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+}
+.like:focus {
+   outline: none;
+
+    background: transparent;
+    cursor: pointer;
+}
+.like i,.like span{
+   color:#26a69a;
+}
+.comment-icon{
+	 color:#26a69a;
+}

@@ -33,12 +33,17 @@ class CommentController extends AbstractController
      
         if($form->isSubmitted() && $form->isValid())
         {
+          
            $comment->setUser($this->getUser());
           $comment->setPost($post);
           $this->em->persist($comment);
           $this->em->flush();
-          return $this->redirectToRoute('home');
+        
+         
+          return $this->redirectToRoute('post_show',['id'=>$post->getId()]);
         }
+
+      
         return $this->render('comment/index.html.twig', [
             'form' => $form->createView(),
             'id'=>$post->getId(),
