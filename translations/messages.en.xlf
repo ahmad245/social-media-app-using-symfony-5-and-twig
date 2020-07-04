@@ -159,6 +159,10 @@
                 <source>DELETE</source>
                 <target>DELETE</target>
             </trans-unit>
+             <trans-unit id="comment.edit">
+                <source>EDIT</source>
+                <target>EDIT</target>
+            </trans-unit>
               <trans-unit id="comment.reply">
                 <source>REPLY</source>
                 <target>REPLY</target>
@@ -175,6 +179,44 @@
             <trans-unit id="notifications.none">
                 <source>You have not notifications</source>
                 <target>You have not notifications</target>
+            </trans-unit>
+
+             <trans-unit id="tage.popular">
+                <source>Most popular tags</source>
+                <target>Most popular tags</target>
+            </trans-unit>
+
+             <trans-unit id="follow.who">
+                <source>Who to follow</source>
+                <target>Who to follow</target>
+            </trans-unit>
+
+             <trans-unit id="language.la">
+                <source>language</source>
+                <target>language</target>
+            </trans-unit>
+
+             <trans-unit id="english.en">
+                <source>English</source>
+                <target>English</target>
+            </trans-unit>
+             <trans-unit id="french.en">
+                <source>French</source>
+                <target>French</target>
+            </trans-unit>
+
+             <trans-unit id="read.more">
+                <source>Read more</source>
+                <target>Read more</target>
+            </trans-unit>
+
+            <trans-unit id="like.like">
+                <source>LIKES</source>
+                <target>LIKES</target>
+            </trans-unit>
+              <trans-unit id="replies.replies">
+                <source>REPLIES</source>
+                <target>REPLIES</target>
             </trans-unit>
 
             <trans-unit id="email.registration">

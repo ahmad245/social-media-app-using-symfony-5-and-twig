@@ -74,7 +74,7 @@
 
 					</ul>
 					  <div class="card-panel  center">
-					   <h6 class="tags-header">Most populer tags</h6>
+					   <h6 class="tags-header">{{'Most popular tags'|trans}}</h6>
 		                	{% for tag in tags %}
 							<div class="chip teal lighten-2">
 							<a href="{{path("post_tag",{'id':tag.tags.id})}}" class="tag">{{tag.tags.name}}</a>
@@ -85,7 +85,7 @@
                      {% if MabyWantToFollow|length > 0 %}
 					 <div class="card-panel  center">
 					  <ul class="collection ">
-						  <li class="collection-header"><h6>Who to follow</h6></li>
+						  <li class="collection-header"><h6>{{'Who to follow'|trans}}</h6></li>
 							
 								{% for userMabyToFollow in MabyWantToFollow %}
 								   	{% include "post/following.html.twig" with {'following':userMabyToFollow} %}

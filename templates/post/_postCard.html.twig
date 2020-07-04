@@ -35,14 +35,16 @@
 				<div class="col s4 right-align">
 					{% if is_granted('edit',post) %}
 
-						<a href="{{path('post_edit',{'id':post.id})}}" class="waves-effect waves-light btn-small  lighten-3 post-edit">edit</a>
+						<a href="{{path('post_edit',{'id':post.id})}}"  class="waves-effect waves-light  btn-floating  btn-small  lighten-2 modal-trigger " >
+										<i class="material-icons iconis  prefix">edit</i></a>
 
 					{% endif %}
 					{% if is_granted('delete',post) %}
 
                      
 					  
-						<a href="#{{post.id}}{% if type is defined %}{{type}}{% endif %}" class="waves-effect waves-light modal-trigger btn-small  lighten-3 post-delete">delete</a>
+						<a href="#{{post.id}}{% if type is defined %}{{type}}{% endif %}" class="waves-effect waves-light   btn-floating modal-trigger btn-small  lighten-3 post-delete">
+									  <i class="material-icons iconis  prefix">delete</i></a>
 					{% endif %}
 
 
@@ -56,7 +58,7 @@
 							{{post.content}}
 						{% else %}
 							{{post.content | str(100)}}
-						<span class="date">	Read more ...</span>
+						<span class="date">	{{'Read more'|trans}} ...</span>
 						{% endif %}
 
 

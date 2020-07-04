@@ -169,6 +169,10 @@
                 <source>DELETE</source>
                 <target>SUPPRIMER</target>
             </trans-unit>
+            <trans-unit id="comment.edit">
+                <source>EDIT</source>
+                <target>Éditer</target>
+            </trans-unit>
               <trans-unit id="comment.reply">
                 <source>REPLY</source>
                 <target>REPONDRE</target>
@@ -200,6 +204,45 @@
             <trans-unit id="notifications.none">
                 <source>You have not notifications</source>
                 <target>Vous n'avez pas de notifications</target>
+            </trans-unit>
+
+
+             <trans-unit id="tage.popular">
+                <source>Most popular tags</source>
+                <target>Tags les plus populaires</target>
+            </trans-unit>
+
+             <trans-unit id="follow.who">
+                <source>Who to follow</source>
+                <target>Qui suivre</target>
+            </trans-unit>
+
+            <trans-unit id="language.la">
+                <source>language</source>
+                <target>Langue</target>
+            </trans-unit>
+
+              <trans-unit id="english.en">
+                <source>English</source>
+                <target>Anglais</target>
+            </trans-unit>
+             <trans-unit id="french.en">
+                <source>French</source>
+                <target>Français</target>
+            </trans-unit>
+
+             <trans-unit id="read.more">
+                <source>Read more</source>
+                <target>Lire la suite</target>
+            </trans-unit>
+
+             <trans-unit id="like.like">
+                <source>LIKES</source>
+                <target>Aime</target>
+            </trans-unit>
+              <trans-unit id="replies.replies">
+                <source>REPLIES</source>
+                <target>Réponses</target>
             </trans-unit>
 
             <trans-unit id="email.registration">
