@@ -108,9 +108,6 @@
     "fzaninotto/faker": {
         "version": "v1.9.1"
     },
-    "imagine/imagine": {
-        "version": "1.2.3"
-    },
     "jdorn/sql-formatter": {
         "version": "v1.2.17"
     },
@@ -128,19 +125,6 @@
     },
     "laminas/laminas-zendframework-bridge": {
         "version": "1.0.1"
-    },
-    "liip/imagine-bundle": {
-        "version": "1.8",
-        "recipe": {
-            "repo": "github.com/symfony/recipes-contrib",
-            "branch": "master",
-            "version": "1.8",
-            "ref": "5a5bdc2d0e2533ed6935d5ae562f2b318a8fc1ee"
-        },
-        "files": [
-            "./config/packages/liip_imagine.yaml",
-            "./config/routes/liip_imagine.yaml"
-        ]
     },
     "monolog/monolog": {
         "version": "2.0.2"

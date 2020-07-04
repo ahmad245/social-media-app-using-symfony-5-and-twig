@@ -20,6 +20,9 @@
 		.collapsible-header i {
 			z-index: 1;
 		}
+		.show-more{
+			width:100%
+		}
 	</style>
 {% endblock %}
 {% block body %}
@@ -35,11 +38,13 @@
 		{% endif %}
 
 	</div>
+	{% if comments|length>0 %}
     <div class="row">
-	  <div class="col s8 offset-s2">
-		    <a id="more" class="waves-effect waves-light btn"><i class="material-icons left">cloud</i>{{'Show More'|trans}}</a>
+	  <div class="col s12 m8 l8 offset-m2 offset-l2 ">
+		    <a id="more" class="waves-effect waves-light btn show-more"><i class="material-icons left">expand_more</i>{{'Show More'|trans}}</a>
 		</div>
 	</div>
+{% endif %}
 
 {% endblock %}
 {% block javascripts %}
