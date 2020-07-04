@@ -210,26 +210,33 @@
 		const handelEvent=(urlLoading,action)=>{
 	      let pageId=1;
            const reload=async (urlLoading,action)=>{
-   console.log(pageId)
+  
            let urlLoadingUpdate=urlLoading.replace('pageId',pageId);
                console.log(urlLoadingUpdate);
 		   
               let data=await fetchMyPost(urlLoadingUpdate);
-			 var script = document.createElement("script");
-             script.src = "https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js";
-               
+			// var script = document.createElement("script");
+             //script.src = "https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js";
+                var script = document.createElement("script");
+               script.src = "/initM/initModal.js";
+{# 
+			     var scriptLike = document.createElement("script");
+               scriptLike.src = "/js/like.js"; #}
 		       if(action.target.id=='go')
 			   {
                  target.innerHTML=data.templete.content;
 				  target.appendChild(script);
+				  {# target.appendChild(scriptLike); #}
 			   }
 			  else  if(action.target.id=='likePost'){
                   targetLike.innerHTML=data.templete.content;
 				  targetLike.appendChild(script);
+				  {# targetLike.appendChild(scriptLike); #}
 			   }
 			    else if(action.target.id=='commentPost'){
 				   targetComment.innerHTML=data.templete.content;
 				  targetComment.appendChild(script);
+				  {# targetComment.appendChild(scriptLike); #}
 			   }
                
 				  var modalelems = document.querySelectorAll('.modal');
@@ -237,44 +244,40 @@
 				let pages=document.querySelectorAll(".pages");
 
          ////////////////////////////////////
-             let likes = document.querySelectorAll('button.like');
-			let unlikes = document.querySelectorAll('button.unlike');
+							let likes = document.querySelectorAll('button.like');
+				let unlikes = document.querySelectorAll('button.unlike');
 
-			function handelLike(e) {
-		     
-			 {% if not app.user %}
-			   return window.location.replace("{{path('account_login')}}");
-			 {% endif %}
-			 
+				function handelLike(e) {
 
-                this.disabled=true
-			let icon = this.querySelector('i');
-			let likeCount = this.querySelector('#likeCount');
-			this.parentElement.setAttribute('disabled', true);
-			
-			// let a=e.target.closest('a');
-			let url = this.dataset.href;
-         
-			axios.get(url).then((response) => {
-              this.disabled=false
-		
-			
-			likeCount.innerText = response.data.likes;
-			icon.innerText = response.data.message == 'added' ? 'favorite_border ' : 'favorite';
 
-			}).catch((err) => {
-			console.log(err)
-			})
+					this.disabled=true
+				let icon = this.querySelector('i');
+				let likeCount = this.querySelector('#likeCount');
+				this.parentElement.setAttribute('disabled', true);
 
-			e.preventDefault();
-			}
-			likes.forEach((el) => {
-			el.addEventListener('click', handelLike);
+				// let a=e.target.closest('a');
+				let url = this.dataset.href;
+				console.log(url)
+				axios.get(url).then((response) => {
+				this.disabled=false
+				console.log(response.data)
 
-			})
-			unlikes.forEach((el) => {
-			el.addEventListener('click', handelLike)
-			})
+				likeCount.innerText = response.data.likes;
+				icon.innerText = response.data.message == 'added' ? 'favorite ' : 'favorite_border';
+
+				}).catch((err) => {
+				console.log(err)
+				})
+
+				e.preventDefault();
+				}
+				likes.forEach((el) => {
+				el.addEventListener('click', handelLike);
+
+				})
+				unlikes.forEach((el) => {
+				el.addEventListener('click', handelLike)
+				})
 
 		 //////////////////
 			

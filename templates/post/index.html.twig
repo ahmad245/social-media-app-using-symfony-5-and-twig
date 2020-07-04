@@ -22,11 +22,7 @@
 						{{message}}
 					</div>
 				{% endfor %}
-				{# {% if app.user %}
-					<a href={{path('post_add')}} class="btn-floating btn-large waves-effect waves-light red postAdd">
-						<i class="material-icons">add</i>
-					</a>
-				{% endif %} #}
+		
 
 
 				{% if usersToFollow is defined and  usersToFollow|length > 0 %}
@@ -52,9 +48,11 @@
 					{% endfor %}
 
 				{% endif %}
-         <div class="card-panel  center">
-			{{posts.display()}}
-		</div>
+				 {% if posts.getTotal() > posts.getLimit() %}
+					<div class="  center">
+						{{posts.display()}}
+					</div>
+				 {% endif %}	
 
 			</div>
 	
@@ -76,7 +74,7 @@
 
 					</ul>
 					  <div class="card-panel  center">
-					   <h6 >Most populer tags</h6>
+					   <h6 class="tags-header">Most populer tags</h6>
 		                	{% for tag in tags %}
 							<div class="chip teal lighten-2">
 							<a href="{{path("post_tag",{'id':tag.tags.id})}}" class="tag">{{tag.tags.name}}</a>

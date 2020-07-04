@@ -57,9 +57,9 @@ class PostController extends AbstractController
     $form = $this->createForm(SearchType::class, $search);
     $form->handleRequest($req);
     if ($form->isSubmitted() ) {
-      // $posts = $repo->fillter($search);
+    
       $data=$repo->fillter($search,$limit, $offset);
-      // $total=$data->count();
+     
     } 
     else{
 
@@ -86,6 +86,7 @@ class PostController extends AbstractController
       'form' => $form->createView(),
       'tags'=>$repoTags->popularTags(),
       'MabyWantToFollow'=>$userMabyWantToFollowByCity
+      
     ]);
   }
 

@@ -1,14 +1,12 @@
+<div class="row">
 
-	
-	<div class="row">
-
-			{% for post in posts.getData() %}
-				<div class="col s8 offset-s2">
-					{% include "post/_postCard.html.twig" with {'post':post} %}
-				</div>
-			{% endfor %}
-			<div class="col s8 offset-s2">
-			{% include "profile/_pagination.html.twig" with {'page':page,'pages':pages} %}
-</div>
-
+	{% for post in posts.getData() %}
+		<div class="col s8 offset-s2">
+			{% include "post/_postCard.html.twig" with {'post':post} %}
 		</div>
+	{% endfor %}
+	<div class="col s8 offset-s2 center">
+		{% include "profile/_pagination.html.twig" with {'page':page,'pages':pages} %}
+	</div>
+
+</div>

@@ -50,6 +50,8 @@
 {% block javascripts %}
 	{{parent()}}
 	<script>
+
+	
 		document.addEventListener('DOMContentLoaded', function () {
 var elems = document.querySelectorAll('.collapsible');
 var instances = M.Collapsible.init(elems, {});
@@ -73,7 +75,18 @@ console.log(target.dataset.email)
 
   let more=document.getElementById('more');
   let comments=document.getElementById('comments');
-  let pageId=2;
+
+  	
+	let totalComments=document.querySelector(`.comment-icon`);
+	let commentTotal=totalComments.innerText;
+	commentTotal=commentTotal.split(' ')[1];
+	
+
+	if(commentTotal<=5){
+        more.classList.add('hide');
+	}
+	else{
+		  let pageId=2;
   const preUrl=(page)=>{
    let urlPagePost="{{path('comments_post',{id:post.id,'page':'pageId'}) }}";
 
@@ -101,7 +114,7 @@ console.log(target.dataset.email)
      let data=await fetchComments(urlPagePost);
 	         var script = document.createElement("script");
              script.src = "/initM/initModal.js";
-           
+        
 	 let div=document.createElement('div');
 	 div.innerHTML=data;
 	  div.appendChild(script);
@@ -110,6 +123,8 @@ console.log(target.dataset.email)
   
    pageId++;
   })
+	}
+
 });
 
 

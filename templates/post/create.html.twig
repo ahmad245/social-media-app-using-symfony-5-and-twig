@@ -23,7 +23,8 @@
 				<div class="card-content">
 					{{form_start(form)}}
 					{{form_widget(form)}}
-					<div class="collection hide"></div>
+					
+                    
 					 <button class="btn waves-effect waves-light" type="submit" name="action">{{'SUBMIT'|trans}}
                              <i class="material-icons right">send</i>
                        </button>
@@ -38,6 +39,7 @@
 {% block _post_tags_widget %}
   <div class="chips chips-initial chips-autocomplete input-field">
   </div>
+  <div class="collection hide"></div>
   {{form_widget(form)}}
  {% endblock %}
 
@@ -169,8 +171,11 @@ document.addEventListener('DOMContentLoaded', function() {
     let inputHidden = document.getElementById('post_tags');
 
     elems = document.querySelector('.chips');
-    instances = M.Chips.init(elems, {});
+    instances = M.Chips.init(elems, {
+        placeholder:'Tags'
+    });
     instance = M.Chips.getInstance(elems);
+    
    
     let chipsList = [];
 
