@@ -12,6 +12,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 class NotificationController extends AbstractController
 {
@@ -24,6 +25,7 @@ class NotificationController extends AbstractController
     }
     /**
      * @Route("/notification", name="notification")
+     *  @Security("is_granted('ROLE_USER') ")
      */
     public function unreadCount()
     {
@@ -37,6 +39,7 @@ class NotificationController extends AbstractController
     /**
     
      * @Route("/notification/all", name="notification_all")
+     *  @Security("is_granted('ROLE_USER') ")
      */
     public function allNofification()
     {
@@ -49,6 +52,7 @@ class NotificationController extends AbstractController
 
     /**
      * @Route("/seen/{id}" , name="mark_seen")
+     *  @Security("is_granted('ROLE_USER') ")
      *
      * @param Notification $notification
      * @return void
@@ -63,6 +67,7 @@ class NotificationController extends AbstractController
     }
 /**
      * @Route("/allseen" , name="mark_all_seen")
+     *  @Security("is_granted('ROLE_USER') ")
      *
      * @param Notification $notification
      * @return void

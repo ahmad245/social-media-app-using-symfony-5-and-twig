@@ -1,8 +1,21 @@
-  <li class="collection-item avatar userImages">
-      <img src="/images/ah.jpg" alt="" class="circle">
-      <span class="title">{{following.fullname}} </span>
-     <p> <a href="{{path('my_profile',{'id':following.id})}}">{{following.username}} </a></p>
-      <a href="{{path('following',{'id':following.id})}}" class="waves-effect waves-light btn-small">
-										<i class="material-icons left">person_add</i>Following</a>
-    </li>
-  
+<li class="collection-item avatar userImages">
+	<img src="/images/ah.jpg" alt="" class="circle">
+	<span class="title">{{following.fullname}}
+	</span>
+	<p>
+		<a href="{{path('my_profile',{'id':following.id})}}">{{following.username}}
+		</a>
+    	{% if  app.user and  (following is not same as(app.user)) %}
+		{% if   app.user.isFollowing(following) %}
+			<a href="{{path('unfollowing',{'id':following.id})}}" class="waves-effect waves-light btn-small right">
+				<i class="material-icons left">person_outline</i>Un Following</a>
+		{% else %}
+			<a href="{{path('following',{'id':following.id})}}" class="waves-effect waves-light btn-small right">
+				<i class="material-icons left">person_add</i>Following</a>
+		{% endif %}
+	{% endif %}
+	</p>
+
+	{# <a href="{{path('following',{'id':following.id})}}" class="waves-effect waves-light btn-small">
+											<i class="material-icons left">person_add</i>Following</a> #}
+</li>

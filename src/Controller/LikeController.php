@@ -6,6 +6,7 @@ use App\Entity\Post;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 class LikeController extends AbstractController
 {
@@ -16,7 +17,7 @@ class LikeController extends AbstractController
     }
    /**
     *  @Route("/like/{id}", name="like")
-    *
+    *  @Security("is_granted('ROLE_USER') ")
     * @param Post $post
     * @return void
     */

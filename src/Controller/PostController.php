@@ -27,7 +27,7 @@ class PostController extends AbstractController
 {
   private $em;
   private $pagination;
-  public function __construct(EntityManagerInterface $em,PaginationService $pagination)
+  public function __construct(EntityManagerInterface $em, PaginationService $pagination)
   {
     $this->em = $em;
     $this->pagination = $pagination;
@@ -36,57 +36,53 @@ class PostController extends AbstractController
    * @Route("/",name="home")
    * @Route("/post", name="post")
    */
-  public function index(PostRepository $repo, UserRepository $userRepo, Request $req,TagRepository $repoTags)
+  public function index(PostRepository $repo, UserRepository $userRepo, Request $req, TagRepository $repoTags)
   {
+    ini_set('max_execution_time', 300);
+    set_time_limit(300);
     // $req->getSession()->set('_locale','fr');
     // $req->setLocale('fr');
-  
-  // dd(  $req->getSession()->get('_locale'));die;
-  $userMabyWantToFollowByCity=[];
-  $userMaby=[];
+
+    // dd(  $req->getSession()->get('_locale'));die;
+    $userMabyWantToFollowByCity = [];
+    $userMaby = [];
     $search = new Search();
-    
+
     if ($req->query->get('page')) {
       $search->page = $req->query->get('page');
-  }
-  $limit=5;
-  $usersToFollow = [];
-  $data = [];
-  $total=0;
-  $offset= ($search->page * $limit) -$limit ;
+    }
+    $limit = 5;
+    $usersToFollow = [];
+    $data = [];
+    $total = 0;
+    $offset = ($search->page * $limit) - $limit;
     $form = $this->createForm(SearchType::class, $search);
     $form->handleRequest($req);
-    if ($form->isSubmitted() ) {
-    
-      $data=$repo->fillter($search,$limit, $offset);
-     
-    } 
-    else{
+    if ($form->isSubmitted()) {
+
+      $data = $repo->fillter($search, $limit, $offset);
+    } else {
 
       if ($this->getUser() instanceof User) {
-       // $posts = $repo->findByUsers($this->getUser()->getFollowing());
-        $data=$repo->findByUsers($this->getUser()->getFollowing(),$limit, $offset);
+
+        $data = $repo->findByUsers($this->getUser()->getFollowing(), $limit, $offset);
         // $total=$data->count();
         $usersToFollow = $data->count() === 0 ? $userRepo->findByMoreThan5Post($this->getUser()) : [];
-        $userMaby=$userRepo->findBySameCity($this->getUser()->getFollowing(),$this->getUser()->getCity(),$this->getUser());
-        $userMabyWantToFollowByCity = count($userMaby) === 0 ? $userRepo->findByMoreThan5PostButNotFowwing($this->getUser()->getFollowing(),$this->getUser()) : $userMaby;
+        $userMaby = $userRepo->findBySameCity($this->getUser()->getFollowing(), $this->getUser()->getCity(), $this->getUser());
+        $userMabyWantToFollowByCity = count($userMaby) < 5 ? array_merge($userRepo->findByMoreThan5PostButNotFowwing($this->getUser()->getFollowing(), $this->getUser()) ,$userMaby) :[] ;
       } else {
-       // $posts = $repo->findAllPost();
-       $data=$repo->findAllPost($limit, $offset);
-      //  $total=$data->count();
-       
+
+        $data = $repo->findAllPost($limit, $offset);
       }
-     
-   
     }
-     $this->pagination->setEntityClass(Post::class)->setData($data)->setLimit($limit)->setPage($search->page)->setTotal($data->count());
+    $this->pagination->setEntityClass(Post::class)->setData($data)->setLimit($limit)->setPage($search->page)->setTotal($data->count());
     return $this->render('post/index.html.twig', [
       'posts' => $this->pagination,
       'usersToFollow' => $usersToFollow,
       'form' => $form->createView(),
-      'tags'=>$repoTags->popularTags(),
-      'MabyWantToFollow'=>$userMabyWantToFollowByCity
-      
+      'tags' => $repoTags->popularTags(),
+      'MabyWantToFollow' => $userMabyWantToFollowByCity
+
     ]);
   }
 
@@ -108,7 +104,7 @@ class PostController extends AbstractController
     if ($form->isSubmitted() && $form->isValid()) {
 
 
-     // dump($form->getData());die;
+      // dump($form->getData());die;
       foreach ($post->getTags() as $tag) {
         $tagExest = $tagRepo->findOneBy(['name' => $tag->getName()]);
 
@@ -124,7 +120,7 @@ class PostController extends AbstractController
       }
       foreach ($post->getImages() as $image) {
 
-     
+
         $image->setPost($post);
         $this->em->persist($image);
       }
@@ -134,7 +130,7 @@ class PostController extends AbstractController
 
       $this->em->flush();
 
-      return $this->redirectToRoute('post_show',['id'=>$post->getId()]);
+      return $this->redirectToRoute('post_show', ['id' => $post->getId()]);
     }
     return $this->render('post/create.html.twig', [
       'form' => $form->createView()
@@ -155,15 +151,12 @@ class PostController extends AbstractController
     $form = $this->createForm(PostType::class, $post);
     $form->handleRequest($req);
     if ($form->isSubmitted()) {
-     
+
       foreach ($post->getImages() as $image) {
-       // dd($post->getImages());
-        if(is_null($image->getUrl()) && is_null($image->getFile()))
-        {
+        // dd($post->getImages());
+        if (is_null($image->getUrl()) && is_null($image->getFile())) {
           $this->em->remove($image);
-         
-        }
-        else{
+        } else {
           $image->setPost($post);
           $this->em->persist($image);
         }
@@ -189,7 +182,7 @@ class PostController extends AbstractController
 
       $this->em->flush();
 
-      return $this->redirectToRoute('post_show',['id'=>$post->getId()]);
+      return $this->redirectToRoute('post_show', ['id' => $post->getId()]);
     }
     return $this->render('post/create.html.twig', [
       'form' => $form->createView(),
@@ -218,7 +211,7 @@ class PostController extends AbstractController
 
     $this->em->flush();
     $this->addFlash('success', 'the post was deleted');
-    return $this->redirectToRoute('my_posts',['id'=>$this->getUser()->getId()]);
+    return $this->redirectToRoute('my_posts', ['id' => $this->getUser()->getId()]);
   }
 
 
@@ -228,20 +221,20 @@ class PostController extends AbstractController
    * @param Post $post
    * @return void
    */
-  public function show($id, PostRepository $repo,CommentRepository $commentRepo)
+  public function show($id, PostRepository $repo, CommentRepository $commentRepo)
   {
-    $page=1;
-    
-    $limit=5;
-    $total=0;
-    $offset= ($page * $limit) -$limit ;
-    
+    $page = 1;
+
+    $limit = 5;
+    $total = 0;
+    $offset = ($page * $limit) - $limit;
+
     $post = $repo->findByPost($id);
     // $total=$commentRepo->countCommentByPost($id);
-    $comments=$commentRepo->findByPost($id,$limit,$offset);
+    $comments = $commentRepo->findByPost($id, $limit, $offset);
     return $this->render('post/show.html.twig', [
       'post' => $post,
-      'comments'=> $comments
+      'comments' => $comments
     ]);
   }
 
@@ -254,7 +247,7 @@ class PostController extends AbstractController
    */
   public function userPost(User $user, PostRepository $repo)
   {
-  
+
     $posts = $repo->findByUser($user);
 
     return $this->render('post/post_user.html.twig', [
@@ -270,39 +263,38 @@ class PostController extends AbstractController
    * @param PostRepository $repo
    * @return void
    */
-  public function myPost(User $user, PostRepository $repo,Request $req, UserRepository $userRepo,TagRepository $repoTags)
+  public function myPost(User $user, PostRepository $repo, Request $req, UserRepository $userRepo, TagRepository $repoTags)
   {
     $search = new Search();
-    
+
     if ($req->query->get('page')) {
       $search->page = $req->query->get('page');
-  }
-  $limit=5;
-  $usersToFollow = [];
-  $data = [];
-  $total=0;
-  $offset= ($search->page * $limit) -$limit ;
+    }
+    $limit = 5;
+    $usersToFollow = [];
+    $data = [];
+    $total = 0;
+    $offset = ($search->page * $limit) - $limit;
     $form = $this->createForm(SearchType::class, $search);
     $form->handleRequest($req);
     if ($form->isSubmitted() && $form->isValid()) {
       // $posts = $repo->fillter($search);
-      $data=$repo->fillter($search,$limit, $offset);
+      $data = $repo->fillter($search, $limit, $offset);
       // $total=$data->count();
-    } 
-    else{
-     $data= $repo->findMyPost($user,$limit, $offset);
-     $userMaby=$userRepo->findBySameCity($this->getUser()->getFollowing(),$this->getUser()->getCity(),$this->getUser());
-     $userMabyWantToFollowByCity = count($userMaby) === 0 ? $userRepo->findByMoreThan5PostButNotFowwing($this->getUser()->getFollowing(),$this->getUser()) : $userMaby;
+    } else {
+      $data = $repo->findMyPost($user, $limit, $offset);
+      $userMaby = $userRepo->findBySameCity($this->getUser()->getFollowing(), $this->getUser()->getCity(), $this->getUser());
+      $userMabyWantToFollowByCity = count($userMaby) < 5 ? array_merge($userRepo->findByMoreThan5PostButNotFowwing($this->getUser()->getFollowing(), $this->getUser()) ,$userMaby) :[] ;
     }
- 
+
 
     $this->pagination->setEntityClass(Post::class)->setData($data)->setLimit($limit)->setPage($search->page)->setTotal($data->count());
 
     return $this->render('post/index.html.twig', [
       'posts' =>  $this->pagination,
       'form' => $form->createView(),
-      'MabyWantToFollow'=>$userMabyWantToFollowByCity,
-      'tags'=>$repoTags->popularTags(),
+      'MabyWantToFollow' => $userMabyWantToFollowByCity,
+      'tags' => $repoTags->popularTags(),
     ]);
   }
 
@@ -314,38 +306,37 @@ class PostController extends AbstractController
    * @param PostRepository $repo
    * @return void
    */
-  public function tagPost(Tag $tag, PostRepository $repo,Request $req, UserRepository $userRepo,TagRepository $repoTags)
+  public function tagPost(Tag $tag, PostRepository $repo, Request $req, UserRepository $userRepo, TagRepository $repoTags)
   {
-    $userMabyWantToFollowByCity=[];
-    $userMaby=[];
+    $userMabyWantToFollowByCity = [];
+    $userMaby = [];
     $search = new Search();
-    
+
     if ($req->query->get('page')) {
       $search->page = $req->query->get('page');
-  }
-  $limit=5;
-  $usersToFollow = [];
-  $data = [];
-  $total=0;
-  $offset= ($search->page * $limit) -$limit ;
+    }
+    $limit = 5;
+    $usersToFollow = [];
+    $data = [];
+    $total = 0;
+    $offset = ($search->page * $limit) - $limit;
     $form = $this->createForm(SearchType::class, $search);
     $form->handleRequest($req);
     if ($form->isSubmitted() && $form->isValid()) {
       // $posts = $repo->fillter($search);
-      $data=$repo->fillter($search,$limit, $offset);
+      $data = $repo->fillter($search, $limit, $offset);
       // $total=$data->count();
-    } 
-    else{
-     $data= $repo->findByTags($tag->getId(),$limit, $offset);
+    } else {
+      $data = $repo->findByTags($tag->getId(), $limit, $offset);
     }
     if ($this->getUser() instanceof User) {
       // $posts = $repo->findByUsers($this->getUser()->getFollowing());
-     
-       // $total=$data->count();
-       $usersToFollow = $data->count() === 0 ? $userRepo->findByMoreThan5Post($this->getUser()) : [];
-       $userMaby=$userRepo->findBySameCity($this->getUser()->getFollowing(),$this->getUser()->getCity(),$this->getUser());
-       $userMabyWantToFollowByCity = count($userMaby) === 0 ? $userRepo->findByMoreThan5PostButNotFowwing($this->getUser()->getFollowing(),$this->getUser()) : $userMaby;
-     }
+
+      // $total=$data->count();
+      $usersToFollow = $data->count() === 0 ? $userRepo->findByMoreThan5Post($this->getUser()) : [];
+      $userMaby = $userRepo->findBySameCity($this->getUser()->getFollowing(), $this->getUser()->getCity(), $this->getUser());
+      $userMabyWantToFollowByCity = count($userMaby) < 5 ? array_merge($userRepo->findByMoreThan5PostButNotFowwing($this->getUser()->getFollowing(), $this->getUser()) ,$userMaby) :[] ;
+    }
     // $posts=$tag->getPosts();
 
     $this->pagination->setEntityClass(Post::class)->setData($data)->setLimit($limit)->setPage($search->page)->setTotal($data->count());
@@ -353,8 +344,8 @@ class PostController extends AbstractController
     return $this->render('post/index.html.twig', [
       'posts' => $this->pagination,
       'form' => $form->createView(),
-      'MabyWantToFollow'=>$userMabyWantToFollowByCity,
-      'tags'=>$repoTags->popularTags(),
+      'MabyWantToFollow' => $userMabyWantToFollowByCity,
+      'tags' => $repoTags->popularTags(),
     ]);
   }
 }

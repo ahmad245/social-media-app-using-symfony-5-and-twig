@@ -1,12 +1,23 @@
-	<div class="row">
+<div class="row">
+	{% if  posts.getData()|length>0 %}
 
-			{% for post in posts.getData() %}
-				<div class="col s8 offset-s2">
-					{% include "post/_postCard.html.twig" with {'post':post,'type':'myComment'} %}
-				</div>
-			{% endfor %}
-				<div class="col s8 offset-s2 center">
-			{% include "profile/_pagination.html.twig" with {'page':page,'pages':pages} %}
-</div>
-
+		{% for post in posts.getData() %}
+			<div class="col s8 offset-s2">
+				{% include "post/_postCard.html.twig" with {'post':post,'type':'myComment'} %}
+			</div>
+		{% endfor %}
+		{% if posts.getTotal() > posts.getLimit() %}
+			<div class="col s8 offset-s2 center">
+				{% include "profile/_pagination.html.twig" with {'page':page,'pages':pages} %}
+			</div>
+		{% endif %}
+	{% else %}
+		<div class="col s8 offset-s2">
+			<p class="center">
+				no post yet
+			</p>
 		</div>
+
+	{% endif %}
+
+</div>

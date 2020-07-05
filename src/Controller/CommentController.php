@@ -10,6 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\ORM\EntityManagerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 class CommentController extends AbstractController
 {
@@ -20,6 +21,7 @@ class CommentController extends AbstractController
   }
     /**
      * @Route("/comment/{id}", name="comment_add")
+     *  @Security("is_granted('ROLE_USER') ")
      */
     public function add(Post $post, Request $req)
     {
@@ -53,6 +55,7 @@ class CommentController extends AbstractController
     }
     /**
      * @Route("/comment/{id}/edit", name="comment_edit")
+     * @Security("is_granted('ROLE_EDITER') or  (is_granted('ROLE_USER') and user==comment.getUser())")
      */
     public function edit(Comment $comment, Request $req)
     {
@@ -75,6 +78,7 @@ class CommentController extends AbstractController
 
     /**
      * @Route("/comment/{id}/delete", name="comment_delete")
+     *  @Security("is_granted('ROLE_EDITER') or  (is_granted('ROLE_USER') and user==comment.getUser())")
      */
     public function delete(Comment $comment){
       $postId=$comment->getPost()->getId();

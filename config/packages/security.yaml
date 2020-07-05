@@ -20,7 +20,10 @@ security:
             form_login:
                login_path: account_login
                check_path: account_login
+               default_target_path: home 
+               always_use_default_target_path: true
                use_referer: true
+               
 
             logout:
                 path: account_logout

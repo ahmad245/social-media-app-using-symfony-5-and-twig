@@ -20,6 +20,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 class ManagePasswordController extends AbstractController
 {
@@ -45,11 +46,11 @@ class ManagePasswordController extends AbstractController
     /**
      * @Route("/managePassword/password-update", name="password_update")
      */
-    public function updatePassword(User $user,Request $req)
+    public function updatePassword(Request $req)
     {
         $password=new UpdatePassword();
         $user=$this->getUser();
-        $form=$this->createForm(UpdatePasswordType::class,$user);
+        $form=$this->createForm(UpdatePasswordType::class,$password);
         $form->handleRequest($req);
         if($form->isSubmitted() && $form->isValid())
         {
