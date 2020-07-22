@@ -1,0 +1,46 @@
+# easy_admin:
+#    entities:
+#         # List the entity class name you want to manage
+#        - App\Entity\Post
+#        - App\Entity\User
+#        - App\Entity\Comment
+easy_admin:
+    entities:
+#        # List the entity class name you want to manage
+        Post:
+            class: App\Entity\Post
+            list:
+                actions: [ { name: 'Show' } ]
+            show:
+                fields:
+                    - id
+                    - tags
+                    - content
+                    - createAt
+                    - comments
+                    - images
+        Comment:
+            class: App\Entity\Comment
+        User:
+           class: App\Entity\User
+           form:
+            fields:
+                - { property: 'birthday', type: 'Symfony\Component\Form\Extension\Core\Type\TextType' }
+                - firstName
+                - lastName
+                - email
+                - phone
+                - country
+                - picture
+                
+                - city
+                - phone
+                - password
+                - introduction
+                - bio
+                - userRoles
+                - enabled
+               
+
+               
+               

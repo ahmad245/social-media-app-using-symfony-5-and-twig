@@ -45,67 +45,47 @@ class SettingType extends AbstractType
             'download_uri' => true,
              'image_uri' => false,
              'label'=>false,
-            
-             
-         
-            // 'asset_helper' => true,
         ])
         ->add('country',EntityType::class, [
             'class' => Country::class,
-           // 'choice_label' => 'Country',
             'choice_value' => function (?Country $entity) {
                 return $entity ? $entity->getCountryCode() : '';
-            },
-            
+            },           
         ])
         
         ->add('phone', TextType::class, [
-
             'label' => false
-
         ])
         ->add('birthday', TextType::class, [
-
             'attr' => [
                 'class' => 'datepicker'
             ],
             'required' => false,
-            'empty_data' => null,
-            
+            'empty_data' => null,      
         ])
-      //  ->add('picture', TextType::class)
-        // ->add('password', PasswordType::class)
-        // ->add('confirmPassword', PasswordType::class)
         ->add('introduction', TextareaType::class)
         ->add('bio', TextareaType::class)
         ->add('region', EntityType::class, [
             'class' => Regions::class,
             'mapped' => false,
-            'required'   => false,
-            
+            'required'   => false,      
         ]);
-
         $builder->get('region')->addEventListener(
           FormEvents::POST_SUBMIT,
           function (FormEvent $event) {
-            $form = $event->getForm();
-           
+            $form = $event->getForm();  
             $this->addDepartementField($form->getParent(), $form->getData());
           }
-        
-        
       );
-
         $builder->addEventListener(
             FormEvents::POST_SET_DATA ,
             function (FormEvent $event) {
-              // dd($event->getData());die;
+            
               $data = $event->getData();
               /* @var $ville Ville */
               $city = $data->getCity();
               $form = $event->getForm();
               if ($city) {
-              
                 // On récupère le département et la région
                 $departement = $city->getDepartment();
                 $region = $departement->getRegion();

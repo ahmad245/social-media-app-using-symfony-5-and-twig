@@ -5,6 +5,7 @@
         "php": "^7.2.5",
         "ext-ctype": "*",
         "ext-iconv": "*",
+        "easycorp/easyadmin-bundle": "2.3.9",
         "fzaninotto/faker": "^1.9",
         "knplabs/knp-time-bundle": "^1.11",
         "sensio/framework-extra-bundle": "^5.1",

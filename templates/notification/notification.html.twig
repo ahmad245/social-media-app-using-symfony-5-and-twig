@@ -43,10 +43,13 @@
 										<span class="new badge" data-badge-caption="{{'Read'|trans}}"></span>
 									</a>
 
+                                   {% if notification.post %}
+									   
+								 
 									<a href="{{path('post_show',{'id':notification.post.id})}}">
 										<span class="new badge" data-badge-caption="{{'Liked Your Post'|trans}}"></span>
 									</a>
-
+                            {% endif %}
 								</li>
 							{% elseif notification is follow %}
 								<li class="collection-item">
@@ -66,17 +69,21 @@
                   
                 {% elseif notification is comment %}
                 	<li class="collection-item">
+				       	{% if notification.commentedBy %}
+					
 									<a href="{{path('post_user',{'id':notification.commentedBy.id})}}">
 										{{notification.commentedBy.username}}</a>
-
+										{% endif %}
+                            
+							  
 									<a href="{{path('mark_seen',{'id':notification.id})}}">
 										<span class="new badge" data-badge-caption="{{'Read'|trans}}"></span>
 									</a>
-
+                             {% if notification.post %}
 									<a href="{{path('post_show',{'id':notification.post.id})}}">
 										<span class="new badge" data-badge-caption="{{'Comment To Your Post'|trans}}"></span>
 									</a>
-
+                              {% endif %}
 								</li>
 
 

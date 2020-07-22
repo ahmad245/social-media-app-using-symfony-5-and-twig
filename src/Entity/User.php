@@ -84,7 +84,6 @@ class User implements UserInterface, \Serializable
 
     /**
      * @ORM\Column(type="datetime")
-     * @Assert\DateTime
      *
      */
     private $createAt;
@@ -93,10 +92,11 @@ class User implements UserInterface, \Serializable
      * @ORM\Column(type="date",nullable=true)
      */
     private $birthday;
+    private $birthdayEasyAdmin;
 
   /**
      * @Vich\UploadableField(mapping="imagesUser", fileNameProperty="picture")
-     * @Assert\NotNull()
+   
      */
     private $file;
 
@@ -200,7 +200,7 @@ class User implements UserInterface, \Serializable
     /**
      * @ORM\Column(type="boolean")
      */
-    private $enabled;
+    private $enabled=false;
 
  
     /**
@@ -589,11 +589,17 @@ class User implements UserInterface, \Serializable
      *
      * @return  self
      */ 
-    public function setBirthday(string $birthday)
+    public function setBirthday( $birthday)
     {
         try {
+            if($birthday instanceof \DateTime){
+                $this->birthday=$birthday;
+            }
+            else{
+                $this->birthday  = new \DateTime($birthday);
+            }
 
-            $this->birthday  = new \DateTime($birthday);
+            
         }
         catch(\Exception $e) {
            //Do Nothing
@@ -1009,5 +1015,25 @@ class User implements UserInterface, \Serializable
     public function __toString()
     {
         return $this->getFullName();
+    }
+
+    /**
+     * Get the value of birthdayEasyAdmin
+     */ 
+    public function getBirthdayEasyAdmin()
+    {
+        return $this->birthday;
+    }
+
+    /**
+     * Set the value of birthdayEasyAdmin
+     *
+     * @return  self
+     */ 
+    public function setBirthdayEasyAdmin($birthdayEasyAdmin)
+    {
+        $this->birthday = $birthdayEasyAdmin;
+
+        return $this;
     }
 }

@@ -147,8 +147,6 @@ class PostRepository extends ServiceEntityRepository
             ->orderBy('p.createAt', 'DESC')
             ->setMaxResults($limit)
             ->setFirstResult($offset);
-            // ->getResult();
-            
             $paginator=new Paginator($query,$fetchJoinCollection = true);
            
             return $paginator;
@@ -167,7 +165,6 @@ class PostRepository extends ServiceEntityRepository
             ->getQuery()
             ->setMaxResults($limit)
             ->setFirstResult($offset);
-            // ->getResult();
             
             $paginator=new Paginator($query,$fetchJoinCollection = true);
            
@@ -281,13 +278,7 @@ class PostRepository extends ServiceEntityRepository
         if ($search->maxLikes) {
             $query->andWhere('p IN  (:maxLikes)')
                 ->setParameter('maxLikes', $this->getPostBuLikesMoreThan5());
-            //  ->setParameter('users',$this->userRepository->findByMoreThan15Post());
-
         }
-        // if(!$search->maxLikes && !$search->maxPosts && empty($search->phone) && empty($search->identity))
-        // {
-
-        // }
          $query->orderBy('p.createAt', 'DESC')
             ->setMaxResults($limit)
             ->setFirstResult($offset);

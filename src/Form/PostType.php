@@ -25,19 +25,8 @@ class PostType extends AbstractType
             ->add('content',TextareaType::class)
           
               ->add('tags',TagType::class,
-            //   [
-            //     'attr'=>['class'=>'chips chips-initial']
-            // ] 
+           
             )
-        //    ->add('images',VichImageType::class, [
-        //     'required' => false,
-        //     'allow_delete' => true,
-         
-        //     'download_uri' => true,
-        //     'image_uri' => true,
-     
-        //     'asset_helper' => true,
-        // ])
             ->add('images',CollectionType::class,[
                 'entry_type'=>ImageType::class,
                 'allow_add'=>true,
@@ -45,8 +34,6 @@ class PostType extends AbstractType
                  'label'=>false
             ])
             
-        
-           // ->add('submit',SubmitType::class)
         ;
     }
 

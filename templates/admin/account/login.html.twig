@@ -1,0 +1,67 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello AccountController!
+{% endblock %}
+
+{% block stylesheets %}
+	{{parent()}}
+	<style>
+	.container{
+		padding:0px;
+	}
+	</style>
+	{# <link rel="stylesheet" href="/account/login.css"> #}
+{% endblock %}
+
+{% block body %}
+
+
+		<div class="row">
+			<div class="col m8 s8 offset-m2 offset-s2 center">
+                <h4>Admin Login.</h4>
+
+				<div class="row login">
+					<h4>{{'Sign In'|trans}}.</h4>
+					{% if error %}
+						<div class="alert alert-danger">
+							{{error.message}}
+						</div>
+					{% endif %}
+					<form action="{{path('admin_account_login')}}" method="POST" class="col s12">
+						<div class="row">
+							<div class="input-field col m12 s12">
+								<i class="material-icons iconis prefix">account_box</i>
+								<input id="email" type="email" class="validate" name="_username">
+								<label for="email">Email</label>
+							</div>
+						</div>
+						<div class="row">
+							<div class="input-field col m12 s12">
+								<i class="material-icons iconis prefix">enhanced_encryption</i>
+								<input id="password" type="password"  class="validate" name="_password">
+								<label for="password">Password</label>
+							</div>
+						</div>
+
+						<div class="collection">
+							
+							<a href="{{path('password_forgot')}}" class="collection-item active">forgot Password</a>
+							
+    				  </div>
+						
+						<div class="row">
+							<button class="btn waves-effect waves-light" type="submit" id="submit" name="action">login!</button>
+						</div>
+					</form>
+				</div>
+
+			</div>
+		</div>
+	
+</div></div><!-- fin del .container -->{% endblock %}
+{% block javascripts %}
+{{parent()}}
+<script src="/account/global.js">
+</script><script src="/account/utile.js">
+</script><script src="/account/login.js"></script>
+{% endblock %}

@@ -3,6 +3,7 @@
 namespace App\Entity;
 use App\Entity\User;
 use App\Entity\Image;
+
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -29,10 +30,10 @@ class Post implements  \Serializable
      * )
      */
     private $content;
-
+    //@Assert\DateTime
     /**
      * @ORM\Column(type="datetime")
-     * @Assert\DateTime
+   
      */
     private $createAt;
 
@@ -286,6 +287,6 @@ class Post implements  \Serializable
     }
     public function __toString()
     {
-        return $this->title;
+        return $this->content;
     }
 }

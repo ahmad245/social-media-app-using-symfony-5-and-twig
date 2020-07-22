@@ -38,35 +38,21 @@ class PostController extends AbstractController
    */
   public function index(PostRepository $repo, UserRepository $userRepo, Request $req, TagRepository $repoTags)
   {
-    ini_set('max_execution_time', 300);
-    set_time_limit(300);
-    // $req->getSession()->set('_locale','fr');
-    // $req->setLocale('fr');
-
-    // dd(  $req->getSession()->get('_locale'));die;
-    $userMabyWantToFollowByCity = [];
-    $userMaby = [];
-    $search = new Search();
+    ini_set('max_execution_time', 300); set_time_limit(300);
+    $userMabyWantToFollowByCity = []; $userMaby = [];  $search = new Search();
 
     if ($req->query->get('page')) {
       $search->page = $req->query->get('page');
     }
-    $limit = 5;
-    $usersToFollow = [];
-    $data = [];
-    $total = 0;
-    $offset = ($search->page * $limit) - $limit;
+    $limit = 5; $usersToFollow = []; $data = []; $total = 0; $offset = ($search->page * $limit) - $limit;
     $form = $this->createForm(SearchType::class, $search);
     $form->handleRequest($req);
     if ($form->isSubmitted()) {
 
       $data = $repo->fillter($search, $limit, $offset);
     } else {
-
       if ($this->getUser() instanceof User) {
-
         $data = $repo->findByUsers($this->getUser()->getFollowing(), $limit, $offset);
-        // $total=$data->count();
         $usersToFollow = $data->count() === 0 ? $userRepo->findByMoreThan5Post($this->getUser()) : [];
         $userMaby = $userRepo->findBySameCity($this->getUser()->getFollowing(), $this->getUser()->getCity(), $this->getUser());
         $userMabyWantToFollowByCity = count($userMaby) < 5 ? array_merge($userRepo->findByMoreThan5PostButNotFowwing($this->getUser()->getFollowing(), $this->getUser()) ,$userMaby) :[] ;
@@ -89,22 +75,15 @@ class PostController extends AbstractController
   /**
    * @Route("/post/add", name="post_add")
    * @Security("is_granted('ROLE_USER') ")
-   *
    * @param Request $req
    * @return void
    */
   public function add(Request $req, TagRepository $tagRepo)
   {
     $post = new Post();
-
     $form = $this->createForm(PostType::class, $post);
     $form->handleRequest($req);
-
-
     if ($form->isSubmitted() && $form->isValid()) {
-
-
-      // dump($form->getData());die;
       foreach ($post->getTags() as $tag) {
         $tagExest = $tagRepo->findOneBy(['name' => $tag->getName()]);
 

@@ -14,7 +14,7 @@ class CommentReplyType extends AbstractType
     {
         $builder
             ->add('content')
-            ->add('submit',SubmitType::class)
+            
         ;
     }
 

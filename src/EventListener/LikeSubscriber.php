@@ -45,16 +45,11 @@ class LikeSubscriber implements EventSubscriber
     
                $em->persist($notificationComment);
                $uow->computeChangeSet($em->getClassMetadata(CommentNotification::class),$notificationComment);
-            }
-           
-          
-              
+            }              
               
         }
-        
         foreach ($uow->getScheduledCollectionUpdates() as $collectionUpdat) {
-           
-           
+            
             if (!$collectionUpdat->getOwner() instanceof Post) {
                  if (!$collectionUpdat->getOwner() instanceof User) {
                     if (!$collectionUpdat->getOwner() instanceof Comment) {
@@ -70,17 +65,11 @@ class LikeSubscriber implements EventSubscriber
                    
                     continue;
                  }
-               
                 
             }
         }
             $insertDiff=$collectionUpdat->getInsertDiff();
-            if(!count($insertDiff)){
-               
-                return;
-            }
-            
-           
+            if(!count($insertDiff)){ return; }
 
             if($collectionUpdat->getOwner() instanceof Post){
                

@@ -179,4 +179,28 @@ class Comment
 
         return $this;
     }
+    public function __toString()
+    {
+        return $this->content;
+    }
+
+    /**
+     * Get the value of commentedBy
+     */ 
+    public function getCommentedBy()
+    {
+        return $this->commentedBy;
+    }
+
+    /**
+     * Set the value of commentedBy
+     *
+     * @return  self
+     */ 
+    public function setCommentedBy($commentedBy)
+    {
+        $this->commentedBy = $commentedBy;
+
+        return $this;
+    }
 }

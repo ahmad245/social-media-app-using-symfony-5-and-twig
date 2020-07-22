@@ -245,6 +245,20 @@
                 <target>Réponses</target>
             </trans-unit>
 
+             <trans-unit id="operation.update">
+                <source>update</source>
+                <target>Mise à jour</target>
+            </trans-unit>
+             <trans-unit id="password.update password">
+                <source>update password</source>
+                <target>Mettre à jour le mot de passe</target>
+            </trans-unit>
+
+             <trans-unit id="operation.submit">
+                <source>submit</source>
+                <target>Soumettre</target>
+            </trans-unit>
+
             <trans-unit id="email.registration">
                 <source>email.registration</source>
                 <target><![CDATA[<h3>Bienvenue dans l'application!</h3>

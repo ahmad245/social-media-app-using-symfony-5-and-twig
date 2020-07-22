@@ -75,7 +75,7 @@ class AccountController extends AbstractController
             //dispatch the event using EventDispatcherInterface method dispatch(event object ,event name); 
             $this->eventDispatcher->dispatch($userRegisterEvent,UserRegisterEvent::Name); 
 
-            return $this->redirectToRoute('account_login');
+            return $this->redirectToRoute('account_wating');
         }
         return $this->render('account/register.html.twig',[
             'form'=>$form->createView()
@@ -107,6 +107,13 @@ class AccountController extends AbstractController
         return $this->render('account/edit.html.twig',[
             'form'=>$form->createView()
         ]);
+    }
+
+ /**
+     * @Route("/acount/wating",name="account_wating")
+     */
+    public function redirectToWaitingPage(){
+        return $this->render('account/waitingActiviting.html.twig');
     }
 
     

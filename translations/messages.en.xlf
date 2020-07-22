@@ -254,6 +254,20 @@
                 <target>Identity</target>
             </trans-unit>
 
+             <trans-unit id="operation.update">
+                <source>update</source>
+                <target>update</target>
+            </trans-unit>
+
+             <trans-unit id="operation.submit">
+                <source>submit</source>
+                <target>submit</target>
+            </trans-unit>
+             <trans-unit id="password.update password">
+                <source>update password</source>
+                <target>update password</target>
+            </trans-unit>
+
 
         </body>
     </file>

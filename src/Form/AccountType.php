@@ -39,45 +39,25 @@ class AccountType extends AbstractType
                 'required' => false,
                 'allow_delete' => true,
                 'download_uri' => true,
-                 'image_uri' => false,
-                 'label'=>false,
-               
-                 
-             
-                // 'asset_helper' => true,
+                'image_uri' => false,
+                'label' => false,
             ])
-            ->add('country',EntityType::class, [
-                'class' => Country::class,
-               // 'choice_label' => 'Country',
+            ->add('country', EntityType::class, [
+                'class' => Country::class,             
                 'choice_value' => function (?Country $entity) {
                     return $entity ? $entity->getCountryCode() : '';
-                },
-                //'required'   => false,
+                },              
             ])
-            // ->add('address', ChoiceType::class, [
-            //     'mapped' => false,
-            //     'required'   => false,
-            //     'attr' => [
-            //         'id' => 'address-country'
-            //     ]
-            // ])
             ->add('phone', TextType::class, [
-
                 'label' => false
-
             ])
             ->add('birthday', TextType::class, [
-
                 'attr' => [
                     'class' => 'datepicker'
                 ],
                 'required' => false,
                 'empty_data' => null,
-                // 'widget' => 'single_text',
-                // 'html5' => false,
-
             ])
-          //  ->add('picture', TextType::class)
             ->add('password', PasswordType::class)
             ->add('confirmPassword', PasswordType::class)
             ->add('introduction', TextareaType::class)
@@ -90,34 +70,25 @@ class AccountType extends AbstractType
             ->add('department', ChoiceType::class, [
                 'mapped' => false,
                 'required'   => false,
-
-
             ])
             ->add('city', EntityType::class, [
                 'class' => Cities::class,
                 'required'   => false,
-                // 'mapped' => false,
-                // 'required'   => false,
                 'choices' => []
             ]);
-        //$builder->get('address')->resetViewTransformers();
         $builder->get('department')->resetViewTransformers();
         $builder->get('city')->resetViewTransformers();
-
         $builder->get('city')->addEventListener(
-            FormEvents::PRE_SUBMIT ,
+            FormEvents::PRE_SUBMIT,
             function (FormEvent $event) {
-                $event->setData($this->getDataFromRepository((int)$event->getData() ));
-              
+                $event->setData($this->getDataFromRepository((int)$event->getData()));
             }
         );
-    
-       
     }
 
     private function getDataFromRepository($id)
     {
-        if($id==null) return;
+        if ($id == null) return;
         $result =  $this->repoCities->findOneBy(['id' => $id]);
         return $result;
     }

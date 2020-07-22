@@ -91,32 +91,21 @@
 				  
 			  });
 			  ///////////////////////////////////////////////////////////////////
-
 			  	const fetchUserByIdentity = (url) => {
 					   let urlUser = "{{ path('user_search',{user:'url'}) }}";
-                   urlUser = urlUser.replace('url', url);
-				   console.log(urlUser)
-				  return  axios.get(urlUser).then((response) => {
-			      return response.data;
+						urlUser = urlUser.replace('url', url);
+						console.log(urlUser)
+						return  axios.get(urlUser).then((response) => {
+						return response.data;
+							}).catch((err) => {console.log(err);}) } 
 
-				}).catch((err) => {
-				console.log(err);
-				})
-				
-				} 
 			    var searchFor = M.Autocomplete.getInstance(serchAuto);
 			   const debounceUserSearch = (callback, delay = 1000) => {
 							let timeoutId;
 							return (...args) => {
-								if (timeoutId) {
-									clearTimeout(timeoutId);
+								if (timeoutId) {clearTimeout(timeoutId);}
+								timeoutId = setTimeout(() => {callback.apply(null, args);}, delay);}
 								}
-								timeoutId = setTimeout(() => {
-									callback.apply(null, args);
-								}, delay);
-
-							}
-             }
 			  onKeyUpUserSearch=async(e)=>{
 					let resultSearchUser= await fetchUserByIdentity(e.target.value)
 									let userObect={};
@@ -124,7 +113,6 @@
 									resultSearchUser.forEach((obj)=>{
 										userObect[obj.email]=obj.picture
 									})
-									console.log(resultSearchUser);
 									searchFor.updateData(userObect);
 									}
 				
@@ -148,9 +136,6 @@
 				} 
 				fetchData();
 
-
-
-
 				////////////////////like////////////////////////
 					let likes = document.querySelectorAll('button.like');
 			let unlikes = document.querySelectorAll('button.unlike');
@@ -161,7 +146,6 @@
 			   return window.location.replace("{{path('account_login')}}");
 			 {% endif %}
 			 
-
                 this.disabled=true
 			let icon = this.querySelector('i');
 			let likeCount = this.querySelector('#likeCount');
